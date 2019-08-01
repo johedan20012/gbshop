@@ -17,3 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/productos', 'ProductosController@getProductos');
+
+Route::get('/productos2/{id}', 'ProductosController@getProductosPorCategoria');
+
+Route::get('/producto/{id}', 'ProductosController@getProducto');

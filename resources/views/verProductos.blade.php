@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Productos gbshop</title>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}"> <!--Bootstrap 4-->
 </head>
 <body>
     @foreach($productos as $producto)
