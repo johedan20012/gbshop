@@ -14,9 +14,15 @@ class ProductosController extends Controller
      *
      * @return Productos
      */
-    public function getProductos()
+    public function getProductos(Request $request)
     {
-        return view('verProductos', ['productos' => Producto::all()]);
+        $productos = Producto::paginate(20)->setPageName("p");
+
+        if($request->ajax()){
+            return view('tablaProductos', ['productos' => $productos]);
+        }
+
+        return view('inicio', ['productos' => $productos /*Producto::all()*/]);
     }
 
     public function getProductosPorCategoria($id){
@@ -39,7 +45,6 @@ class ProductosController extends Controller
     }
 
     public function getProducto($id){
-        $producto = Producto::find($id);
-        return view('verProducto', ['producto' => $producto, 'categoria' => Categoria::find($producto->idcategoria)]);
+        return view('verProducto', ['producto' => Producto::find($id)]);
     }
 }

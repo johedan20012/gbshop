@@ -10,14 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('inicio', 'ProductosController@getProductos')->name('produc');
+});*/
+
+Route::get('/', 'ProductosController@getProductos');
 
 
-Route::get('/productos', 'ProductosController@getProductos');
+//Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 
 Route::get('/productos2/{id}', 'ProductosController@getProductosPorCategoria');
 
-Route::get('/producto/{id}', 'ProductosController@getProducto');
+Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
