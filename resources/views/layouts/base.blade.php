@@ -10,7 +10,7 @@
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 
     <!-- font Awesome CDN-->
-    <!-- <script src="https://use.fontawesome.com/025d1f53df.js"></script> -->
+    <script src="https://use.fontawesome.com/025d1f53df.js"></script>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}"> <!--Bootstrap 4-->

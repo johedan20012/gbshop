@@ -20,6 +20,6 @@ Route::get('/', 'ProductosController@getProductos');
 
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 
-Route::get('/productos2/{id}', 'ProductosController@getProductosPorCategoria');
+Route::get('/vGxWbRowQT', 'ProductosController@getProductosPorCategoria');
 
 Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
