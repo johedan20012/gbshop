@@ -34,9 +34,7 @@
     </header>
 
     <div id="main">
-      <div class="container">
         @yield('contenido');
-      </div>
     </div>
 
     <footer >

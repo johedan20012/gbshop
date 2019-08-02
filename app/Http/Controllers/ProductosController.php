@@ -16,13 +16,13 @@ class ProductosController extends Controller
      */
     public function getProductos(Request $request)
     {
-        $productos = Producto::paginate(20)->setPageName("p");
+        $productos = Producto::paginate(5)->setPageName("p");
 
         if($request->ajax()){
             return view('tablaProductos', ['productos' => $productos]);
         }
 
-        return view('inicio', ['productos' => $productos /*Producto::all()*/]);
+        return view('inicio', ['productos' => $productos /*Producto::all()*/, 'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
     }
 
     public function getProductosPorCategoria($id){
