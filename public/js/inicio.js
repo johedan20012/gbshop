@@ -1,19 +1,18 @@
-$(window).on('hashchange', function() {
+/*$(window).on('hashchange', function() {
     if (window.location.hash) {
         var page = window.location.hash.replace('#', '');
         if (page == Number.NaN || page <= 0) {
             return false;
         }else{
-            getData(page);
+            var id = $("#paginador-idCat").val();
+            getDataByCategorie(id,page);
         }
     }
 });
-
+*/
 $(document).ready(function(){
     $(document).on('click', '.pagination a',function(event){
         event.preventDefault();
-        //console.log("Clickeaste la pafinacion y su pagina es");
-        //console.log($(this).attr('href').split('p=')[1]);
         
         $('li').removeClass('active');
         $(this).parent('li').addClass('active');
@@ -22,7 +21,10 @@ $(document).ready(function(){
         
         var page=$(this).attr('href').split('p=')[1];
         
-        getData(page);
+        var id = $("#paginador-idCat").val();
+        console.log(page);
+        console.log(id);
+        getDataByCategorie(id,page);
     });
 
     //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
@@ -30,64 +32,65 @@ $(document).ready(function(){
     var i;
 
     for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-        } else {
-        dropdownContent.style.display = "block";
-        }
-    });
-    }
-/*
-    var categorias = document.getElementsByClassName("categoria");
-    for(let a = 1; a < categorias.length; a++){
-        console.log("hola");
-        
-        categorias[a].addEventListener("click", function(event){
-            event.preventDefault();
-            getDataByCategorie(1);
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+            } else {
+            dropdownContent.style.display = "block";
+            }
         });
-    }*/
+    }
 
     $(document).on('click', '.categoria',function(event){
+        var id = $(this).children().val();
         event.preventDefault();
-            getDataByCategorie(1);
+
+        let nameCat = $(this).attr("nombreCat");
+        let idCat = $(this).attr("idCat");
+        let nameSubCat = "";
+
+        if($(this).hasClass("subCategoria") ){
+            nameSubCat = $(this).attr("nombreSubCat");
+        }
+    
+        goToBreadcrumb(id,nameCat,nameSubCat,idCat);
     });
 });
 
-function getDataByCategorie(id){
-    console.log("gg");
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+function goToBreadcrumb(id, categoria, subcategoria, idCategoria){
+    let emptyString = "''";
 
-    $.ajax({
-        type:'POST',
-        url: window.location.href+'vGxWbRowQT',
-        data:{}
-    }).done(function(data){
-        $("#paginador").empty().html(data);
-        //location.hash = 2;
-    });
+    $("#directorio").html('<li class="breadcrumb-item" id="breadcrum-init"><a href="#" onclick="goToBreadcrumb(0,'+emptyString+','+emptyString+');">GB Shop Music Store</a></li>');
+        
+    if(subcategoria != ""){
+        let categoria1=  categoria;
+        categoria = "'"+categoria+"'";
+        $("#directorio").append('<li class="breadcrumb-item" id="breadcrum-init"><a href="#" onclick="goToBreadcrumb('+idCategoria+','+categoria+','+emptyString+');">'+categoria1+'</a></li>');
+        $("#directorio").append('<li class="breadcrumb-item active" aria-current="page">'+subcategoria+'</li>');
+    }else{
+        if(categoria != ""){
+            $("#directorio").append('<li class="breadcrumb-item active" aria-current="page">'+categoria+'</li>');
+        }
+    }
+
+    getDataByCategorie(id,1);
 }
 
-function getData(page){
+function getDataByCategorie(id,page){
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
     $.ajax({
-        type:'GET',
-        url: '?p=' + page,
-        data:{}
+        type:'POST',
+        url: $('#rutaProductos').val()+'?p=' + page,
+        data:{id: id}
     }).done(function(data){
         $("#paginador").empty().html(data);
-        //location.hash = page;
+        $("#paginador-idCat").val(id);
+        window.scrollTo(0,0);
     });
 }

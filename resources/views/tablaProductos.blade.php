@@ -1,6 +1,9 @@
 {!! $productos->links('widgets.pagination') !!}
 
 <ul class="list-group">
+    @if(count($productos) == 0)
+        No se encontraron productos con los datos solicitados.
+    @endif
     @foreach($productos as $producto)
         <li class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
@@ -26,3 +29,5 @@
         </li>
     @endforeach
 </ul>
+
+{!! $productos->links('widgets.pagination') !!}
