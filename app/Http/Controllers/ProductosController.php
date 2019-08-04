@@ -14,7 +14,7 @@ class ProductosController extends Controller
      *
      * @return Productos
      */
-    public function getProductos(Request $request)
+    public function getCatalogo(Request $request)
     {
         $productos = Producto::paginate(5)->setPageName("p");
 
@@ -22,7 +22,7 @@ class ProductosController extends Controller
             return view('tablaProductos', ['productos' => $productos]);
         }
 
-        return view('inicio', ['productos' => $productos /*Producto::all()*/, 'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
+        return view('catalogo', ['productos' => $productos /*Producto::all()*/, 'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
     }
 
     /**
@@ -51,6 +51,6 @@ class ProductosController extends Controller
     }
 
     public function getProducto($id){
-        return view('verProducto', ['producto' => Producto::find($id)]);
+        return view('producto', ['producto' => Producto::find($id)]);
     }
 }

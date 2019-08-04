@@ -14,7 +14,8 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}"> <!--Bootstrap 4-->
-    <link rel="stylesheet" href=" {{ asset('css/inicio.css')}}" type="text/css"> 
+    <link rel="stylesheet" href="{{asset('css/base.css')}}">
+    @yield('css')
 
     <!--<title>GB Route Music Store: Tienda online</title> -->
     <title>@yield('titulo')</title>

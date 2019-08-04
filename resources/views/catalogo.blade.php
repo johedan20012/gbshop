@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('css')
+<link rel="stylesheet" href=" {{ asset('css/catalogo.css')}}" type="text/css"> 
+@endsection
+
 @section('titulo')
 GB Route Music Store: Tienda online
 @endsection
