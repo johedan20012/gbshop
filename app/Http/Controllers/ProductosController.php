@@ -9,34 +9,39 @@ use Illuminate\Http\Request;
 
 class ProductosController extends Controller
 {
+    private function getBreadcrumb($id,$showLast = false){
+        $breadcrumb = null;
+   
+        $categoria = Categoria::find($id);
+        if($categoria != null){
+            $padre = $categoria->padre;
+
+            $lastRuta = ($showLast)? route('catalogo').'?id='.$categoria->idcategorias: "";
+            if($padre != null){
+                $breadcrumb = array(['nombre' => $padre->nombre,'ruta' => route('catalogo').'?id='.$padre->idcategorias ],['nombre' => $categoria->nombre, 'ruta' => $lastRuta ]);
+            }else{
+                $breadcrumb = array(['nombre' => $categoria->nombre, 'ruta' => $lastRuta]);
+            }
+        }
+
+        return $breadcrumb;
+    }
     /**
      * Muestra todos los productos
      *
      * @return Productos
      */
-    public function getCatalogo(Request $request)
+    public function getCatalogoPorCategoria(Request $request)
     {
-        $productos = Producto::paginate(5)->setPageName("p");
-
-        if($request->ajax()){
-            return view('tablaProductos', ['productos' => $productos]);
-        }
-
-        return view('catalogo', ['productos' => $productos /*Producto::all()*/, 'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
-    }
-
-    /**
-     * Muestra todos los productos por categoria, si la categoria es 0 regresa todos los productos
-     *
-     * @return Productos
-     */
-
-    public function getProductosPorCategoria(Request $request){
         $validatedData = $request->validate([
-            'id' => 'required|integer|digits_between:1,10'
+            'id' => 'nullable|integer|digits_between:1,10'
         ]);
-        $id = $request->input('id');
-
+        if($request->input('id') !== null){
+            $id = $request->input('id');
+        }else{
+            $id=0;
+        }
+        $breadcrumb = null;
         if($id == 0){
             $productos = Producto::paginate(5)
             ->setPageName("p");
@@ -46,11 +51,52 @@ class ProductosController extends Controller
                         })->orWhere('idcategoria',$id)
                         ->paginate(5)
                         ->setPageName("p");
+            
+            $breadcrumb = $this->getBreadcrumb($id);
         }
-        return view('tablaProductos', ['productos' => $productos]);
+        /*return view('widgets.tablaProductos', ['productos' => $productos]);
+
+        $productos = Producto::paginate(5)->setPageName("p");*/
+
+        if($request->ajax()){
+            $tabla = view('widgets.tablaProductos', ['productos' => $productos,'idcategoria'=>$id])->render();
+            $bread = view('widgets.breadcrumb', ['breadcrumb' => $breadcrumb])->render();
+            return response()->json(array('tabla' => $tabla, 'bread'=>$bread));
+        }
+
+        return view('catalogo', ['productos' => $productos /*Producto::all()*/, 'categorias' => Categoria::all()->where('idcategoriapadre',null), 'breadcrumb' => $breadcrumb,'idcategoria'=>$id]);
     }
 
-    public function getProducto($id){
-        return view('producto', ['producto' => Producto::find($id)]);
+    /**
+     * Muestra todos los productos por categoria, si la categoria es 0 regresa todos los productos
+     *
+     * @return Productos
+     */
+
+    public function getProductosPorCategoria(Request $request){
+        
+    }
+
+    public function getProducto(Request $request){
+        $validatedData = $request->validate([
+            'code' => 'nullable|string'
+        ]);
+
+
+        if($request->input('code') !== null){
+            $codigo = $request->input('code');
+
+            $producto = Producto::where('codigo',$codigo)->first();
+
+            if($producto == null){
+                return view('extras.error')->withErrors(["error" => "Producto inexistente"]);
+            }
+        }else{
+            return view('extras.error')->withErrors(["error" => "Producto inexistente"]);
+        }
+        
+        $breadcrumb = $this->getBreadcrumb($producto->idcategoria,true);
+
+        return view('producto', ['producto' => $producto,'breadcrumb'=>$breadcrumb]);
     }
 }

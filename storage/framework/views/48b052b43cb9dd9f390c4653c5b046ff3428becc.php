@@ -11,14 +11,14 @@
                 
                 <div class="image-parent">
                     <?php if(isset($producto->foto)): ?>
-                        <a href="<?php echo e(route('verProducto', [$producto->idproductos])); ?>">
+                        <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>">
                             <img class="img-fluid" width="100px" height="100px" src="<?php echo e(asset('storage/imagenesProductos/'.$producto->foto->nombre)); ?>" alt="" title=""></a>
                         </a>
                     <?php endif; ?>
                 </div>
 
                 <div class="text-left mr-auto">
-                    <a href="<?php echo e(route('verProducto', [$producto->idproductos])); ?>" title="<?php echo e($producto->nombre); ?>" target="_self"><?php echo e($producto->nombre); ?></a>
+                    <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" title="<?php echo e($producto->nombre); ?>" target="_self"><?php echo e($producto->nombre); ?></a>
                 </div>
 
                 <span class="price-item ms-price ms-search-result_item-price">

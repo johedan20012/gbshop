@@ -11,4 +11,8 @@ class Categoria extends Model
     public function subCategorias(){
         return $this->hasMany('App\Categoria','idcategoriapadre','idcategorias');
     }
+
+    public function padre(){
+        return $this->belongsTo('App\Categoria', 'idcategoriapadre', 'idcategorias');
+    }
 }

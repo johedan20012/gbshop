@@ -31,7 +31,4 @@
     @else
         <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
     @endif
-
-    <!-- Id cat paginador-->
-    <input type="hidden" id="paginador-idCat" value="0">
 </ul>

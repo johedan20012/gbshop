@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
             $table->text('descripcion')->nullable();
             $table->decimal('precio',11,2)->unsigned()->default(0);
             $table->unsignedInteger('stock')->default(0);
+            $table->string('codigo',15)->unique();
             $table->unsignedInteger('idmarca')->index();
             $table->unsignedInteger('idcategoria')->index();
             $table->timestamps();

@@ -5,7 +5,15 @@
 @endsection
 
 @section('titulo')
-GB Route Music Store: Tienda online
+  @if(isset($breadcrumb) && $breadcrumb != null)
+    <?php $titulo=""?>
+    @foreach($breadcrumb as $hoja)
+      <?php $titulo .= ' '.$hoja['nombre']?>
+    @endforeach
+    {{$titulo}} | GB Route Music Store: Tienda online
+  @else
+    Catalogo | GB Route Music Store: Tienda online
+  @endif
 @endsection
 
 @section('contenido')
@@ -25,43 +33,15 @@ GB Route Music Store: Tienda online
                       </div>
                   </div>              
               </li>
-              @foreach($categorias as $categoria)
-                  <li class="list-group-item list-group-item-action flex-column align-items-start">
-                      <div class="d-flex w-100 justify-content-between">
-                          <div class="row col-md-12">
-                              <div class="col-md-11 pl-md-1">
-                                <a class="d-inline categoria" href="" title="{{$categoria->nombre}}" target="_self" nombreCat="{{$categoria->nombre}}">{{$categoria->nombre}}
-                                  <input type="hidden" value="{{$categoria->idcategorias}}">
-                                </a>
-                              </div>
-                              @if(count($categoria->subCategorias) )
-                                <button class="dropdown-btn  col-md-1">
-                                  <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-container">
-                                  @foreach($categoria->subCategorias as $subCategoria)
-                                    <a class="categoria subCategoria" href="#" nombreCat="{{$categoria->nombre}}" nombreSubCat="{{$subCategoria->nombre}}" idCat="{{$categoria->idcategorias}}">{{$subCategoria->nombre}}
-                                      <input type="hidden" value="{{$subCategoria->idcategorias}}">
-                                    </a>
-                                  @endforeach
-                                </div>
-                              @endif
-                          </div>
-                      </div>              
-                  </li>
-              @endforeach
+              @include('widgets.sidebarCategorias')
           </ul>
         </div>
         <div class="col-md-8">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" id="directorio">
-              <li class="breadcrumb-item" id="breadcrum-init"><a href="#">GB Shop Music Store</a></li>
-              
-              <!-- <li class="breadcrumb-item active" aria-current="page">Otros</li> -->
-            </ol>
-          </nav>
+          <div class="col-md-12" id="breadcr">
+            @include('widgets.breadcrumb')
+          </div>
           <div class="col-md-12" id="paginador">
-            @include('tablaProductos')
+            @include('widgets.tablaProductos')
           </div>
         </div>
     </div>
@@ -70,5 +50,5 @@ GB Route Music Store: Tienda online
 
 @section('scripts')
   <script src="{{ asset('js/inicio.js') }}"></script>
-  <input type="hidden" value="{{ route('productosPorCategoria') }}" id="rutaProductos">
+  <input type="hidden" value="{{ route('catalogo') }}" id="rutaProductos">
 @endsection

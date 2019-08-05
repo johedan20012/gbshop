@@ -9,14 +9,7 @@
 <?php $__env->startSection('contenido'); ?>
 <div class="container">
     <div class="product_wrap">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" title="Volver a Inicio">GB Route Music Store</a></li>
-                <li class="breadcrumb-item"><a href="#" title="Guitarras">Guitarras</a></li>
-                <li class="breadcrumb-item"><a href="#" title="Ukuleles, Banjos y Mandolinas">Ukuleles, Banjos Y Mandolinas</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Ukelele La Sevillana Mod. Svuke-100</li>
-            </ol>
-            </nav>
+        <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="row">
         <div id="product_image_container" class="col-md-5">
             <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
