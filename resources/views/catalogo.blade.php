@@ -21,20 +21,7 @@
   <div class="d-flex justify-content-center">
     <div class ="row col-md-11 pl-md-2">
         <div class="col-md-4">
-          <ul class="sidenav list-group">
-              <li class="list-group-item list-group-item-action flex-column align-items-start">
-                  <div class="d-flex w-100 justify-content-between">
-                      <div class="row col-md-12">
-                          <div class="col-md-11 pl-md-1">
-                            <a class="d-inline categoria" href="" title="Todos" target="_self" nombreCat="">Todos
-                              <input type="hidden" value="0">
-                            </a>
-                          </div>
-                      </div>
-                  </div>              
-              </li>
-              @include('widgets.sidebarCategorias')
-          </ul>
+          @include('widgets.sidebarCategorias')
         </div>
         <div class="col-md-8">
           <div class="col-md-12" id="breadcr">
@@ -49,6 +36,6 @@
 @endsection
 
 @section('scripts')
-  <script src="{{ asset('js/inicio.js') }}"></script>
+  <script src="{{ asset('js/catalogo.js') }}"></script>
   <input type="hidden" value="{{ route('catalogo') }}" id="rutaProductos">
 @endsection

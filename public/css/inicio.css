@@ -1,0 +1,97 @@
+/* Fixed sidenav, full height  Inicio.css*/
+.sidenav {
+	/*height: 100%;
+	width: 200px;/*
+	position: fixed;*/
+	z-index: 1;
+	top: 0;
+	left: 0;
+	/*background-color: #111;*/
+	overflow-x: hidden;
+	padding-top: 20px;
+  }
+  
+  /* Style the sidenav links and the dropdown button */
+  .sidenav a, .dropdown-btn {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	color: #818181;
+	display: block;
+	border: none;
+	background: none;
+	width:100%;
+	text-align: left;
+	cursor: pointer;
+	outline: none;
+  }
+  
+  /* On mouse-over */
+  .sidenav a:hover, .dropdown-btn:hover {
+	color: #f1f1f1;
+  }
+
+   
+  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+	display: none;
+	/*background-color: #262626;*/
+	padding-left: 8px;
+  }
+.money{
+	font-weight: bold;
+    font-size: 21px;
+	color:#bf2546;
+}
+
+.carousel-control-next-icon{
+
+	background-color: #bf2546!important;
+}
+
+.carousel-control-prev-icon{
+
+	background-color:#bf2546!important;
+}
+
+/* Product-name */
+
+.product-name{
+	
+	overflow: hidden;
+	max-height:3em;
+	min-height:3em;
+	display: block;
+	text-transform: capitalize;
+	-webkit-line-clamp: 2	
+}
+
+/* old price old price*/
+
+.price{
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: bold;	
+}
+
+.new-price{
+	display: block;
+	text-decoration: none;
+	color: #359902;
+
+}
+
+.pleca{
+	background: #359902;
+	color: white;
+	display: inline-block;
+    position: relative;
+    font-size: 13px;
+    padding: 3px 7px;
+    margin: 0 0 0 0;
+    border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.2) 3px 3px 3px;
+}
+.ultimos{
+	color: red
+}

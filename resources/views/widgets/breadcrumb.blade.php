@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" id="directorio">
-        <li class="breadcrumb-item" id="breadcrum-init"><a href="{{ route('catalogo') }}">GB Shop Music Store</a></li>
+        <li class="breadcrumb-item" id="breadcrum-init"><a href="{{ route('inicio') }}">GB Shop Music Store</a></li>
         
         @if(isset($breadcrumb) && $breadcrumb != null)
             @foreach($breadcrumb as $hoja)

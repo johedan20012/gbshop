@@ -73,8 +73,9 @@ class ProductosController extends Controller
      * @return Productos
      */
 
-    public function getProductosPorCategoria(Request $request){
-        
+    public function getInicio(Request $request){
+        $productos = Producto::all()->take(4);
+        return view('inicio', ['productos'=>$productos,'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
     }
 
     public function getProducto(Request $request){
