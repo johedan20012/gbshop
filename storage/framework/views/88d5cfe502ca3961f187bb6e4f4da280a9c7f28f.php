@@ -26,7 +26,9 @@
       <div class="container" id="encabezado">
         <div class="row">
           <div class="col-md-12">
+              <a href="<?php echo e(route('inicio')); ?>">
               <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>" class="img-responsive" alt="Gb Shop">
+              </a>
           </div>
           
 

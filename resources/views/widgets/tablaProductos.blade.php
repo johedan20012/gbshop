@@ -20,7 +20,7 @@
                 </div>
 
                 <span class="price-item ms-price ms-search-result_item-price">
-                    <div id="product_price" class="ms-vip-price-container money">
+                    <div id="product_price" class="money">
                         <span class="money">$ {{ $producto->precio }}</span>
                     </div>          
                 </span>

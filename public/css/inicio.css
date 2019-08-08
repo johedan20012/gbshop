@@ -29,6 +29,7 @@
   /* On mouse-over */
   .sidenav a:hover, .dropdown-btn:hover {
 	color: #f1f1f1;
+	/*color: red;*/
   }
 
    
@@ -38,10 +39,15 @@
 	/*background-color: #262626;*/
 	padding-left: 8px;
   }
-.money{
+.money{/*
 	font-weight: bold;
     font-size: 21px;
-	color:#bf2546;
+	color:#bf2546;*/
+
+	font-weight: bold;
+    font-size: 20px;
+    color: #bf2546;
+    font-family: sans-serif;
 }
 
 .carousel-control-next-icon{

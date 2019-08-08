@@ -74,7 +74,7 @@ class ProductosController extends Controller
      */
 
     public function getInicio(Request $request){
-        $productos = Producto::all()->take(4);
+        $productos = Producto::take(4)->get();
         return view('inicio', ['productos'=>$productos,'categorias' => Categoria::all()->where('idcategoriapadre',null)]);
     }
 

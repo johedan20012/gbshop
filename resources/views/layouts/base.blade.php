@@ -26,7 +26,9 @@
       <div class="container" id="encabezado">
         <div class="row">
           <div class="col-md-12">
+              <a href="{{ route('inicio')}}">
               <img src="{{asset('storage/imagenesLayout/logo.png') }}" class="img-responsive" alt="Gb Shop">
+              </a>
           </div>
           
 
