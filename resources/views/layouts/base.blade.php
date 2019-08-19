@@ -29,6 +29,9 @@
               <a href="{{ route('inicio')}}">
               <img src="{{asset('storage/imagenesLayout/logo.png') }}" class="img-responsive" alt="Gb Shop">
               </a>
+              @if(Auth::check())
+                <a class="text-white" href="{{ route('admin')}}">Panel de administración</a>
+              @endif
           </div>
           
 

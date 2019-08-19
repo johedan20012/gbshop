@@ -6,6 +6,7 @@ use App\Producto;
 use App\Categoria;
 use App\FotosProducto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use Validator;
 
@@ -28,6 +29,7 @@ class ProductosController extends Controller
 
         return $breadcrumb;
     }
+
     /**
      * Muestra todos los productos
      *
@@ -45,13 +47,13 @@ class ProductosController extends Controller
         }
         $breadcrumb = null;
         if($id == 0){
-            $productos = Producto::paginate(5)
+            $productos = Producto::paginate(20)
             ->setPageName("p");
         }else{
             $productos = Producto::whereIn('idcategoria',function($query2) use ($id){
                             $query2->select('idcategorias')->from('categorias')->where('idcategoriapadre',$id);
                         })->orWhere('idcategoria',$id)
-                        ->paginate(5)
+                        ->paginate(20)
                         ->setPageName("p");
             
             $breadcrumb = $this->getBreadcrumb($id);
@@ -105,13 +107,13 @@ class ProductosController extends Controller
 
     public function store(Request $request){
         $validacion = Validator::make($request->all(), array(
-            'producto-nombre' => 'required|string|max:50|regex:/^[0-9a-zñÑÁÉÍÓÚáéíóúüA-Z]+$/',
+            'producto-nombre' => 'required|string|max:100', //|regex:/^[0-9a-zñÑÁÉÍÓÚáéíóúüA-Z ]+$/
             'producto-descripcion' => 'nullable|string',
             'producto-marca' => 'required|integer',
             'producto-categoria' => 'required|integer',
-            'producto-subCategoria' => 'nullable|integer',
+            'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
-            'producto-imagen.*' => 'required|file|image|mimes:jpeg,png|max:2048' 
+            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048' //Para esto activamos php_fileinfo en php.ini
         ));
 
         //TODO DEBUG
@@ -128,7 +130,7 @@ class ProductosController extends Controller
         }*/
         
         if($validacion->fails()){
-            return redirect()->route('admin')->with('Error' , 'No se pudo registrar el producto, revisa los campos');
+            return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Error' , 'No se pudo registrar el producto, revisa los campos');
         }
 
         $producto = new Producto();
@@ -144,12 +146,43 @@ class ProductosController extends Controller
         $producto->idcategoria = $idcategoria;
 
         if(!$producto->save()){ //No se logro guardar el producto de manera correcta;
-            return redirect()->route('admin')->with('Error' , 'No se pudo registrar el producto');
+            return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Error' , 'No se pudo registrar el producto');
         }
-        return redirect()->route('admin')->with('Mensaje' , 'Producto registrado con exito!');
 
-        return redirect()->route('detailVideo', ['video_id' => $comment->video_id])->with(array(
-            'message' => 'Comentario añadido correctamente'
-        ));
+        //Guardar imagenes
+
+        $photos = $request->file('producto-foto');
+        $falloFotos = false;
+
+        foreach ($photos as $photo) {
+
+            $extension = $photo->getClientOriginalExtension();
+
+            $filename  = str_random(15).'.'.$extension;
+
+            while(Storage::disk('imgProductos')->exists($filename)){
+                $filename  = str_random(15).'.'.$extension;
+            }
+
+            Storage::disk('imgProductos')->put($filename, file_get_contents($photo));
+            
+            if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
+                return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
+            }
+
+            $foto = new FotosProducto();
+
+            $foto->idproducto = $producto->idproductos;
+            $foto->nombre = $filename;
+
+            if(!$foto->save()){ //No se guardo la foto en la base de datos
+                Storage::disk('imgProductos')->delete($filename);
+
+                return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
+            }
+
+        }
+
+        return redirect()->route('admin',['numPag' => 1])->with('Mensaje' , 'Producto registrado con exito!');
     }
 }

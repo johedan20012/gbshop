@@ -1,0 +1,17 @@
+/* configAdmin */
+#add-producto, #del-producto, #add-marca, #del-marca, #add-categoria, #del-categoria{
+	border: 1px solid #e0e1e1;
+	border-radius: 8px;
+	padding: 10px;
+}
+#del-categoria, #del-marca .centro {
+	text-align: center;
+}
+#del-categoria .form-check{
+	text-align: center;
+}
+
+/* TOAST */
+#myToast{
+	max-width: none;
+}

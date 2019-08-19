@@ -29,6 +29,9 @@
               <a href="<?php echo e(route('inicio')); ?>">
               <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>" class="img-responsive" alt="Gb Shop">
               </a>
+              <?php if(Auth::check()): ?>
+                <a class="text-white" href="<?php echo e(route('admin')); ?>">Panel de administración</a>
+              <?php endif; ?>
           </div>
           
 

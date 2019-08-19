@@ -28,7 +28,11 @@ Route::post('/regProducto','ProductosController@store')->name('regProducto')->mi
 Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
 
-Route::view('/admin', 'auth.admin')->name('admin')->middleware('auth');
+Route::get('/admin/{numPag?}','AdminController@getPanel')->name('admin')->middleware('auth');
+Route::post('/admin/SubCat','AdminController@getSubCategorias')->name('subCat')->middleware('auth');
+Route::post('/admin/regMarca','AdminController@storeMarca')->name('storeMarca')->middleware('auth');
+Route::post('/admin/regCategoria','AdminController@storeCategoria')->name('storeCategoria')->middleware('auth');
+
 Route::view('/loginAdmin','auth.login')->name('loginAdmin')->middleware('guest');
 
 // Authentication Routes...
