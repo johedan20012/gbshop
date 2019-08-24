@@ -11,10 +11,21 @@ use Validator;
 
 class AdminController extends Controller
 {
-    public function getPanel(Request $request,$numPag = null){
+    public function getPanel(Request $request){
+        $numPag = 1;
+        
+        $validacion = Validator::make($request->all(), array(
+            'numPag' => 'nullable|integer'
+        ));
+
+        if($validacion->fails()){
+            $numPag = 1;
+        }else{
+            $numPag = ($request->has('numPag'))? $request->input('numPag') : 1;
+        }
 
         if($request->ajax()){
-
+            
             if($request->has('cadena')){
                 //Buscar marcas por medio de la cadena
                 $validatedData = $request->validate([
@@ -22,23 +33,17 @@ class AdminController extends Controller
                 ]);
 
                 if($request->input('cadena') !== null){
-                    $marcas = Marca::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->paginate(10)->setPageName("p");
+                    $marcas = Marca::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->paginate(10,['*'],'pM');
             
                     $tabla = view('widgets.tablaMarcas', ['marcas1' => $marcas,'actual' => $request->input('cadena')])->render();
         
                     return response()->json(array('tabla' => $tabla));
-                }else{
-                    $marcas = Marca::paginate(10)->setPageName("p");
-            
-                    $tabla = view('widgets.tablaMarcas', ['marcas1' => $marcas])->render();
-
-                    return response()->json(array('tabla' => $tabla));
                 }
             }
-            
+        
             //Traer marcas indiscriminadamente
             
-            $marcas = Marca::paginate(10)->setPageName("p");
+            $marcas = Marca::paginate(10,['*'],'pM');
             
             $tabla = view('widgets.tablaMarcas', ['marcas1' => $marcas])->render();
 
@@ -46,8 +51,9 @@ class AdminController extends Controller
         }
 
         $marcas = Marca::orderBy('nombre')->get();
-        $marcas1 = Marca::orderBy('nombre')->paginate(10)->setPageName("p");
+        $marcas1 = Marca::orderBy('nombre')->paginate(10,['*'],'pM');
         $categorias = Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get();
+        $categorias1 = Categoria::orderBy('nombre')->paginate(15)->setPageName('p');
 
         //$productos = Producto::paginate(5)->setPageName("p");
 
@@ -55,6 +61,7 @@ class AdminController extends Controller
             'marcas' => $marcas, 
             'marcas1'=> $marcas1, 
             'categorias' => $categorias,
+            'categorias1' => $categorias1,
             'numPag' => $numPag //Como numPag solo es enviado atraves del servidor , no lo valido
         ]);
     }
@@ -93,6 +100,61 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin',['numPag' => 2])->with('Mensaje' , 'Marca registrada con exito!');
+    }
+
+    public function editMarca(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'marca-id' => 'required|integer',
+            'marca-nombre' => 'required|string|max:50'
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo editar la marca');
+        }
+
+        $marca = Marca::find($request->input('marca-id'));
+        if($marca == null){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo editar la marca');
+        }
+
+        $marca->nombre = $request->input('marca-nombre');
+
+        try{
+            if(!$marca->save()){ //No se logro guardar la marca de manera correcta;
+                return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo editar la marca');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo editar la marca');
+        }
+
+        return redirect()->route('admin',['numPag' => 2])->with('Mensaje' , 'Marca editada con exito!');
+    }
+
+    public function delMarca(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'marca-id' => 'required|integer',
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo borrar la marca');
+        }
+        /*
+        $marca = Marca::find($request->input('marca-id'));
+        if($marca == null){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo borrar la marca');
+        }
+
+        $marca->nombre = $request->input('marca-nombre');*/
+
+        try{
+            if(!Marca::destroy($request->input('marca-id'))){ //No se logro guardar la marca de manera correcta;
+                return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo borrar la marca');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['numPag' => 2])->with('Error' , 'No se pudo borrar la marca, primero elimina los productos de esta marca');
+        }
+
+        return redirect()->route('admin',['numPag' => 2])->with('Mensaje' , 'Marca eliminada con exito!');
     }
 
     public function storeCategoria(Request $request){

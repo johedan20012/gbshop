@@ -21,7 +21,7 @@ Administración gbshop
         <div class="col-md-12 col-sm-12 col-12">
         <br>
         <?php if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning')): ?>
-            <div class="toast" id="myToast" data-autohide="false">
+            <div class="toast" id="myToast" data-delay="3000">
                 <div class="toast-header">
                     <strong class="mr-auto"><i class="fa fa-grav"></i>Mensaje de GBShop</strong>
                     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
@@ -178,7 +178,6 @@ Administración gbshop
                     <div id="del-marca-form">
                         <?php echo $__env->make('widgets.tablaMarcas', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                     </div>
-                    
                 </div>
                 </div>
             </div>  
@@ -220,66 +219,8 @@ Administración gbshop
                 <br>
                 <div id="del-categoria">
                     <div id="del-categoria-form">
-                    <form class="form-inline">                        
-                        <input type="search" class="form-group" name="categoria-busca" id="categoria-busca" placeholder="Buscar">                        
-                        <a href="#"><i class="fa fa-search"></i></a>
-                    </form>
+                        <?php echo $__env->make('widgets.tablaCategorias', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                     </div>
-                    <table class="table table-hover">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col" class="centro">Sub Categoria</th>
-                        <TH scope="COL" class="centro">Acciones</TH>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Guitarras</td>
-                        <td>
-                            <div class="form-check">
-                            <input class="form-check-input position-static center" type="checkbox" id="blankCheckbox" value="option1" aria-label="subcategoria" checked disabled >
-                            </div>  
-                        </td>
-                        <td>
-                            <div class="btn-group d-flex">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Acciones
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><i class="fa fa-edit" style="color:blue"> </i>_Modificar</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-times" style="color: red"> </i>_Eliminar</a>
-                            </div>
-                            </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Ukuleles</td>
-                        <td>
-                            <div class="form-check">
-                            <input class="form-check-input position-static center" type="checkbox" id="blankCheckbox2" value="option2" aria-label="subcategoria"  disabled >
-                            </div>   
-                        </td>
-                        <td>
-                            <div class="btn-group d-flex">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Acciones
-                            </button>
-                            <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#"><i class="fa fa-edit" style="color:blue"> </i>_Modificar</a>
-                            <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-times" style="color: red"> </i>_Eliminar</a>
-                            </div>
-                            </div> 
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
                 </div>
             </div>  
         </div>

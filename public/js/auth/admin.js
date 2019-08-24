@@ -7,20 +7,30 @@ $(document).ready(function(){
         getSubCategorias($("#producto-categoria").val());
     });
 
-    //Paginacion de la tabla marcas
+    //Paginacion de la tabla marcas y categorias
     $(document).on('click', '.pagination a',function(event){
         event.preventDefault();
         
+        var idVentana = $('.tab-pane.fade.show.active')[0].id;
+
         $('li').removeClass('active');
         $(this).parent('li').addClass('active');
 
         var myurl = $(this).attr('href');
         
-        var page=$(this).attr('href').split('p=')[1];
+        var page ="";
 
-        var cadena=$("#marca-actual").val();
-        
-        buscarMarcas(cadena,page);
+        if(idVentana == 'nav-marcas'){
+            console.log('gg0');
+            page= myurl.split('pM=')[1];
+            page = 2;
+            var cadena=$("#marca-actual").val();
+            buscarMarcas(cadena,page);
+        }else{
+
+            page=$(this).attr('href').split('pC=')[1];
+        }
+       
     });
 
     var timeout = null;
@@ -58,13 +68,26 @@ $(document).ready(function(){
 
     //Modal de editar y/o eliminar marcas
     $(document).on('show.bs.modal','#modalEditarMarcas',function(event){
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+        var nombre = button.data('nombre');
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
+        var modal = $(this);
+        //modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('#marca-id').val(id);
+        modal.find('#marca-nombre').val(nombre);
+    });
+    $(document).on('show.bs.modal','#modalBorrarMarcas',function(event){
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+        var nombre = button.data('nombre');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        //modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('#marca-id').val(id);
+        modal.find('#message-modalMarcas').html( '¿Eliminar la marca "' + nombre + '"?');
     });
 });
 
@@ -76,10 +99,10 @@ function buscarMarcas(cadena,page){
     });
     $.ajax({
         type:'GET',
-        url: $('#rutaMarcas').val()+'?p='+page+'&cadena=' + cadena,
+        url: $('#rutaMarcas').val()+'?pM='+page+'&cadena=' + cadena,
         data:{}
     }).done(function(data){
-        //console.log(data);
+        console.log(data);
         $("#del-marca-form").empty().html(data.tabla);   
 
         $('#marca-busca').focus();
@@ -115,13 +138,7 @@ function buscarMarcas(cadena,page){
                 }
                 nuevaCadena += cadena.substring(indice);
 
-
                 nombres.eq(a).html(nuevaCadena);
-                /*
-
-                for(let b=0; b<cadena.length && b <51; b++){
-                    console.logi
-                }*/
             }
         }
     });

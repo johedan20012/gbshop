@@ -1,3 +1,4 @@
+<?php if($paginator->hasPages()): ?>
 <ul class="pagination">
     <!-- Previous Page Link -->
     <?php if($paginator->onFirstPage()): ?>
@@ -15,6 +16,7 @@
 
         <!-- Array Of Links -->
         <?php if(is_array($element)): ?>
+            
             <?php $__currentLoopData = $element; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php if($page == $paginator->currentPage()): ?>
                     <li class="active page-item"><span class="page-link"><?php echo e($page); ?></span></li>
@@ -32,3 +34,4 @@
         <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
     <?php endif; ?>
 </ul>
+<?php endif; ?>

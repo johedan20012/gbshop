@@ -1,3 +1,4 @@
+@if ($paginator->hasPages())
 <ul class="pagination">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
@@ -15,6 +16,7 @@
 
         <!-- Array Of Links -->
         @if (is_array($element))
+            
             @foreach ($element as $page => $url)
                 @if ($page == $paginator->currentPage())
                     <li class="active page-item"><span class="page-link">{{ $page }}</span></li>
@@ -32,3 +34,4 @@
         <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
     @endif
 </ul>
+@endif
