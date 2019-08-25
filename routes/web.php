@@ -20,34 +20,33 @@ Route::get('/','ProductosController@getInicio')->name('inicio');
 
 Route::get('/catalogo', 'ProductosController@getCatalogoPorCategoria')->name('catalogo');
 
-
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 
 Route::post('/vGxWbRowQT', 'ProductosController@getProductosPorCategoria')->name('productosPorCategoria');
-Route::post('/regProducto','ProductosController@store')->name('regProducto')->middleware('auth');
+
 Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
 
-Route::get('/admin','AdminController@getPanel')->name('admin')->middleware('auth');
-Route::post('/admin/SubCat','AdminController@getSubCategorias')->name('subCat')->middleware('auth');
-Route::post('/admin/regMarca','AdminController@storeMarca')->name('storeMarca')->middleware('auth');
-Route::post('/admin/editMarca','AdminController@editMarca')->name('editMarca')->middleware('auth');
-Route::post('/admin/delMarca','AdminController@delMarca')->name('delMarca')->middleware('auth');
-Route::post('/admin/regCategoria','AdminController@storeCategoria')->name('storeCategoria')->middleware('auth');
 
-Route::view('/loginAdmin','auth.login')->name('loginAdmin')->middleware('guest');
+//TODO Rutas de administracion
+Route::view('/loginAdmin','admin.login')->name('loginAdmin')->middleware('guest'); //? Muestra el form para login
 
-// Authentication Routes...
-/*
-Route::get('login', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@showLoginForm'
-  ]);*/
-  Route::post('loginAdmin', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@login'
-  ]);
-  Route::post('logout', [
-    'as' => 'logout',
-    'uses' => 'Auth\LoginController@logout'
-  ]);
+Route::post('loginAdmin','Auth\LoginController@login')->name('login');
+Route::post('logout','Auth\LoginController@logout')->name('logout');
+
+Route::get('/admin','AdminController@getPanel')->name('admin')->middleware('auth'); //? Muestra el panel de administracion
+  //* Rutas de administracion para productos
+  Route::post('/admin/SubCat','AdminController@getSubCategorias')->name('subCat')->middleware('auth');
+  Route::post('/regProducto','AdminController@storeProducto')->name('regProducto')->middleware('auth');
+
+  //* Rutas de administracion para marcas
+  Route::post('/admin/tablaMarcas','AdminController@getTablaMarcas')->name('tablaMarcas')->middleware('auth');
+  Route::post('/admin/regMarca','AdminController@storeMarca')->name('storeMarca')->middleware('auth');
+  Route::post('/admin/editMarca','AdminController@editMarca')->name('editMarca')->middleware('auth');
+  Route::post('/admin/delMarca','AdminController@delMarca')->name('delMarca')->middleware('auth');
+
+  //* Rutas de administracion para categorias
+  Route::post('/admin/tablaCategorias','AdminController@getTablaCategorias')->name('tablaCategorias')->middleware('auth');
+  Route::post('/admin/regCategoria','AdminController@storeCategoria')->name('storeCategoria')->middleware('auth');
+  Route::post('/admin/editCategoria','AdminController@editCategoria')->name('editCategoria')->middleware('auth');
+  Route::post('/admin/delCategoria','AdminController@delCategoria')->name('delCategoria')->middleware('auth');
