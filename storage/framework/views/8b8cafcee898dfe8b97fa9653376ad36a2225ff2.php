@@ -29,8 +29,4 @@
         </li>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </ul>
-
-<!-- Id cat paginador-->
-<input type="hidden" id="paginador-idCat" value="<?php echo e($idcategoria); ?>">
-
 <?php echo $productos->links('widgets.pagination'); ?>

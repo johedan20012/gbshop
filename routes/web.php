@@ -15,17 +15,15 @@ Route::get('/', function () {
     return view('inicio', 'ProductosController@getProductos')->name('produc');
 });*/
 //Auth::routes();
-
-Route::get('/','ProductosController@getInicio')->name('inicio');
-
-Route::get('/catalogo', 'ProductosController@getCatalogoPorCategoria')->name('catalogo');
-
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
-
-Route::post('/vGxWbRowQT', 'ProductosController@getProductosPorCategoria')->name('productosPorCategoria');
-
-Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
+
+
+//TODO Rutas de la tienda
+Route::get('/','ProductosController@getInicio')->name('inicio'); //?Inicio
+Route::get('/catalogo', 'ProductosController@getCatalogoPorCategoria')->name('catalogo');
+Route::post('/proPorCat', 'ProductosController@getProductosPorCategoria')->name('productosPorCategoria');
+Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 
 
 //TODO Rutas de administracion

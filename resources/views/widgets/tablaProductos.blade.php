@@ -28,8 +28,4 @@
         </li>
     @endforeach
 </ul>
-
-<!-- Id cat paginador-->
-<input type="hidden" id="paginador-idCat" value="{{ $idcategoria}}">
-
 {!! $productos->links('widgets.pagination') !!}

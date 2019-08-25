@@ -84,4 +84,22 @@ footer .copyright .container {
 	font-size:14px;
 }
 
-/* content */
+
+ /* Estilos para Navbar */
+
+ li{
+	list-style: none;
+}
+#cart{
+	float: right;
+	padding-top: 9px;
+}
+#cart .bco{
+	color: #fff; 
+	font-size: 18px
+}
+#cart .dropdown-item:hover{
+	color: #ffffff;
+    text-decoration: none;
+    background-color: #ef4444;
+}

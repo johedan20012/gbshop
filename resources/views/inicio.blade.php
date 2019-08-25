@@ -11,10 +11,10 @@ GB Route Music Store: Tienda online
 @section('contenido')
 <div class="d-flex justify-content-center">
     <div class="row col-md-11">
-        <div class="col-sm-4">
+        <div class="col-md-4 col-sm-12 col-12 collapse navbar-collapse show" id="navbarTogglerDemo01">
             @include('widgets.sidebarCategorias')
         </div>
-        <div class="col-sm-8">
+        <div class="col-md-8 col-sm-12 col-12">
             <hr>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
