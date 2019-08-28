@@ -35,7 +35,7 @@
 
 <?php $__env->startSection('scripts'); ?>
   <script src="<?php echo e(asset('js/catalogo.js')); ?>"></script>
-  <input type="hidden" value="<?php echo e(route('catalogo')); ?>" id="rutaProductos">
+  <input type="hidden" value="<?php echo e(route('buscarProductos')); ?>" id="rutaProductos">
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

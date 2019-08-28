@@ -103,3 +103,13 @@ footer .copyright .container {
     text-decoration: none;
     background-color: #ef4444;
 }
+
+/* Modal de login */
+
+#ModalLogin input:valid{
+	border: 1px solid green;
+
+}
+#ModalLogin input:invalid{
+	border: 1px solid red;
+}

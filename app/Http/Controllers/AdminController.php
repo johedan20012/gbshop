@@ -61,10 +61,12 @@ class AdminController extends Controller
             default:
                 $marcas = Marca::orderBy('nombre')->get();
                 $categorias = Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get();
-        
+                $productos = Producto::orderBy('nombre')->paginate(10)->setPageName('p');
+
                 return view('admin.panelProductos',[
                     'marcas' => $marcas, 
                     'categorias' => $categorias,
+                    'productos' => $productos,
                     'numPag' => 1,
                     'sinNavbar' => true
                 ]);
@@ -73,6 +75,29 @@ class AdminController extends Controller
     }
 
     //TODO, Aqui empiezan las funciones que llama el panel de productos
+    public function getTablaProductos(Request $request){
+        if($request->ajax() or True){
+            if($request->has('cadena')){
+                //Buscar productos por medio de la cadena
+                $validatedData = $request->validate([
+                    'cadena' => 'nullable|string|max:50'
+                ]);
+
+                if($request->input('cadena') !== null){
+                    $productos = Producto::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->orderBy('nombre')->paginate(10)->setPageName("p");
+                    $tabla = view('widgets.admin.tablaProductos', ['productos' => $productos,'actual' => $request->input('cadena')])->render();
+        
+                    return response()->json(array('tabla' => $tabla));
+                }
+            }
+        
+            //Traer productos indiscriminadamente
+            $productos = Producto::orderBy('nombre')->paginate(10)->setPageName("p");
+            $tabla = view('widgets.admin.tablaProductos', ['productos' => $productos])->render();
+            return response()->json(array('tabla' => $tabla));
+        }
+    }
+
     public function storeProducto(Request $request){
         $validacion = Validator::make($request->all(), array(
             'producto-nombre' => 'required|string|max:100', //|regex:/^[0-9a-zñÑÁÉÍÓÚáéíóúüA-Z ]+$/

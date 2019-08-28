@@ -161,5 +161,4 @@ GB Route Music Store: Tienda online
 
 @section('scripts')
 <script src="{{ asset('js/inicio.js') }}"></script>
-  <input type="hidden" value="{{ route('catalogo') }}" id="rutaProductos">
 @endsection

@@ -159,6 +159,5 @@ GB Route Music Store: Tienda online
 
 <?php $__env->startSection('scripts'); ?>
 <script src="<?php echo e(asset('js/inicio.js')); ?>"></script>
-  <input type="hidden" value="<?php echo e(route('catalogo')); ?>" id="rutaProductos">
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

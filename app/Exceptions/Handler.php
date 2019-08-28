@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -50,4 +53,18 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    /**
+     * Editado por kevin https://pusher.com/tutorials/multiple-authentication-guards-laravel
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+        {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Unauthenticated.'], 401);
+            }
+            if (($request->is('admin') || $request->is('admin/*') ) && (!Auth::guard('cliente')->check())) {
+                return redirect()->guest('/loginAdmin');
+            }
+            return redirect()->guest('/');
+        }
 }

@@ -11,17 +11,6 @@ $(document).ready(function(){
 
         buscarMarcas(cadena,page);
     });
-    /*
-    var timeout = null;
-    //Buscador de marcas
-    $(document).on('keyup', '#marca-busca',function(event){ 
-        clearTimeout(timeout);
-
-        timeout = setTimeout(function () {
-            var buscar = $('#marca-busca').val();
-            buscarMarcas(buscar,1);
-        }, 500);
-    }); */
 
     //Evento ajax de buscar marca
     $(document).on('search', '#marca-busca',function(event){ 

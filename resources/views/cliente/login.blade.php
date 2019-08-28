@@ -5,7 +5,7 @@
 @endsection
 
 @section('titulo')
-Login - Admins
+Login - Clientes
 @endsection
 
 @section('contenido')
@@ -23,7 +23,7 @@ Login - Admins
         @endif
 
         <!-- Login Form -->
-        <form class="form-horizontal" method="POST" action="{{ route('loginAdmin') }}">
+        <form class="form-horizontal" method="POST" action="{{ route('loginCliente') }}">
             {{ csrf_field() }}
             <input type="text" id="user" class="fadeIn second" name="username" placeholder="Usuario" autocomplete="off" value="{{old('username')}}">
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" autocomplete="new-password">

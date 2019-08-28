@@ -62,10 +62,18 @@
                             <button type="submit" class="btn btn-danger">Agregar a la Página</button>  
                         </div>
                     </div>
-                    
                 </form>
             </div>
-        </div>        
+        </div> 
+        <div class="col-md-12 col-12">
+            <br>
+            <div id="del-producto">
+                <div id="del-producto-form">
+                    <?php echo $__env->make('widgets.admin.tablaProductos', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>  
+                </div>
+            </div>
+        </div>
+             
     </div>
 </div>
 <?php $__env->stopSection(); ?>
@@ -74,6 +82,7 @@
     <?php //Esto incluye la section 'scripts' definida por mi padre, en caso de existir , sin esto , mi seccion sobreescribiria la definida por mi padre?>
     ##parent-placeholder-16728d18790deb58b3b8c1df74f06e536b532695##
         <input type="hidden" value="<?php echo e(route('subCat')); ?>" id="rutaSubCategorias">
+        <input type="hidden" value="<?php echo e(route('tablaProductos')); ?>" id="rutaProductos">
         <script src="<?php echo e(asset('js/admin/tabProductos.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

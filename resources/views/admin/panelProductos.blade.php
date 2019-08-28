@@ -63,10 +63,18 @@
                             <button type="submit" class="btn btn-danger">Agregar a la Página</button>  
                         </div>
                     </div>
-                    
                 </form>
             </div>
-        </div>        
+        </div> 
+        <div class="col-md-12 col-12">
+            <br>
+            <div id="del-producto">
+                <div id="del-producto-form">
+                    @include('widgets.admin.tablaProductos')  
+                </div>
+            </div>
+        </div>
+             
     </div>
 </div>
 @endsection
@@ -75,5 +83,6 @@
     <?php //Esto incluye la section 'scripts' definida por mi padre, en caso de existir , sin esto , mi seccion sobreescribiria la definida por mi padre?>
     @parent
         <input type="hidden" value="{{ route('subCat') }}" id="rutaSubCategorias">
+        <input type="hidden" value="{{ route('tablaProductos') }}" id="rutaProductos">
         <script src="{{ asset('js/admin/tabProductos.js') }}"></script>
 @endsection

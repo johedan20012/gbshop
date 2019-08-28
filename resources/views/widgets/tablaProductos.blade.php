@@ -1,5 +1,16 @@
 {!! $productos->links('widgets.pagination') !!}
 <ul class="list-group">
+    @if(isset($actual))  
+        <input type="hidden" id="categoria-actual" value="{{ $actual }}">  
+    @else
+        <input type="hidden" id="categoria-actual" value=""> 
+    @endif
+    @if(isset($actual2))  
+        <input type="hidden" id="cadena-actual" value="{{ $actual2 }}">  
+    @else
+        <input type="hidden" id="cadena-actual" value=""> 
+    @endif
+
     @if(count($productos) == 0)
         No se encontraron productos con los datos solicitados.
     @endif

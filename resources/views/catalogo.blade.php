@@ -37,5 +37,5 @@
 
 @section('scripts')
   <script src="{{ asset('js/catalogo.js') }}"></script>
-  <input type="hidden" value="{{ route('catalogo') }}" id="rutaProductos">
+  <input type="hidden" value="{{ route('buscarProductos') }}" id="rutaProductos">
 @endsection

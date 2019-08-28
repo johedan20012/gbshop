@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- font Awesome CDN-->
     <script src="https://kit.fontawesome.com/66cdcaa667.js"></script>
 
@@ -53,8 +53,12 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i>   Total: $6,500.00</a>
-                      <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
-                      <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>   Registrarse</a>
+                      @if(Auth::guard('cliente')->check())
+                        <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-in-alt"></i>   Cerrar Sesión</a>
+                      @endif
+                      @if(!(Auth::guard('cliente')->check() || Auth::check())) <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ModalLogin"><i class="fas fa-sign-in-alt"></i>   Iniciar Sesión</a>@endif
+                      <!-- <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>   Registrarse</a>-->
                     </div>
                   </div>
                 </div>
@@ -112,5 +116,41 @@
     
     <script src="{{ asset('js/app.js') }}"></script> <!--JQUERY-->
     @yield('scripts')
+
+    @if(!isset($sinNavbar) && !(Auth::guard('cliente')->check() || Auth::check()))
+      <!-- Modal login clientes -->
+      <div class="modal fade" id="ModalLogin" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title text-danger text-bold" id="ModalLabel">Iniciar Sesión en GB Route</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form role="form" action="{{ route('loginCliente') }}" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="form-group">
+                  <label for="UserName"><i class="fas fa-user"></i> Usuario</label>
+                  <input type="text" class="form-control" id="username" name="username" aria-describedby="usernamehelp" placeholder="Nombre de Usuario" autocomplete="off" value="{{old('username')}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="Password"><i class="fas fa-lock"></i> Contraseña</label>
+                  <input type="password" class="form-control" id="password" name="password" aria-describedby="userpasshelp" placeholder="Contraseña" required>
+                </div>
+                <label>
+                  <input type="checkbox" name="remember" value="{{ old('remember') ? 'checked' : '' }}"> Recuerdame
+                </label>
+                <a class="" href="#">Registrarse</a>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary btn-sm">Iniciar Sesión</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      @endif
   </body>
 </html>

@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('titulo'); ?>
-Login - Admins
+Login - Clientes
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('contenido'); ?>
@@ -21,7 +21,7 @@ Login - Admins
         <?php endif; ?>
 
         <!-- Login Form -->
-        <form class="form-horizontal" method="POST" action="<?php echo e(route('loginAdmin')); ?>">
+        <form class="form-horizontal" method="POST" action="<?php echo e(route('loginCliente')); ?>">
             <?php echo e(csrf_field()); ?>
 
             <input type="text" id="user" class="fadeIn second" name="username" placeholder="Usuario" autocomplete="off" value="<?php echo e(old('username')); ?>">

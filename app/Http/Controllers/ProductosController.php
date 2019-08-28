@@ -36,32 +36,34 @@ class ProductosController extends Controller
 
         $breadcrumb = null;
         if($cadena != ""){
-            $productos = Producto::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->orderBy('nombre')->paginate(10)->setPageName("p");
-            return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb]);
-        }
-
-        if($id == 0){
-            $productos = Producto::orderBy('nombre')->paginate(20)->setPageName("p");
+            $productos = Producto::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->orderBy('nombre')->paginate(20)->setPageName("p");
+            //return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb]);
         }else{
-            $productos = Producto::whereIn('idcategoria',function($query2) use ($id){
-                            $query2->select('idcategorias')->from('categorias')->where('idcategoriapadre',$id);
-                        })->orWhere('idcategoria',$id)->orderBy('nombre')
-                        ->paginate(20)
-                        ->setPageName("p");
-            
-            $breadcrumb = $this->getBreadcrumb($id);
+
+            if($id == 0){
+                $productos = Producto::orderBy('nombre')->paginate(20)->setPageName("p");
+            }else{
+                $productos = Producto::whereIn('idcategoria',function($query2) use ($id){
+                                $query2->select('idcategorias')->from('categorias')->where('idcategoriapadre',$id);
+                            })->orWhere('idcategoria',$id)->orderBy('nombre')
+                            ->paginate(20)
+                            ->setPageName("p");
+                
+                $breadcrumb = $this->getBreadcrumb($id);
+            }
+
         }
         /*return view('widgets.tablaProductos', ['productos' => $productos]);
 
         $productos = Producto::paginate(5)->setPageName("p");*/
 
         if($request->ajax()){
-            $tabla = view('widgets.tablaProductos', ['productos' => $productos,'idcategoria'=>$id])->render();
+            $tabla = view('widgets.tablaProductos', ['productos' => $productos,'actual' => $id,'actual2' => $cadena])->render();
             $bread = view('widgets.breadcrumb', ['breadcrumb' => $breadcrumb])->render();
             return response()->json(array('tabla' => $tabla, 'bread'=>$bread));
         }
 
-        return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb,'idcategoria'=>$id]);
+        return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb,'actual' => $id,'actual2' => $cadena]);
     }
 
     /**

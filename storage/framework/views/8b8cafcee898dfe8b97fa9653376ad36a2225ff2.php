@@ -1,6 +1,17 @@
 <?php echo $productos->links('widgets.pagination'); ?>
 
 <ul class="list-group">
+    <?php if(isset($actual)): ?>  
+        <input type="hidden" id="categoria-actual" value="<?php echo e($actual); ?>">  
+    <?php else: ?>
+        <input type="hidden" id="categoria-actual" value=""> 
+    <?php endif; ?>
+    <?php if(isset($actual2)): ?>  
+        <input type="hidden" id="cadena-actual" value="<?php echo e($actual2); ?>">  
+    <?php else: ?>
+        <input type="hidden" id="cadena-actual" value=""> 
+    <?php endif; ?>
+
     <?php if(count($productos) == 0): ?>
         No se encontraron productos con los datos solicitados.
     <?php endif; ?>
