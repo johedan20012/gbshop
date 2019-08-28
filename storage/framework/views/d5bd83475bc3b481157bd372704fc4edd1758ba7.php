@@ -68,7 +68,6 @@ Administración gbshop
             <?php else: ?>
                 <a href = "<?php echo e(route('admin').'?panel=4'); ?>" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Admin</a>
             <?php endif; ?>
-            
             <a class="nav-item nav-link ml-auto" role = "tab" aria-controls="nav-admin" aria-selected="false" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                 <?php echo e(csrf_field()); ?>

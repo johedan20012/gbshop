@@ -51,6 +51,9 @@
                       <i class="fas fa-shopping-cart bco"></i>
                       <span class="text-option" style="color: #fff">Mi Carrito</span>
                     </a>
+                    <?php if(Auth::guard('cliente')->check()): ?>
+                      <span class="text-option" style="color: #fff"><?php echo e(Auth::guard('cliente')->user()->username); ?></span>
+                    <?php endif; ?>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i>   Total: $6,500.00</a>
                       <?php if(Auth::guard('cliente')->check()): ?>

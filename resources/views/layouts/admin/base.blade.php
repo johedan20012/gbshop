@@ -67,7 +67,6 @@ Administración gbshop
             @else
                 <a href = "{{route('admin').'?panel=4'}}" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Admin</a>
             @endif
-            
             <a class="nav-item nav-link ml-auto" role = "tab" aria-controls="nav-admin" aria-selected="false" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
