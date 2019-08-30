@@ -17,6 +17,8 @@
     <title><?php echo $__env->yieldContent('titulo'); ?></title>
   </head>
   <body>
+
+    <?php $__env->startSection('header'); ?>
     <header>
       <div class="container" id="encabezado">
         <div class="row">
@@ -71,7 +73,8 @@
         <?php endif; ?>
       </div>  
     </header>
-
+    <?php echo $__env->yieldSection(); ?>
+    
     <div id="main">
         <?php echo $__env->yieldContent('contenido'); ?>;
     </div>

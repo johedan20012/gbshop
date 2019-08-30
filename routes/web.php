@@ -17,6 +17,9 @@ Route::get('/', function () {
 //Auth::routes();
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
+//?BORRA ESTAS 2 ROUTAS
+Route::view('/prueba','prueba');
+Route::post('/pruebaF','ProductosController@borrame')->name('borrar');
 
 
 //TODO Rutas de la tienda
@@ -28,6 +31,10 @@ Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 //Route::view('/login','cliente.login')->name('getLoginCliente')->middleware('guest');
 //TODO Proceso de login para clientes
 Route::post('/loginCliente','Auth\LoginController@clienteLogin')->middleware('guest')->name('loginCliente');
+
+//TODO Proceso de registro de clientes, vista y proceso
+Route::get('/registro', 'Auth\RegisterController@showClienteRegisterForm');
+Route::post('/registro', 'Auth\RegisterController@createCliente')->name('registroCliente');
 
 //TODO Login de admins, la vista y el proceso
 Route::view('/loginAdmin','admin.login',['sinNavbar' => True])->name('getLoginAdmin')->middleware('guest'); //? Muestra el form para login

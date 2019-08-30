@@ -17,6 +17,8 @@
     <title>@yield('titulo')</title>
   </head>
   <body>
+
+    @section('header')
     <header>
       <div class="container" id="encabezado">
         <div class="row">
@@ -71,7 +73,8 @@
         @endif
       </div>  
     </header>
-
+    @show
+    
     <div id="main">
         @yield('contenido');
     </div>

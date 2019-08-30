@@ -111,4 +111,30 @@ class ProductosController extends Controller
 
         return $breadcrumb;
     }
+
+    private function borrame(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048' //Para esto activamos php_fileinfo en php.ini
+        ));
+
+        $photos = $request->file('producto-foto');
+        $falloFotos = false;
+
+        foreach ($photos as $photo) {
+            $extension = $photo->getClientOriginalExtension();
+            $filename  = str_random(15).'.'.$extension;
+
+            while(Storage::disk('imgProductos')->exists($filename)){
+                $filename  = str_random(15).'.'.$extension;
+            }
+
+            Storage::disk('imgProductos')->put($filename, file_get_contents($photo));
+
+            if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
+                return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
+            }
+
+        }
+        return redirect()->route('inicio')->with('Mensaje' , 'Producto registrado con exito!');
+    }
 }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Cliente;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,6 +39,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:cliente');
     }
 
     /**
@@ -67,5 +70,22 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    protected function createCliente(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $cliente = Cliente::create([
+            'username' => $request['registro-nombre'],
+            'email' => $request['registro-correo'],
+            'password' => Hash::make($request['registro-pass']),
+        ]);
+        return redirect()->intended('loginCliente');
+    }
+
+    public function showClienteRegisterForm()
+    {
+        return view('cliente.registro', ['url' => '/registro']);
     }
 }

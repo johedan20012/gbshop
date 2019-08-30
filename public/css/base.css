@@ -104,6 +104,15 @@ footer .copyright .container {
     background-color: #ef4444;
 }
 
+.card-text{
+	min-height: 5em;
+    max-height: 5em;
+    overflow: hidden;
+}
+
+.card-img {
+	max-width: 166px;
+}
 /* Modal de login */
 
 #ModalLogin input:valid{
