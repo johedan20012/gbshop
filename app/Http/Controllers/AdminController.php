@@ -11,6 +11,7 @@ use App\Producto;
 use App\FotosProducto;
 
 use Validator;
+use Image;
 
 class AdminController extends Controller
 {
@@ -138,10 +139,12 @@ class AdminController extends Controller
             $filename  = str_random(15).'.'.$extension;
 
             while(Storage::disk('imgProductos')->exists($filename)){
-                $filename  = str_random(15).'.'.$extension;
+                $filename  = str_random(15).'.jpg';
             }
 
-            Storage::disk('imgProductos')->put($filename, file_get_contents($photo));
+            $imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
+
+            Storage::disk('imgProductos')->put($filename, (string) $imagen);
             if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
                 return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
             }

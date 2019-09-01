@@ -13,12 +13,20 @@ class Cliente extends Authenticatable
      *
      * @var string
      */
+
+     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    
     protected $table = 'clientes';
     protected $primaryKey = 'idclientes';
     protected $guard = 'cliente';
 
     protected $fillable = [
-        'username', 'email', 'password',
+        'email', 'password','nombreCompleto'
     ];
 
     protected $hidden = [

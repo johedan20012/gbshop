@@ -64,7 +64,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validacion = Validator::make($request->all(), [
-            'username'   => 'required|string',
+            //'username'   => 'required|string',
+            'email' => 'required|string|email|unique:clientes,email',
             'password' => 'required|min:6'
         ]);
 
@@ -82,20 +83,20 @@ class LoginController extends Controller
             }  
             return back()->with('Error',$error)->withInput($request->only('username', 'remember'));
         }
-        
+        /*
         $admin = User::whereRaw("BINARY `username`= ?",[$request->username])->first();
 
         if($admin == null){
             return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
-        }
+        }*/
 
-        Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->get('remember'));
+        Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'));
             
         if(Auth::user() != null){
             return redirect()->intended('/admin');
         }
 
-        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
+        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('email', 'remember'));
     }
 
     public function showClienteLoginForm()
@@ -107,7 +108,7 @@ class LoginController extends Controller
     {
         
         $validacion = Validator::make($request->all(), [
-            'username'   => 'required|string',
+            'email'   => 'required|string|email',
             'password' => 'required|min:6'
         ]);
 
@@ -123,21 +124,21 @@ class LoginController extends Controller
                     $error = "La contraseña debe tener minimo 6 caracteres"; 
                 }
             }  
-            return back()->with('Error',$error)->withInput($request->only('username', 'remember'));
+            return back()->with('Error',$error)->withInput($request->only('email', 'remember'));
         }
-        
+        /*
         $cliente = Cliente::whereRaw("BINARY `username`= ?",[$request->username])->first();
 
         if($cliente == null){
             return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
-        }
+        } */
 
-        Auth::guard('cliente')->attempt(['username' => $request->username, 'password' => $request->password], $request->get('remember'));
+        Auth::guard('cliente')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'));
             
         if(Auth::user() != null){
             return redirect()->intended('/');
         }
 
-        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
+        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('email', 'remember'));
     }
 }

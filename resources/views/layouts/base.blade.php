@@ -49,22 +49,34 @@
                 </div> 
                 <div class="col-10 col-md-5">
                   <div class="dropdown" id="cart">
-                    <a href="#" class="dropdown-toggle" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-shopping-cart bco"></i>
-                      <span class="text-option" style="color: #fff">Mi Carrito</span>
-                    </a>
-                    @if(Auth::guard('cliente')->check())
-                      <span class="text-option" style="color: #fff">{{ Auth::guard('cliente')->user()->username}}</span>
-                    @endif
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i>   Total: $6,500.00</a>
-                      @if(Auth::guard('cliente')->check())
-                        <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-in-alt"></i>   Cerrar Sesión</a>
-                      @endif
-                      @if(!(Auth::guard('cliente')->check() || Auth::check())) <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ModalLogin"><i class="fas fa-sign-in-alt"></i>   Iniciar Sesión</a>@endif
-                      <!-- <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>   Registrarse</a>-->
+                    <div class="btn-group">
+                      <a href="#" class="dropdown-toggle" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-shopping-cart bco"></i>
+                        <span class="text-option" style="color: #fff">Mi Carrito</span>
+                      </a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#"><i class="fas fa-dollar-sign"></i>   Total: $6,500.00</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-check-circle"></i>   Confirmar compra</a>
+                      </div>
                     </div>
+
+                    @if(!(Auth::guard('cliente')->check() || Auth::check()))
+                    <a href="#" data-toggle="modal" style="color: #fff" data-target="#ModalLogin"><i class="fas fa-sign-in-alt"></i>   Iniciar Sesión</a>
+                    @endif
+                    
+                    @if(Auth::guard('cliente')->check())
+                      <div class="btn-group">
+                        <a href="#" class="dropdown-toggle" type="" id="dropdownMenuUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-user bco"></i>
+                          <span class="text-option" style="color: #fff">{{ Auth::guard('cliente')->user()->nombreCompleto}}</span>
+                        </a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#"><i class="fas fa-address-card"></i>   Mi cuenta</a>
+                          <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
+                          <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-in-alt"></i>   Cerrar Sesión</a>
+                        </div>
+                      </div>
+                    @endif
                   </div>
                 </div>
               </div>  
@@ -138,8 +150,8 @@
               <form role="form" action="{{ route('loginCliente') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">
-                  <label for="UserName"><i class="fas fa-user"></i> Usuario</label>
-                  <input type="text" class="form-control" id="username" name="username" aria-describedby="usernamehelp" placeholder="Nombre de Usuario" autocomplete="off" value="{{old('username')}}" required>
+                  <label for="UserName"><i class="fas fa-user"></i> Correo electrónico</label>
+                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailhelp" placeholder="Nombre de Usuario" autocomplete="off" value="{{old('username')}}" required>
                 </div>
                 <div class="form-group">
                   <label for="Password"><i class="fas fa-lock"></i> Contraseña</label>
@@ -148,7 +160,7 @@
                 <label>
                   <input type="checkbox" name="remember" value="{{ old('remember') ? 'checked' : '' }}"> Recuerdame
                 </label>
-                <a class="" href="#">Registrarse</a>
+                <a class="mr-0" href="{{ route('registro') }}">Registrarse</a>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-primary btn-sm">Iniciar Sesión</button>

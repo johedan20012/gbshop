@@ -11,24 +11,26 @@ GB Route Music Store: Tienda online
 @section('header')
 <header class="header-tienda">
     <div class="container">
-    <div class="row">
-        <div class="col-12 col-md-3 col-xs-12">
-        <img src="{{asset('storage/imagenesLayout/logo.png') }}"  alt="Gb Shop">
+        <div class="row">
+            <div class="col-12 col-md-3 col-xs-12">
+                <a href="{{ route('inicio')}}">
+                    <img src="{{asset('storage/imagenesLayout/logo.png') }}"  alt="Gb Shop">
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-xs-12 text-center abajo">
+                <ul class="lista-inline">
+                    <br>
+                    <li class="">
+                        <i class="fas fa-lock rojo-red"></i>
+                        Pago seguro y fácil
+                    </li>
+                    <li class="">
+                        <i class="fas fa-shipping-fast rojo-red"></i>
+                        Tu pedido en la fecha programada
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-12 col-md-6 col-xs-12 text-center abajo">
-        <ul class="lista-inline">
-            <br>
-            <li class="">
-            <i class="fas fa-lock rojo-red"></i>
-            Pago seguro y fácil
-            </li>
-            <li class="">
-            <i class="fas fa-shipping-fast rojo-red"></i>
-            Tu pedido en la fecha programada
-            </li>
-        </ul>
-        </div>
-    </div>
     </div>  
 </header>
 @endsection
@@ -36,6 +38,28 @@ GB Route Music Store: Tienda online
 @section('contenido')
 <div class="container">
     <div class="row">
+        @if(Session::has('Error') | Session::has('Mensaje'))
+            <div class="col-md-12 col-sm-12 col-12">
+                <div class="toast" style="max-width: none;" id="myToast" data-delay="5000">
+                    <div class="toast-header">
+                        <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                    </div>
+                    <div class="toast-body">
+                        @if(Session::has('Error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ Session::get('Error') }}
+                            </div>
+                        @elseif(Session::has('Mensaje'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('Mensaje') }}
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="col-12 m-t-10 text-center">
             <h5>Comprar en <strong class="rojo-red">GB Route</strong> es muy fácil</h5>
             <h6>inicia sesión para continuar con tu compra. ¿No estás registrado? Regístrate</strong></h6>                
@@ -67,30 +91,32 @@ GB Route Music Store: Tienda online
             </nav>
             <div class="tab-content" id="nav-regcontenido">
             <div class="tab-pane fade show active" id="nav-inicias" role="tabpanel" aria-labelledby="nav-inicias-tab">
-                <form role="form" action="inicias.php" method="post" enctype="multipart/form-data" >
-                <div class="col-12">
-                    <div class="form-group m-b-20 m-t-10">
-                    <label class="rojo-red" for="inicias-nombre">Nombre de Usuario:</label>
-                    <input type="text" class="form-control" name="inicias-nombre" id="inicias-nombre" placeholder="Ingresa tu nombre de usuario" autocomplete="off" required>
-                    </div> 
-                    <div class="form-group m-b-20 m-t-10">
-                    <label class="rojo-red" for="inicias-pass">Contraseña:</label>
-                    <input type="password" class="form-control" name="inicias-pass" id="inicias-pass" placeholder="7 a 15 caracteres" autocomplete="off"  required>
+                <form role="form" action="{{ route('loginCliente')}}" method="post" enctype="multipart/form-data" >
+                    {{ csrf_field() }}
+                    <div class="col-12">
+                        <div class="form-group m-b-20 m-t-10">
+                        <label class="rojo-red" for="email">Correo electrónico:</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Ingresa tu nombre de usuario" autocomplete="off" required>
+                        </div> 
+                        <div class="form-group m-b-20 m-t-10">
+                        <label class="rojo-red" for="password">Contraseña:</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="7 a 15 caracteres" autocomplete="off"  required>
+                        </div>
+                        <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
+                        Entrar
+                        </button>
+                        <div class="m-b-20 m-t-10"><a href="#">¿Olvidaste tu contraseña?</a></div>
                     </div>
-                    <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
-                    Entrar
-                    </button>
-                    <div class="m-b-20 m-t-10"><a href="#">¿Olvidaste tu contraseña?</a></div>
-                </div>
                 </form>
             </div>
 
             <div class="tab-pane fade" id="nav-registro" role="tabpanel" aria-labelledby="nav-registro-tab">
                 <form role="form" action="{{ route('registroCliente')}}" method="post" enctype="multipart/form-data" >
+                {{ csrf_field() }}
                 <div class="col-12">
                     <div class="form-group">
-                    <label class="rojo-red" for="registro-nombre">Nombre de Usuario:</label>
-                    <input type="text" class="form-control" name="registro-nombre" id="registro-nombre" placeholder="Ingresa tu nombre de usuario" autocomplete="off" required>
+                    <label class="rojo-red" for="registro-nombre">Nombre(s):</label>
+                    <input type="text" class="form-control" name="registro-nombre" id="registro-nombre" placeholder="Ingresa tu nombre(s)" autocomplete="off" required>
                     </div>
                     <div class="form-group">
                     <label class="rojo-red" for="registro-correo">Correo electrónico:</label>
@@ -102,8 +128,8 @@ GB Route Music Store: Tienda online
                     <input type="password" class="form-control" name="registro-pass" id="registro-pass" placeholder="7 a 15 caracteres" autocomplete="off"  required>
                     </div>
                     <div class="form-group">
-                    <label class="rojo-red" for="registro-passconf">Confirma contraseña:</label>
-                    <input type="password" class="form-control" name="registro-passconf" id="registro-passconf" placeholder="7 a 15 caracteres" autocomplete="off" required>
+                    <label class="rojo-red" for="registro-pass-confirmation">Confirma contraseña:</label>
+                    <input type="password" class="form-control" name="registro-pass_confirmation" id="registro-pass-confirmation" placeholder="7 a 15 caracteres" autocomplete="off" required>
                     </div>
                     <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
                     Registrate y compra
@@ -118,12 +144,6 @@ GB Route Music Store: Tienda online
 @endsection
 
 @section('scripts')
-<script src="https://www.google.com/recaptcha/api.js?render=6LfQSLUUAAAAACQOzseZ3J9wWIEg1v5iU0Rtgnv9"></script>
-<script>
-    grecaptcha.ready(function() {
-    grecaptcha.execute('6LfQSLUUAAAAACQOzseZ3J9wWIEg1v5iU0Rtgnv9', {action: 'homepage'}).then(function(token) {
-        ...
-    });
-    });
-</script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfQSLUUAAAAACQOzseZ3J9wWIEg1v5iU0Rtgnv9"></script>
+    <script src="{{ asset('js/cliente/registro.js') }}"></script>
 @endsection

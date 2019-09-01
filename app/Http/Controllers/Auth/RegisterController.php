@@ -74,14 +74,24 @@ class RegisterController extends Controller
 
     protected function createCliente(Request $request)
     {
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
+
+        $validacion = Validator::make($request->all(), array(
+            'registro-nombre' => 'required|string|max:255',
+            'registro-correo' => 'required|string|email|max:255|unique:clientes,email',
+            'registro-pass' => 'required|string|min:6|confirmed',
+        ));
+        
+        if($validacion->fails()){
+            return back()->with('Error' , 'No se completar el registro, puede que el correo ya este registrado');
+        }
 
         $cliente = Cliente::create([
-            'username' => $request['registro-nombre'],
+            'nombreCompleto' => $request['registro-nombre'],
             'email' => $request['registro-correo'],
-            'password' => Hash::make($request['registro-pass']),
+            'password' => bcrypt($request['registro-pass']),
         ]);
-        return redirect()->intended('loginCliente');
+        return redirect()->intended('/registro')->with('Mensaje' , 'Registro efectuado con exito, puede proceder a iniciar sesión');
     }
 
     public function showClienteRegisterForm()

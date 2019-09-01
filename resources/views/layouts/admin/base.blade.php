@@ -25,7 +25,7 @@ Administración gbshop
         @if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning'))
             <div class="toast" id="myToast" data-delay="3000">
                 <div class="toast-header">
-                    <strong class="mr-auto"><i class="fa fa-grav"></i>Mensaje de GBShop</strong>
+                    <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
                     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
                 </div>
                 <div class="toast-body">
