@@ -73,6 +73,7 @@ GB Route Music Store: Tienda online
                 
             </div>
             <div class="row">
+                <!--
                 <div class="col-md-3 col-xs-6">  
                     <img src="{{ asset('storage/imagenesProductos/borrame/saxofon-jupiter-jas700_iZ677905355XvZmediumXpZ1XfZ201650939-28989489872-6XsZ201650939xIM.jpg') }}" class="img-thumbnail" alt="imagen34">                
                     <span class="product-name">Saxofón Júpiter JAS700</span>
@@ -152,7 +153,7 @@ GB Route Music Store: Tienda online
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

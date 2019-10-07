@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use Validator;
+use Session;
 
 use App\User;
 use App\Cliente;
@@ -46,6 +47,23 @@ class LoginController extends Controller
         $this->middleware('guest:cliente')->except('logout');
     }
 
+    public function logout(){
+        Auth::logout();
+
+        $carrito = session()->get('carrito');
+        $productos = session()->get('productos');
+        $total = session()->get('total');
+
+        Session::flush();
+
+        session()->put('carrito', $carrito);
+        session()->put('productos',$productos);
+        session()->put('total',(float)$total);
+
+        return redirect('/');
+        //return dd(session()->all());
+    }
+
     /**
      * Muestra el login para admins
      *
@@ -64,8 +82,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validacion = Validator::make($request->all(), [
-            //'username'   => 'required|string',
-            'email' => 'required|string|email|unique:clientes,email',
+            'username'   => 'required|string',
             'password' => 'required|min:6'
         ]);
 
@@ -90,13 +107,13 @@ class LoginController extends Controller
             return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
         }*/
 
-        Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'));
+        Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->get('remember'));
             
         if(Auth::user() != null){
             return redirect()->intended('/admin');
         }
 
-        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('email', 'remember'));
+        return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
     }
 
     public function showClienteLoginForm()
@@ -106,10 +123,11 @@ class LoginController extends Controller
 
     public function clienteLogin(Request $request)
     {
-        
+        //dd($request);
         $validacion = Validator::make($request->all(), [
             'email'   => 'required|string|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'redireccion' => 'nullable|integer|digits_between:1,3'
         ]);
 
         if($validacion->fails()){
@@ -133,9 +151,13 @@ class LoginController extends Controller
             return back()->with('Error','Las credenciales no son validas')->withInput($request->only('username', 'remember'));
         } */
 
-        Auth::guard('cliente')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'));
+        //Auth::guard('cliente')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'));
             
-        if(Auth::user() != null){
+        if(Auth::guard('cliente')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))){//Auth::user() != null){
+            $redi = ($request->input('redireccion') !== null)? $request->input('redireccion') : 0;
+            if($redi == 1){
+                return redirect()->route('confirmCompra');
+            }
             return redirect()->intended('/');
         }
 

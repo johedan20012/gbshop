@@ -13,6 +13,10 @@ class Producto extends Model
         return $moneda;
     }
 
+    public function getPrecioSFAttribute(){
+        return $this->attributes['precio'];
+    }
+
     public function fotos(){
         return $this->hasMany('App\FotosProducto','idproducto','idproductos');
     }

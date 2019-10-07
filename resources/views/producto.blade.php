@@ -10,6 +10,29 @@
 
 @section('contenido')
 <div class="container">
+    @if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning'))
+        <div class="toast" id="myToast" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body">
+                @if(Session::has('Mensaje'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('Mensaje') }}
+                    </div>
+                @elseif(Session::has('Error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('Error') }}
+                    </div>
+                @elseif(Session::has('Warning'))
+                <div class="alert alert-warning" role="alert">
+                        {{ Session::get('Warning') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
     <div class="product_wrap">
         @include('widgets.breadcrumb')
         <div class="row">
@@ -69,6 +92,7 @@
                 <img src="{{ asset('storage/imagenesLayout/7ELEVEN.png')}}" width="7%">
                 <img src="{{ asset('storage/imagenesLayout/EXTRA.PNG')}}" width="17%">                          
             </div>
+            <!--
             <div class="accordion" id="accordionMensualidades">                                      
                 <h5 class="mb-0">
                     <i class="fa fa-money-check-alt"></i>
@@ -117,15 +141,16 @@
                         <option value="38">18 pagos de $130.19</option>
                     </select>
                 </div>
-            </div> 
+            </div>--> 
             <br>
             <div class="accordion" id="accordionCostos">                                      
                 <h5 class="mb-0">
                     <i class="fa fa-truck"></i>
                     <a data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="true" aria-controls="collapseTwo">                                                                                        
-                        Ver costos de envío
+                        Ver costos de envío <span class="texto-promo">(Envío gratis)</span>
                     </a>
-                </h5>                                        
+                </h5>   
+                <!--                                     
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionCostos">
                         <table class="envios-tabla">
                             <thead>
@@ -170,12 +195,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                </div>
+                </div>-->
             </div>
             <br>
-            <span>Cantidad: <input min="1" type="number" value="1" max="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
-            <br><br><br>
-            <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+            <form action="{{ route('addCarrito') }}" enctype="multipart/form-data" role="form" method="post">
+                {{ csrf_field() }}
+                <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
+                <br><br><br>
+                <input type="hidden" value="{{ $producto->codigo}}" name="codigo">
+                <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+            </form>
         </div>
         <div id="descripcion" class="col-xs-12 clear">
             <h4>Descripción</h4>
@@ -187,5 +216,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/producto.js') }}"></script>
 @endsection

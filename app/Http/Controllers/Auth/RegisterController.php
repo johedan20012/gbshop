@@ -80,10 +80,11 @@ class RegisterController extends Controller
             'registro-nombre' => 'required|string|max:255',
             'registro-correo' => 'required|string|email|max:255|unique:clientes,email',
             'registro-pass' => 'required|string|min:6|confirmed',
+            'redireccion' => 'nullable|integer|digits_between:1,3'
         ));
         
         if($validacion->fails()){
-            return back()->with('Error' , 'No se completar el registro, puede que el correo ya este registrado');
+            return back()->with('Error' , 'No se pudo completar el registro, puede que el correo ya este registrado');
         }
 
         $cliente = Cliente::create([
@@ -91,6 +92,11 @@ class RegisterController extends Controller
             'email' => $request['registro-correo'],
             'password' => bcrypt($request['registro-pass']),
         ]);
+
+        if($request->input('redireccion') !== null){
+            return redirect()->route('registro',['urlsig'=>$request->input('redireccion') ])->with('Mensaje' , 'Registro efectuado con exito, puede proceder a iniciar sesión');;
+        }
+
         return redirect()->intended('/registro')->with('Mensaje' , 'Registro efectuado con exito, puede proceder a iniciar sesión');
     }
 

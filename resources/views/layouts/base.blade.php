@@ -53,10 +53,29 @@
                       <a href="#" class="dropdown-toggle" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-shopping-cart bco"></i>
                         <span class="text-option" style="color: #fff">Mi Carrito</span>
+                        <div class="circulo">
+                          <h2>
+                            @if( Session::get('productos') !== null ) 
+                              {{ Session::get('productos') }} 
+                            @else 
+                              0 
+                            @endif
+                          </h2>
+                        </div>
                       </a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"><i class="fas fa-dollar-sign"></i>   Total: $6,500.00</a>
-                        <a class="dropdown-item" href="#"><i class="fas fa-check-circle"></i>   Confirmar compra</a>
+                        <a class="dropdown-item" href="{{ route('carritoUsuario')}}">
+                          <i class="fas fa-dollar-sign"></i>   
+                          Total: 
+                          @if( Session::get('total') !== null ) 
+                            {{ number_format (Session::get('total'),2) }} 
+                           @else 
+                            0.00 
+                          @endif
+                        </a>
+                        @if( Session::get('productos') !== null ) 
+                          <a class="dropdown-item" href="{{route('confirmCompra')}}"><i class="fas fa-check-circle"></i>   Confirmar compra</a>
+                        @endif
                       </div>
                     </div>
 

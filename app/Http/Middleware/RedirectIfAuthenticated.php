@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
             }
             return redirect('/admin');
         }
-
+        //$request['hola'] = "gg";
         return $next($request);
     }
 }

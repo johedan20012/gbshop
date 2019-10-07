@@ -103,6 +103,7 @@ GB Route Music Store: Tienda online
                         <label class="rojo-red" for="password">Contraseña:</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="7 a 15 caracteres" autocomplete="off"  required>
                         </div>
+                        <input type="hidden" name="redireccion" value="<?php echo e(Request::get('urlsig')); ?>">
                         <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
                         Entrar
                         </button>
@@ -133,6 +134,7 @@ GB Route Music Store: Tienda online
                     <label class="rojo-red" for="registro-pass-confirmation">Confirma contraseña:</label>
                     <input type="password" class="form-control" name="registro-pass_confirmation" id="registro-pass-confirmation" placeholder="7 a 15 caracteres" autocomplete="off" required>
                     </div>
+                    <input type="hidden" name="redireccion" value="<?php echo e(Request::get('urlsig')); ?>">
                     <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
                     Registrate y compra
                     </button>

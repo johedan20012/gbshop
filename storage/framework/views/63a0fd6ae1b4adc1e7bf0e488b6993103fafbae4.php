@@ -8,6 +8,32 @@
 
 <?php $__env->startSection('contenido'); ?>
 <div class="container">
+    <?php if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning')): ?>
+        <div class="toast" id="myToast" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body">
+                <?php if(Session::has('Mensaje')): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?php echo e(Session::get('Mensaje')); ?>
+
+                    </div>
+                <?php elseif(Session::has('Error')): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo e(Session::get('Error')); ?>
+
+                    </div>
+                <?php elseif(Session::has('Warning')): ?>
+                <div class="alert alert-warning" role="alert">
+                        <?php echo e(Session::get('Warning')); ?>
+
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="product_wrap">
         <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="row">
@@ -68,6 +94,7 @@
                 <img src="<?php echo e(asset('storage/imagenesLayout/7ELEVEN.png')); ?>" width="7%">
                 <img src="<?php echo e(asset('storage/imagenesLayout/EXTRA.PNG')); ?>" width="17%">                          
             </div>
+            <!--
             <div class="accordion" id="accordionMensualidades">                                      
                 <h5 class="mb-0">
                     <i class="fa fa-money-check-alt"></i>
@@ -116,15 +143,16 @@
                         <option value="38">18 pagos de $130.19</option>
                     </select>
                 </div>
-            </div> 
+            </div>--> 
             <br>
             <div class="accordion" id="accordionCostos">                                      
                 <h5 class="mb-0">
                     <i class="fa fa-truck"></i>
                     <a data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="true" aria-controls="collapseTwo">                                                                                        
-                        Ver costos de envío
+                        Ver costos de envío <span class="texto-promo">(Envío gratis)</span>
                     </a>
-                </h5>                                        
+                </h5>   
+                <!--                                     
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionCostos">
                         <table class="envios-tabla">
                             <thead>
@@ -169,12 +197,17 @@
                                 </tr>
                             </tbody>
                         </table>
-                </div>
+                </div>-->
             </div>
             <br>
-            <span>Cantidad: <input min="1" type="number" value="1" max="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
-            <br><br><br>
-            <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+            <form action="<?php echo e(route('addCarrito')); ?>" enctype="multipart/form-data" role="form" method="post">
+                <?php echo e(csrf_field()); ?>
+
+                <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
+                <br><br><br>
+                <input type="hidden" value="<?php echo e($producto->codigo); ?>" name="codigo">
+                <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+            </form>
         </div>
         <div id="descripcion" class="col-xs-12 clear">
             <h4>Descripción</h4>
@@ -186,6 +219,6 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-
+    <script src="<?php echo e(asset('js/producto.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

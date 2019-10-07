@@ -122,3 +122,24 @@ footer .copyright .container {
 #ModalLogin input:invalid{
 	border: 1px solid red;
 }
+
+/* navbar superior */
+.circulo {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: blue;
+		
+	padding:3%;
+	position: absolute;
+	top: -37%;
+	left: 9%;;
+
+}
+
+.circulo > h2 {
+	font-family: sans-serif;
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+}

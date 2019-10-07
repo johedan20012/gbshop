@@ -1,0 +1,161 @@
+
+.producto-mas{
+	width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    font-size: 15px;
+    background-color: #062C5F;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+	line-height: 19px;
+	float: left;
+
+}
+.producto-menos{
+	width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    font-size: 15px;
+    background-color: #062C5F;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+	line-height: 16px;
+	font-size: 20px;
+	float: left;
+
+}
+.producto-eliminar{
+	text-align: center;
+	text-decoration: none;
+}
+	
+.producto-menos a, .producto-mas a{
+	color: #fff;
+}
+
+.producto-cantidad{
+	border: #DEE2E6 solid 1px;
+    padding: 0px 10px;
+    text-align: center;
+}
+.controles-producto div{
+	float: left;
+    margin: 0 1px;
+}
+.money2{
+	font-weight: bold;
+	color:#bf2546;
+}
+.cabecera h1{
+	font-size: 22px;
+	color: #fff;
+	text-align: center;
+	
+}
+.cabecera{
+	background-color:#bf2546; 
+	padding: 10px;
+}
+.det-comp {
+	border: solid 2px #bf2546;
+}
+.valores-titulo-etiqueta{
+	margin-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+	color: #000;	
+
+}
+.valores-titulo-valor{
+	margin-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+	color: #000;
+
+}
+.valores-etiqueta{
+	float: left;
+    width: 70%;
+	text-align: left;
+	clear: both;
+
+}
+.valores-valor{
+	float: right;
+    width: 30%;
+    text-align: right;
+}
+.clearfix {
+	overflow: auto;
+  }
+#collapseOne span{
+	padding: 5px 11px 10px 13px;
+ }
+ .producto-encabezado{
+	padding: 15px 13px 37px 10px;
+ }
+ #continuar{
+	 color: #fff;
+	 font-size: 21px;
+	 background-color: #bf2546;
+	 text-align: center;
+	 text-decoration: none;
+ }
+ #continuar :hover{
+	 background-color: #f07d96!important;
+ }
+ .boton-continuar{
+	 padding-top: 24px;
+ }
+ .tarjetas{
+	 background-color: #F2F7F9;
+	 height: auto;
+	 padding: 9px 0px 0px 9px;
+	 overflow: hidden;
+ }
+ .tarjetas i{
+	font-size: 23px;
+ }
+ .iconos{
+	padding-top: 11px;
+ }
+ .iconos i{
+	font-size: x-large; 
+ }
+ .carrito{
+	padding-top: 19px;
+ }
+ a:hover{
+	text-decoration: none;
+ }
+ .envios-tabla{
+	font-size: smaller;
+ }
+ .envios-tabla th:first-child{
+	padding-left: 0;
+    width: 20%; 
+ }
+ .envios-tabla th{
+	color: #a7a7a7;
+    font-weight: normal;
+	width: 10%; 
+	
+	position: relative;
+    padding: 8px;
+ }
+ .envios-tabla tr{
+	background-color: #fff;
+    border-bottom: solid 3px #f6f6f6;
+ }
+ .texto-promo{
+	 color: #359902;
+
+ }
+ .envio-precio{
+	 color: #bf2546;
+ }
+ #collapseTree label, select{
+	font-size: smaller;
+ }

@@ -24,8 +24,17 @@ Route::get('/catalogo', 'ProductosController@getCatalogoPorCategoria')->name('ca
 Route::post('/proPorCat', 'ProductosController@getCatalogoPorCategoria')->name('buscarProductos');
 Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 
+Route::get('/confirmCompra','ClienteController@getConfirmCompra')->name("confirmCompra")->middleware('auth:cliente');
+
 //TODO Rutas para el cliente
-Route::view('/panelUsuario','cliente.panel')->name('panelCliente');
+Route::get('/panelUsuario','ClienteController@getPanel')->name('panelUsuario')->middleware('auth:cliente');
+//?Carrito
+Route::get('/carrito','ClienteController@getCarrito')->name('carritoUsuario');
+Route::post('/agregarCarrito','ClienteController@addCarrito')->name('addCarrito');
+Route::get('/eliminarCarrito','ClienteController@eliminarCarrito')->name('delCarrito');
+Route::get('/vaciarCarrito','ClienteController@vaciarCarrito')->name('vaciarCarrito');
+/*Route::view('/panelUsuario','cliente.panelInicio')->name('panelCliente')->middleware('auth:cliente');
+Route::view('/panelUsuarioEdit','cliente.panelEditar')->name('panelClienteEditar');*/
 
 //Route::view('/login','cliente.login')->name('getLoginCliente')->middleware('guest');
 //TODO Proceso de login para clientes

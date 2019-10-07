@@ -58,13 +58,23 @@ class Handler extends ExceptionHandler
      * Editado por kevin https://pusher.com/tutorials/multiple-authentication-guards-laravel
      */
     protected function unauthenticated($request, AuthenticationException $exception)
-        {
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Unauthenticated.'], 401);
-            }
-            if (($request->is('admin') || $request->is('admin/*') ) && (!Auth::guard('cliente')->check())) {
-                return redirect()->guest('/loginAdmin');
-            }
-            return redirect()->guest('/');
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+        if (($request->is('admin') || $request->is('admin/*') ) && (!Auth::guard('cliente')->check())) {
+            return redirect()->guest('/loginAdmin');
+        }
+        $urlo = $request->session()->get('url');
+        //dd(route('confirmCompra'));
+        //dd($request->getRequestUri());
+        //dd($request->url());
+        if($request->url() == route('confirmCompra')){
+            $urlo = 1;
+        }else{
+            $urlo = 0;
+        }
+        
+        return redirect()->route('registro',["urlsig"=>$urlo]);
+    }
 }
