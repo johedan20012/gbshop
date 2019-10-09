@@ -56,7 +56,7 @@
                                 <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
                             </div>  
                             <div class="form-group">
-                                <label for="producto-foto">Selecciona Imágen...</label>
+                                <label for="producto-foto">Selecciona Imágen...(Maximo 10 fotos, 2MB maximo por cada una)</label>
                                 <input type="file" class="form-control" multiple name="producto-foto[]" id="producto-foto" required>
                             </div> 
                             <button type="submit" class="btn btn-danger">Agregar a la Página</button>  
@@ -76,6 +76,7 @@
              
     </div>
 </div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -83,6 +84,9 @@
     ##parent-placeholder-16728d18790deb58b3b8c1df74f06e536b532695##
         <input type="hidden" value="<?php echo e(route('subCat')); ?>" id="rutaSubCategorias">
         <input type="hidden" value="<?php echo e(route('tablaProductos')); ?>" id="rutaProductos">
+        <input type="hidden" value="<?php echo e(route('fotosProducto')); ?>" id="rutaFotosProducto">
+        <input type="hidden" value="<?php echo e(route('delProducto')); ?>" id="rutaDelProducto">
+        <input type="hidden" value="<?php echo e(route('editProducto')); ?>" id="rutaEditProducto">
         <script src="<?php echo e(asset('js/admin/tabProductos.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

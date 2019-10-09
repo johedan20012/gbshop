@@ -77,7 +77,9 @@ class AdminController extends Controller
 
     //TODO, Aqui empiezan las funciones que llama el panel de productos
     public function getTablaProductos(Request $request){
-        if($request->ajax() or True){
+        if($request->ajax()){// or True){
+            $marcas = Marca::orderBy('nombre')->get();
+            $categorias = Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get();
             if($request->has('cadena')){
                 //Buscar productos por medio de la cadena
                 $validatedData = $request->validate([
@@ -86,7 +88,12 @@ class AdminController extends Controller
 
                 if($request->input('cadena') !== null){
                     $productos = Producto::where('nombre', 'LIKE', '%'.$request->input('cadena').'%')->orderBy('nombre')->paginate(10)->setPageName("p");
-                    $tabla = view('widgets.admin.tablaProductos', ['productos' => $productos,'actual' => $request->input('cadena')])->render();
+                    $tabla = view('widgets.admin.tablaProductos', [
+                        'productos' => $productos,
+                        'actual' => $request->input('cadena'),
+                        'marcas' => $marcas,
+                        'categorias' => $categorias
+                    ])->render();
         
                     return response()->json(array('tabla' => $tabla));
                 }
@@ -94,7 +101,11 @@ class AdminController extends Controller
         
             //Traer productos indiscriminadamente
             $productos = Producto::orderBy('nombre')->paginate(10)->setPageName("p");
-            $tabla = view('widgets.admin.tablaProductos', ['productos' => $productos])->render();
+            $tabla = view('widgets.admin.tablaProductos', [
+                'productos' => $productos,
+                'marcas' => $marcas,
+                'categorias' => $categorias
+            ])->render();
             return response()->json(array('tabla' => $tabla));
         }
     }
@@ -109,7 +120,6 @@ class AdminController extends Controller
             'producto-precio' => 'required|numeric',
             'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048' //Para esto activamos php_fileinfo en php.ini
         ));
-        
         if($validacion->fails()){
             return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Error' , 'No se pudo registrar el producto, revisa los campos');
         }
@@ -123,7 +133,7 @@ class AdminController extends Controller
         $producto->codigo = str_random(15);
         $producto->idmarca = $request->input('producto-marca');
 
-        $idcategoria = ($request->input('producto-subCategoria') != 0)? $request->input('producto-subCategoria'): $request->input('producto-categoria');
+        $idcategoria = ($request->input('producto-subcategoria') != 0)? $request->input('producto-subcategoria'): $request->input('producto-categoria');
         $producto->idcategoria = $idcategoria;
 
         if(!$producto->save()){ //No se logro guardar el producto de manera correcta;
@@ -132,9 +142,13 @@ class AdminController extends Controller
 
         //Guardar imagenes
         $photos = $request->file('producto-foto');
-        $falloFotos = false;
+        $contador = 0;
 
         foreach ($photos as $photo) {
+            $contador ++;
+            if($contador >= 11){
+                return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Producto registrado con exito, la cantidad maxima de fotos(10) fue rebasada, puede que no se hayan guardado algunas fotos');
+            }
             $extension = $photo->getClientOriginalExtension();
             $filename  = str_random(15).'.'.$extension;
 
@@ -142,7 +156,8 @@ class AdminController extends Controller
                 $filename  = str_random(15).'.jpg';
             }
 
-            $imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
+            $imagen = Image::make($photo->getRealPath())->encode('jpg',85);
+            //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('imgProductos')->put($filename, (string) $imagen);
             if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
@@ -174,6 +189,150 @@ class AdminController extends Controller
             return "";
         }
         return Categoria::where('idcategoriapadre',$request->input('id'))->orderBy('nombre')->get();
+    }
+
+    public function getFotosProducto(Request $request){
+        if($request->ajax()){
+            //Buscar marcas por medio de la cadena
+            $validatedData = $request->validate([
+                'id' => 'required|integer'
+            ]);
+            
+            $producto = Producto::find($request->input('id'));
+
+            if(!$producto){
+                return response()->json("error");
+            }
+            $regreso = array();
+            foreach($producto->nombresFotos as $foto){
+                array_push($regreso,array(asset('storage/imagenesProductos/'.$foto["nombre"]),$foto["nombre"]));
+            }
+
+            return response()->json($regreso);
+        }
+    }
+
+    public function editProducto(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'producto-id' => 'required|integer',
+            'producto-nombre' => 'required|string|max:100', //|regex:/^[0-9a-zñÑÁÉÍÓÚáéíóúüA-Z ]+$/
+            'producto-descripcion' => 'nullable|string',
+            'producto-marca' => 'required|integer',
+            'producto-categoria' => 'required|integer',
+            'producto-subcategoria' => 'nullable|integer',
+            'producto-precio' => 'required|numeric',
+            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048', //Para esto activamos php_fileinfo en php.ini
+            'producto-fotosActuales' => 'nullable|string|max:300'
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
+        }
+
+        $producto = Producto::find($request->input('producto-id'));
+
+        if($producto == null){
+            return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
+        }
+
+        $producto->nombre = $request->input('producto-nombre');
+        $producto->descripcion = $request->input('producto-descripcion');
+        $producto->idmarca = $request->input('producto-marca');
+        $producto->idcategoria = ($request->input('producto-subcategoria') != null)? $request->input('producto-subcategoria'): $request->input('producto-categoria');
+        $producto->precio = $request->input('producto-precio');
+        
+        try{
+            if(!$producto->save()){ //No se logro guardar el producto de manera correcta;
+                return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
+        }
+
+        $fotosActuales = ($request->input('producto-fotosActuales') != null)? explode(",",$request->input('producto-fotosActuales')) : array();
+
+        foreach($producto->fotos as $foto){
+            if(array_search($foto->nombre, $fotosActuales) === FALSE){
+                
+                if(!FotosProducto::where('idfotos_productos',$foto->id)->delete()){
+                    return redirect()->route('admin',['panel' => 1])->with('Warning' , 'El producto se pudo editar, pero no se eliminaron algunas fotos y no se registraron las nuevas');
+                }
+
+                Storage::disk('imgProductos')->delete($foto->nombre);
+            }
+        }
+
+        //Guardar fotos nuevas
+        $maximo = 10 - FotosProducto::where('idproducto',$producto->idProductos)->count();
+        if($maximo < 0) $maximo = 0;
+
+        $fotos = ($request->file('producto-foto') != null )? $request->file('producto-foto'):array();
+        $contador = 0;
+
+        foreach ($fotos as $foto) {
+            $contador ++;
+            if($contador > $maximo){
+                return count($producto->fotos)."---".$maximo."----".$contador;
+                return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Producto editado con exito, se borraron las fotos pero la cantidad maxima de fotos(10) fue rebasada, puede que no se hayan guardado algunas fotos');
+            }
+            $extension = $foto->getClientOriginalExtension();
+            $filename  = str_random(15).'.'.$extension;
+
+            while(Storage::disk('imgProductos')->exists($filename)){
+                $filename  = str_random(15).'.jpg';
+            }
+
+            $imagen = Image::make($foto->getRealPath())->encode('jpg',85);
+            //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
+
+            Storage::disk('imgProductos')->put($filename, (string) $imagen);
+            if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
+                return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Se edito el producto, se eliminaron las fotos, pero hubo un error con alguna o varias imagenes nuevas');
+            }
+
+            $foto = new FotosProducto();
+
+            $foto->idproducto = $producto->idproductos;
+            $foto->nombre = $filename;
+
+            if(!$foto->save()){ //No se guardo la foto en la base de datos
+                Storage::disk('imgProductos')->delete($filename);
+
+                return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Se edito el producto, se eliminaron las fotos, pero hubo un error con alguna o varias imagenes nuevas');
+            }
+
+        }
+
+        return redirect()->route('admin',['panel' => 1])->with('Mensaje' , 'Producto editado con exito!');
+    }
+
+    public function delProducto(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'producto-id' => 'required|integer',
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo borrar el producto');
+        }
+        $producto = Producto::find($request->input('producto-id'));
+
+        foreach($producto->fotos as $foto){
+            if(!FotosProducto::destroy($foto->id)){
+                return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo borrar el producto, algunas fotos no se pudieron eliminar');
+            }
+
+            Storage::disk('imgProductos')->delete($foto->nombre);
+        }
+
+        try{
+            if(!Producto::destroy($request->input('producto-id'))){ //No se logro borrar el producto de manera correcta;
+                return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo borrar el producto');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo borrar el producto');
+        }
+
+        return redirect()->route('admin',['panel' => 1])->with('Mensaje' , 'Producto eliminado con exito!');
     }
 
     //TODO, Aqui empiezan las funciones que llama el panel de marcas

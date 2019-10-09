@@ -50,7 +50,7 @@
                 <div class="col-10 col-md-5">
                   <div class="dropdown" id="cart">
                     <div class="btn-group">
-                      <a href="#" class="dropdown-toggle" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a href="#" class="dropdown-toggle" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                         <i class="fas fa-shopping-cart bco"></i>
                         <span class="text-option" style="color: #fff">Mi Carrito</span>
                         <div class="circulo">

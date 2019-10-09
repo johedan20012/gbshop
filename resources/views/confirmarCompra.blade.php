@@ -162,7 +162,7 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="ConektaCash"  >
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="img/OXXO2.png" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="{{ asset('storage/imagenesLayout/OXXO2.jpeg')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
                                                 </li>
                                             </div>
                                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPAgo">
@@ -175,7 +175,7 @@
                                             <div class="card-header" id="headingTwo">
                                                 <li >
                                                     <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="ConektaCard">
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="img/credits.png" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="{{ asset('storage/imagenesLayout/cvv-cards.jpeg')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
                                                 </li>
                                             </div>
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPAgo">
@@ -244,7 +244,7 @@
                                             <div class="card-header" id="headingThree">
                                                 <li>
                                                     <input data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" id="pm-cash" type="radio" class="input-radio btn btn-link" name="payment_method" value="cash" >
-                                                    <label for="">Transferencia Bancaria o depósito en Ventanilla<img src="img/cash.png" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="">Transferencia Bancaria o depósito en Ventanilla<img src="{{ asset('storage/imagenesLayout/cah.jpeg')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
                                                 </li>                                        
                                             </div>
                                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionPAgo">

@@ -16,4 +16,8 @@ class FotosProducto extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function getIdAttribute(){
+        return $this->attributes['idfotos_productos'];
+    }
 }

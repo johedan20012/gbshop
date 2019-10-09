@@ -21,6 +21,10 @@ class Producto extends Model
         return $this->hasMany('App\FotosProducto','idproducto','idproductos');
     }
 
+    public function nombresFotos(){
+        return $this->hasMany('App\FotosProducto','idproducto','idproductos')->select(['nombre']);
+    }
+
     public function foto(){
         return $this->hasOne('App\FotosProducto','idproducto','idproductos');
     }

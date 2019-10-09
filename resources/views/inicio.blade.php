@@ -24,16 +24,16 @@ GB Route Music Store: Tienda online
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{asset('storage/imagenesLayout/banners/slide2_image.png') }}" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
+                        <img src="{{asset('storage/imagenesLayout/banners/slide1_image.png') }}" class="d-block w-100" alt="...">
+                        <!--<div class="carousel-caption d-none d-md-block">
                             <span class="btn btn-danger">Comprar</span>
-                        </div>
+                        </div>-->
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{asset('storage/imagenesLayout/banners/slide2_image.png') }}" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <img src="{{asset('storage/imagenesLayout/banners/slide3_image.png') }}" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{asset('storage/imagenesLayout/banners/slide4_image.png') }}" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

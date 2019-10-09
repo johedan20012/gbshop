@@ -37,7 +37,7 @@
     <div class="product_wrap">
         <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="row">
-        <div id="product_image_container" class="col-md-5">
+        <div id="product_image_container" class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php $iteracion = 0; $bandera = 0;?>
@@ -47,7 +47,7 @@
                         <?php else: ?>
                             <div class="carousel-item">
                         <?php endif; ?>
-                            <img src="<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>" class="d-block w-100" title="Imagen <?php echo e($iteracion); ?>">
+                            <img src="<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>" class="" style="height:100%" title="Imagen <?php echo e($iteracion); ?>">
                         </div>
                         <?php $iteracion += 1; $bandera = 1;?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -74,7 +74,7 @@
                 </div>
         </div>
         
-        <div class="col-md-7">
+        <div class="col-md-6">
             <h7><?php echo e($producto->nombre); ?></h7>
             <br>
             <div id="product_price" >
@@ -91,8 +91,8 @@
             <div style="padding-left: 40px; padding-top: 10px;"> 
                 <img src="<?php echo e(asset('storage/imagenesLayout/visa-american-express-mastercard.jpg')); ?>" width="30%">  
                 <img src="<?php echo e(asset('storage/imagenesLayout/OXXO.png')); ?>" width="10%">
-                <img src="<?php echo e(asset('storage/imagenesLayout/7ELEVEN.png')); ?>" width="7%">
-                <img src="<?php echo e(asset('storage/imagenesLayout/EXTRA.PNG')); ?>" width="17%">                          
+                <!--<img src="<?php echo e(asset('storage/imagenesLayout/7ELEVEN.png')); ?>" width="7%"> -->
+                <!--<img src="<?php echo e(asset('storage/imagenesLayout/EXTRA.PNG')); ?>" width="17%">  -->                        
             </div>
             <!--
             <div class="accordion" id="accordionMensualidades">                                      

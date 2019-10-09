@@ -36,7 +36,7 @@
     <div class="product_wrap">
         @include('widgets.breadcrumb')
         <div class="row">
-        <div id="product_image_container" class="col-md-5">
+        <div id="product_image_container" class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php $iteracion = 0; $bandera = 0;?>
@@ -46,7 +46,7 @@
                         @else
                             <div class="carousel-item">
                         @endif
-                            <img src="{{ asset('storage/imagenesProductos/'.$foto->nombre) }}" class="d-block w-100" title="Imagen {{ $iteracion }}">
+                            <img src="{{ asset('storage/imagenesProductos/'.$foto->nombre) }}" class="" style="height:100%" title="Imagen {{ $iteracion }}">
                         </div>
                         <?php $iteracion += 1; $bandera = 1;?>
                     @endforeach
@@ -73,7 +73,7 @@
                 </div>
         </div>
         
-        <div class="col-md-7">
+        <div class="col-md-6">
             <h7>{{ $producto->nombre }}</h7>
             <br>
             <div id="product_price" >
@@ -89,8 +89,8 @@
             <div style="padding-left: 40px; padding-top: 10px;"> 
                 <img src="{{ asset('storage/imagenesLayout/visa-american-express-mastercard.jpg')}}" width="30%">  
                 <img src="{{ asset('storage/imagenesLayout/OXXO.png')}}" width="10%">
-                <img src="{{ asset('storage/imagenesLayout/7ELEVEN.png')}}" width="7%">
-                <img src="{{ asset('storage/imagenesLayout/EXTRA.PNG')}}" width="17%">                          
+                <!--<img src="{{ asset('storage/imagenesLayout/7ELEVEN.png')}}" width="7%"> -->
+                <!--<img src="{{ asset('storage/imagenesLayout/EXTRA.PNG')}}" width="17%">  -->                        
             </div>
             <!--
             <div class="accordion" id="accordionMensualidades">                                      
