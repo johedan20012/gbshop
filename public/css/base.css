@@ -143,3 +143,20 @@ footer .copyright .container {
 	font-size: 12px;
 	font-weight: bold;
 }
+
+ /*  panel producto imagen dentro de div*/
+ .dimensiones{
+	height: 400px;
+	width: 100%;
+}
+
+.dimensiones2{
+	height: 100%;
+	width: 100%;
+}
+
+.dimensiones-mini{
+	height: 80px;
+	width: 100%;
+	margin-top: 10px;
+}

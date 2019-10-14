@@ -73,72 +73,81 @@
                                 <div class="panel-envio border border-primary rounded p-3" >
                                     <h2>Datos de envio</h2>
                                     <hr>
+                                    <div class="col-12 col-md-12">
+                                        <div class="toast" id="toast-envio" data-delay="3000" style="max-width:none; margin:0; width:100%;">
+                                            <div class="toast-body">
+                                                <div class="alert alert-danger" id="mensaje"  role="alert"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <span class="gris-gray">Proporciona los datos de quien recibirá el pedido</span>
                                     <div class="form-group col-12 col-md-12">
                                         <input type="checkbox" class="" name="cliente-dirAlmacenada" id="cliente-dirAlmacenada" placeholder="Dirección Almacenada">
                                         <label for="cliente-dirAlmacenada">Utilizar Dirección Almacenada</label>
                                     </div>
-                                    <form id="form-envio" role="form" action="" method="POST" enctype="multipart/form-data">
+                                    <form id="form-envio" role="form" action="{{route('procesarCompra')}}" method="POST" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
                                         <div class="form-row" >
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-nombreCompleto">Nombre Completo<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-nombreCompleto" id="cliente-nombreCompleto" required >
+                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-nombreCompleto" id="cliente-nombreCompleto" required >
                                             </div>
                                             <div class="form-group col-12 col-md-3">
                                                 <label for="cliente-aPaterno">Apellido Paterno<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-aPaterno" id="cliente-aPaterno" required >
+                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-aPaterno" id="cliente-aPaterno" required >
                                             </div>
                                             <div class="form-group col-12 col-md-3">
                                                 <label for="cliente-aMaterno">Apellido Materno</label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-aMaterno" id="cliente-aMaterno" >
+                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-aMaterno" id="cliente-aMaterno" >
                                             </div>
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-calle">Calle<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-calle" id="cliente-calle" required >
+                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-calle" id="cliente-calle" required >
                                             </div>
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-entreCalle">Entre Calle</label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-entreCalle" id="cliente-entreCalle">
+                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-entreCalle" id="cliente-entreCalle">
                                             </div>
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-nExt"># Exterior<span class="rojo-red"> *</span></label>
-                                                <input type="number" class="form-control form-envio-cliente" name="cliente-nExt" id="cliente-nExt" required>
+                                                <input type="text" size="10" class="form-control form-envio-cliente" name="cliente-nExt" id="cliente-nExt" required>
                                             </div> 
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-nInt"># Interior</label>
-                                                <input type="number" class="form-control form-envio-cliente" name="cliente-nInt" id="cliente-nInt">
+                                                <input type="text" size="10" class="form-control form-envio-cliente" name="cliente-nInt" id="cliente-nInt">
                                             </div> 
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-cp">C. Postal<span class="rojo-red"> *</span></label>
-                                                <input type="number" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
+                                                <input type="text" size="12" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-colonia">Colonia<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-colonia" id="cliente-colonia" required >
+                                                <input type="text" size="50" class="form-control form-envio-cliente" name="cliente-colonia" id="cliente-colonia" required >
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-municipio">Municipio<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-municipio" id="cliente-municipio" required >
+                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-municipio" id="cliente-municipio" required >
                                             </div> 
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-estado">Estado<span class="rojo-red"> *</span></label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-estado" id="cliente-estado" required >
+                                                <input type="text" size="50" class="form-control form-envio-cliente" name="cliente-estado" id="cliente-estado" required >
                                             </div> 
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-telefono">Teléfono de contacto</label>
-                                                <input type="tel" class="form-control form-envio-cliente" name="cliente-telefono" id="cliente-telefono" >
+                                                <input type="tel" size="15" class="form-control form-envio-cliente" name="cliente-telefono" id="cliente-telefono" >
                                             </div> 
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-referencias">Referencias del domicilio</label>
-                                                <input type="text" class="form-control form-envio-cliente" name="cliente-referencias" id="cliente-referencias">
+                                                <input type="text" size="100" class="form-control form-envio-cliente" name="cliente-referencias" id="cliente-referencias">
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <input type="checkbox" class="" name="cliente-almacenarDir" id="cliente-almacenarDir">
                                                 <label for="cliente-almacenarDir">Almacenar como dirección actual</label>
                                             </div>
+
                                             <div class="form-group col-6 col-md-6">
-                                                <button type="submit" class="btn btn-primary mr-3 form-control">Continuar</button>
-                                            </div> 
+                                                <label ><span class="rojo-red"> *</span>Campos obligatorios</label>
+                                            </div>
                                         </div>                                                                    
                                     </form>
                                 </div> 
@@ -155,13 +164,12 @@
                         </div>
                         <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionGrupo">
                             <div class="card-body">
-                                contenido metodo pago
                                 <div class="payment" >
                                     <div class="accordion" id="accordionPAgo">
                                         <div class="card">
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
-                                                    <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="ConektaCash"  >
+                                                    <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="oxxo"  >
                                                     <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="{{ asset('storage/imagenesLayout/OXXO2.jpeg')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
                                                 </li>
                                             </div>
@@ -174,11 +182,18 @@
                                         <div class="card">
                                             <div class="card-header" id="headingTwo">
                                                 <li >
-                                                    <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="ConektaCard">
+                                                    <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="tarjeta">
                                                     <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="{{ asset('storage/imagenesLayout/cvv-cards.jpeg')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
                                                 </li>
                                             </div>
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPAgo">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="toast" id="toast-tarjeta" data-delay="3000" style="max-width:none; margin:0; width:100%;">
+                                                        <div class="toast-body">
+                                                            <div class="alert alert-danger" id="mensaje"  role="alert"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <form class="" id="card-form" role="form" action="" method="post" enctype="multipart/form-data">
                                                         <span class="card-errors"></span>
@@ -240,22 +255,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingThree">
-                                                <li>
-                                                    <input data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" id="pm-cash" type="radio" class="input-radio btn btn-link" name="payment_method" value="cash" >
-                                                    <label for="">Transferencia Bancaria o depósito en Ventanilla<img src="{{ asset('storage/imagenesLayout/cah.jpeg')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
-                                                </li>                                        
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionPAgo">
-                                                <div class="card-body">
-                                                    Al realizar la compra se genera una hoja de ayuda para realizar la transferencia directamente a nuestra cuenta bancaria o realiza el depósito en ventanilla en tu banco BANORTE más cercano.
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="boton-continuar">
-                                        <a id="continuar" href="#" class="bt btn-danger btn-lg btn-block">Continuar</a>
+                                        <button id="continuarCompra" onclick="procesarCompra($(this));" class="bt btn-danger btn-lg btn-block">Comprar</button>
                                     </div>
                                 </div> 
                             </div> 
@@ -310,7 +312,7 @@
     </div>
 </div>
 
-
+<!--Modales-->
 
 <!-- Modal CVV -->
 <div class="modal fade" id="modalCvc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -327,6 +329,35 @@
         </div>
         </div>
     </div>
+</div>
+
+<!-- Modal mensaje tienda -->
+<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMensajeLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="imgOk" class="text-center">
+            <img src="{{ asset('storage/imagenesLayout/ok.jpg') }}"  style="width:20%;" title="Todo bien">
+        </div>
+        <div id="imgError" class="text-center">
+            <img src="{{ asset('storage/imagenesLayout/error.png') }}"  style="width:20%;" title="Algo malo ocurrio">
+        </div>
+        <div id="modal-mensaje" class="col-md-12 col-12">
+        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modal-boton1" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="modal-boton2" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 

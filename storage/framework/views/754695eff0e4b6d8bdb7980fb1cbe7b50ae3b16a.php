@@ -86,6 +86,7 @@
           <div id="editarProducto">
             <div class="row">
                 <input type="hidden" name="producto-id" id="producto-id">
+                <input type="hidden" name="producto-fotosBorrar" id="producto-fotosBorrar">
                 <div class="col-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label for="producto-nombre">Nombre</label>

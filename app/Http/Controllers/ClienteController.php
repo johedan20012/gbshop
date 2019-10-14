@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Producto;
+use App\Cliente;
+use App\Venta;
+use App\DetalleVenta;
 
 use Validator;
 
@@ -22,13 +27,15 @@ class ClienteController extends Controller
                 $breadcrumb = [['nombre'=> 'Usuario','ruta'=>route('panelUsuario')], ['nombre'=> 'Editar info','ruta'=>'']];
 
                 return view('cliente.panelEditar',['breadcrumb'=>$breadcrumb]);
-                break;
+            case 3:
+                $breadcrumb = [['nombre'=> 'Usuario','ruta'=>route('panelUsuario')], ['nombre'=> 'Mis pedidos','ruta'=>'']];
 
+                return view('cliente.panelPedidos',['breadcrumb'=>$breadcrumb]);
             default:
                 $breadcrumb = [['nombre'=> 'Usuario','ruta'=>'']];
+                
 
                 return view('cliente.panelInicio',['breadcrumb'=>$breadcrumb]);
-                break;
         }
     }
 
@@ -199,5 +206,133 @@ class ClienteController extends Controller
             'breadcrumb' => $breadcrumb,
             'sinNavbar' => true
         ]);
+    }
+
+    public function procesarCompra(Request $request){
+        if($request->ajax()){
+            \Conekta\Conekta::setApiKey("key_cUmxB4FJfqDe5ZZD7pJmbQ");
+            \Conekta\Conekta::setApiVersion("2.0.0");
+
+            $validacion = Validator::make($request->all(), array(
+                'conektaTokenId' => 'required|string|max:100',
+                'cliente-nombreCompleto' => 'required|string|max:45',
+                'cliente-aPaterno' => 'required|string|max:45',
+                'cliente-aMaterno' => 'nullable|string|max:45',
+                'cliente-calle' => 'required|string|max:70',
+                'cliente-entreCalle' => 'nullable|string|max:70',
+                'cliente-nExt' => 'required|string|max:10',
+                'cliente-nInt' => 'nullable|string|max:10',
+                'cliente-cp' => 'required|string|max:12',
+                'cliente-colonia' => 'required|string|max:50',
+                'cliente-municipio' => 'required|string|max:70',
+                'cliente-estado' =>  'required|string|max:50',
+                'cliente-telefono' => 'nullable|string|max:15',
+                'cliente-referencias' => 'nullable|string|max:100',
+                'cliente-almacenarDir' => 'nullable|string|max:5'
+            ));
+
+            if($validacion->fails()){
+                $errores = $validacion->errors();
+                if($errores->has('conektaTokenId')){
+                    $mensaje = "No se pudo procesar el pago por tarjeta";
+                }else{
+                    $mensaje = "No se pudo procesar la compra, hay campos del envio vacios";
+                }
+                return array('Error' , $mensaje);
+            }
+
+            $carrito = session()->get('carrito');
+
+            if(!$carrito){
+                return array('Error', "No tienes productos en tu carrito");
+            }else if(count($carrito) <=0){
+                return array('Error', "No tienes productos en tu carrito");
+            }
+
+            $usuario = Auth::guard('cliente')->user(); //A este punto gracias al middleware, estoy seguro de que tengo un cliente registrado
+
+            $conektaToken = $request->input("conektaTokenId");
+            $nombres = $request->input("cliente-nombreCompleto");
+            $apePaterno = $request->input("cliente-aPaterno");
+            $apeMaterno = ($request->has("cliente-aMaterno"))? $request->input("cliente-aMaterno") : "";
+            $calle = $request->input("cliente-calle");
+            $entreCalle = ($request->has("cliente-entreCalle"))? $request->input("cliente-entreCalle") : "";
+            $nExt = $request->input("cliente-nExt");
+            $nInt = ($request->has("cliente-nInt"))? $request->input("cliente-nInt") : "";
+            $cp = $request->input("cliente-cp");
+            $colonia = $request->input("cliente-colonia");
+            $municipio = $request->input("cliente-municipio");
+            $estado = $request->input("cliente-estado");
+            $telefono = ($request->has("cliente-telefono"))? $request->input("cliente-telefono") : "";
+            $referencias = ($request->has("cliente-referencias"))? $request->input("cliente-referencias") : ""; 
+            $almacenarDir = ($request->has("cliente-almacenarDir"))? $request->input("cliente-almacenarDir") : ""; 
+
+            ///Hasta aqui tengo el token de conekta, los datos del pedido, un carrito con productos y el usuario 
+            try{
+                $cliente = \Conekta\Customer::create(
+                    array(
+                        "name" => $nombres." ".$apePaterno." ".$apeMaterno,
+                        "email" => $usuario->email,
+                        
+                        "payment_sources" => array(
+                            array(
+                                "type" => "card",
+                                "token_id" => $conektaToken
+                            )
+                        )
+                    )
+                );
+            } catch (\Conekta\ProccessingError $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar tus datos");
+            } catch (\Conekta\ParameterValidationError $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar tus datos");
+            } catch (\Conekta\Handler $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar tus datos");
+            }
+
+            try{
+                $order = \Conekta\Order::create(array(
+                    "line_items" => array(
+                      array(
+                        "name" => "Tacos",
+                        "unit_price" => 1000,
+                        "quantity" => 120
+                      )
+                    ), 
+                    "shipping_lines" => array(
+                        array(
+                          "amount" => 180,
+                           "carrier" => "FEDEX"
+                        )
+                    ),
+                    "shipping_contact" => array(
+                        "address" => array(
+                          "street1" => "Calle 123, int 2",
+                          "postal_code" => "06100",
+                          "country" => "MX"
+                        )
+                      ),
+                    "currency" => "MXN",
+                    "customer_info" => array(
+                      "customer_id" => $cliente->id
+                    ),
+                    "charges" => array(
+                        array(
+                            "payment_method" => array(
+                                "type" => "default"   
+                            )
+                        ) 
+                    ) 
+                  )
+                );
+            } catch (\Conekta\ProcessingError $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar el pedido");
+            } catch (\Conekta\ParameterValidationError $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar el pedido2");
+            } catch (\Conekta\Handler $error){ //Obtener el mensaje $error->getMessage();
+                return array('Error', "Hubo un error al procesar el pedido3");
+            }
+            return array("Exito" , "La compra se realizo con exito, los detalles de la compra fueron enviados a su correo");
+        }
     }
 }

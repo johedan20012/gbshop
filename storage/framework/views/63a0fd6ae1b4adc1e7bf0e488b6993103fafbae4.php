@@ -38,17 +38,16 @@
         <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="row">
         <div id="product_image_container" class="col-md-6">
-            <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+            
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php $iteracion = 0; $bandera = 0;?>
                     <?php $__currentLoopData = $producto->fotos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $foto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($bandera == 0): ?>
-                            <div class="carousel-item active">
+                            <div class="carousel-item active dimensiones" style=" background: url(<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>) no-repeat  center; background-size: contain;"></div> 
                         <?php else: ?>
-                            <div class="carousel-item">
+                            <div class="carousel-item dimensiones" style=" background: url(<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>) no-repeat  center; background-size: contain;"> </div>
                         <?php endif; ?>
-                            <img src="<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>" class="" style="height:100%" title="Imagen <?php echo e($iteracion); ?>">
-                        </div>
                         <?php $iteracion += 1; $bandera = 1;?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
@@ -66,7 +65,7 @@
                     <?php $__currentLoopData = $producto->fotos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $foto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-md-3 col-sm-2 col-3">
                             <a href="#" data-target="#carouselExampleIndicators" data-slide-to="<?php echo e($iteracion); ?>" class="active">
-                                <img src="<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>" class="img-thumbnail" title="Imagen <?php echo e($iteracion); ?>">
+                                <div class="dimensiones-mini" style=" background: url(<?php echo e(asset('storage/imagenesProductos/'.$foto->nombre)); ?>) no-repeat  center; background-size: contain;"> </div>
                             </a>
                         </div>
                         <?php $iteracion += 1;?>

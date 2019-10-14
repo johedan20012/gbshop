@@ -67,7 +67,7 @@
         </div>  
         <div class="form-group mx-auto" style="padding-right: 51px;">
             <button type="submit" class="btn btn-primary mr-3">Guardar Cambios</button>
-            <input class="btn btn-light ml-3 " type="reset" value="Cancelar">
+            <a class="btn btn-light ml-3 " href="<?php echo e(route('panelUsuario')); ?>">Cancelar</a>
         </div>                  
     </div> 
     <hr>                  

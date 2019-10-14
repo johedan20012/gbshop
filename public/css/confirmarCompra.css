@@ -202,3 +202,11 @@ body{
 .tarjeta:hover{
     color: #2580db;
 }
+
+#toast-envio{
+	display: none; 
+}
+
+#toast-tarjeta{
+	display: none; 
+}

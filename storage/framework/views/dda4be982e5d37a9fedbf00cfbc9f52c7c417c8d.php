@@ -17,7 +17,7 @@
 <?php $__env->startSection('contenido'); ?>
   <br><hr>
   <div class="d-flex justify-content-center">
-    <div class ="row col-md-11 pl-md-2">
+    <div class ="row col-md-12 pl-md-2">
         <div class="col-md-4">
           <?php echo $__env->make('widgets.sidebarCategorias', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>

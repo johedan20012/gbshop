@@ -19,7 +19,7 @@
 @section('contenido')
   <br><hr>
   <div class="d-flex justify-content-center">
-    <div class ="row col-md-11 pl-md-2">
+    <div class ="row col-md-12 pl-md-2">
         <div class="col-md-4">
           @include('widgets.sidebarCategorias')
         </div>

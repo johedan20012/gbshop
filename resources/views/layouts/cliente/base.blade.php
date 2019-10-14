@@ -46,7 +46,7 @@ GB Route Music Store: Tienda online
         </div>
         <div class="col-md-3 m-t-10 text-center">
             <div class="m-t-10"><a href="{{ route('panelUsuario').'?panel=2'}}">Editar información</a></div><br>
-            <div class="m-t-10 m-b-20">Historial de compras</div>
+            <div class="m-t-10 m-b-20"><a href="{{ route('panelUsuario').'?panel=3'}}">Historial de compras</a></div>
         </div>           
         <div class="col-md-9 m-t-10 ">
             @yield('panel')                   

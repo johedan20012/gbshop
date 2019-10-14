@@ -90,8 +90,8 @@
                           <span class="text-option" style="color: #fff"><?php echo e(Auth::guard('cliente')->user()->nombreCompleto); ?></span>
                         </a>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#"><i class="fas fa-address-card"></i>   Mi cuenta</a>
-                          <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
+                          <a class="dropdown-item" href="<?php echo e(route('panelUsuario')); ?>"><i class="fas fa-address-card"></i>   Mi cuenta</a>
+                          <a class="dropdown-item" href="<?php echo e(route('panelUsuario')); ?>?panel=3"><i class="fas fa-file-alt"></i>   Mis Pedidos</a>
                           <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"><i class="fas fa-sign-in-alt"></i>   Cerrar Sesión</a>
                         </div>
                       </div>
@@ -133,7 +133,7 @@
               <ul>
                 <li class="contacts_company firstItem">GB Route Music Store</li>
                 <li class="contacts_address">Mariano Matamoros 39, Col. Centro, C.p. 62000, Cuernavaca, Morelos</li>
-                <li class="contacts_phone lastItem">Tel: 777 311 2741</li>
+                <li class="contacts_phone lastItem">Tel: 777 311 2741 629 0049</li>
               </ul>
           </div>
         </div>
@@ -142,8 +142,8 @@
         <div class="container">    
           <div class="fiscal-data-container">
             <dl class="fiscalData">
-              <dd>Musical Cortés S. de R.L.</dd>
-              <dd class="document-type"> RFC: MCO180312BT7</dd>
+              <dd>Musical Cortés S. de R.L. &nbsp;</dd>
+              <dd class="text-center tittles-pages-logo"> <a style="color:white;" href="<?php echo e(route('politicas')); ?>" title="Política de Privacidad">Política de Privacidad</a> </dd>
             </dl>
           </div>
           &copy; 2019 Musical Cortés S. de R.L.

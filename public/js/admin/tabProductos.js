@@ -75,6 +75,7 @@ $(document).ready(function(){
                 $formModal.find("#producto-categoria").val(categoria);
             }
 
+            $("#producto-fotosBorrar").val("");
             getFotosProducto(id);
 
             $formModal.find("#producto-categoria").change(function(){
@@ -165,6 +166,12 @@ function getFotosProducto(id){
 
             for(let a =0; a<arreglo.length; a++){
                 if ( arreglo[a] == $(this).data('nombre')) {
+                    let fBorrar = $("#producto-fotosBorrar").val();
+                    if(fBorrar != ""){
+                        fBorrar += ",";
+                    }
+                    fBorrar += arreglo[a];
+                    $("#producto-fotosBorrar").val(fBorrar);
                     arreglo.splice(a, 1); 
                     a--;
                 }

@@ -19,8 +19,8 @@ class AdminController extends Controller
     *
     *   @return El panel actual
     */ 
-
     public function getPanel(Request $request){
+        
         $panel = 1;
         $validacion = Validator::make($request->all(), array(
             'panel' => 'nullable|integer'
@@ -193,10 +193,14 @@ class AdminController extends Controller
 
     public function getFotosProducto(Request $request){
         if($request->ajax()){
+            
             //Buscar marcas por medio de la cadena
-            $validatedData = $request->validate([
+            $validacion = Validator::make($request->all(), array(
                 'id' => 'required|integer'
-            ]);
+            ));
+            if($validacion->fails()){
+                return response()->json("error");
+            }
             
             $producto = Producto::find($request->input('id'));
 
@@ -210,6 +214,8 @@ class AdminController extends Controller
 
             return response()->json($regreso);
         }
+
+        
     }
 
     public function editProducto(Request $request){
@@ -222,7 +228,7 @@ class AdminController extends Controller
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
             'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048', //Para esto activamos php_fileinfo en php.ini
-            'producto-fotosActuales' => 'nullable|string|max:300'
+            'producto-fotosBorrar' => 'nullable|string|max:300'
         ));
         
         if($validacion->fails()){
@@ -235,6 +241,7 @@ class AdminController extends Controller
             return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
         }
 
+        $idProducto = $request->input('producto-id');
         $producto->nombre = $request->input('producto-nombre');
         $producto->descripcion = $request->input('producto-descripcion');
         $producto->idmarca = $request->input('producto-marca');
@@ -249,10 +256,17 @@ class AdminController extends Controller
             return redirect()->route('admin',['panel' => 1])->with('Error' , 'No se pudo editar el producto');
         }
 
-        $fotosActuales = ($request->input('producto-fotosActuales') != null)? explode(",",$request->input('producto-fotosActuales')) : array();
-
+        $fotosBorrar = ($request->input('producto-fotosBorrar') != null)? explode(",",$request->input('producto-fotosBorrar')) : array();
+        
         foreach($producto->fotos as $foto){
-            if(array_search($foto->nombre, $fotosActuales) === FALSE){
+            $encontrado = 0;
+            foreach($fotosBorrar as $borrar){
+                if($borrar == $foto->nombre){
+                    $encontrado = 1;
+                    break;
+                }
+            }
+            if($encontrado == 1){
                 
                 if(!FotosProducto::where('idfotos_productos',$foto->id)->delete()){
                     return redirect()->route('admin',['panel' => 1])->with('Warning' , 'El producto se pudo editar, pero no se eliminaron algunas fotos y no se registraron las nuevas');
@@ -263,16 +277,16 @@ class AdminController extends Controller
         }
 
         //Guardar fotos nuevas
-        $maximo = 10 - FotosProducto::where('idproducto',$producto->idProductos)->count();
+        $maximo = 10 - FotosProducto::where('idproducto',$idProducto)->count();
         if($maximo < 0) $maximo = 0;
 
         $fotos = ($request->file('producto-foto') != null )? $request->file('producto-foto'):array();
         $contador = 0;
-
+        
         foreach ($fotos as $foto) {
             $contador ++;
             if($contador > $maximo){
-                return count($producto->fotos)."---".$maximo."----".$contador;
+                
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Producto editado con exito, se borraron las fotos pero la cantidad maxima de fotos(10) fue rebasada, puede que no se hayan guardado algunas fotos');
             }
             $extension = $foto->getClientOriginalExtension();
@@ -292,7 +306,7 @@ class AdminController extends Controller
 
             $foto = new FotosProducto();
 
-            $foto->idproducto = $producto->idproductos;
+            $foto->idproducto = $idProducto;
             $foto->nombre = $filename;
 
             if(!$foto->save()){ //No se guardo la foto en la base de datos
@@ -302,7 +316,6 @@ class AdminController extends Controller
             }
 
         }
-
         return redirect()->route('admin',['panel' => 1])->with('Mensaje' , 'Producto editado con exito!');
     }
 

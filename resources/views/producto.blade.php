@@ -37,17 +37,16 @@
         @include('widgets.breadcrumb')
         <div class="row">
         <div id="product_image_container" class="col-md-6">
-            <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+            
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php $iteracion = 0; $bandera = 0;?>
                     @foreach($producto->fotos as $foto)
                         @if($bandera == 0)
-                            <div class="carousel-item active">
+                            <div class="carousel-item active dimensiones" style=" background: url({{ asset('storage/imagenesProductos/'.$foto->nombre) }}) no-repeat  center; background-size: contain;"></div> 
                         @else
-                            <div class="carousel-item">
+                            <div class="carousel-item dimensiones" style=" background: url({{ asset('storage/imagenesProductos/'.$foto->nombre) }}) no-repeat  center; background-size: contain;"> </div>
                         @endif
-                            <img src="{{ asset('storage/imagenesProductos/'.$foto->nombre) }}" class="" style="height:100%" title="Imagen {{ $iteracion }}">
-                        </div>
                         <?php $iteracion += 1; $bandera = 1;?>
                     @endforeach
                 </div>
@@ -65,7 +64,7 @@
                     @foreach($producto->fotos as $foto)
                         <div class="col-md-3 col-sm-2 col-3">
                             <a href="#" data-target="#carouselExampleIndicators" data-slide-to="{{ $iteracion }}" class="active">
-                                <img src="{{ asset('storage/imagenesProductos/'.$foto->nombre) }}" class="img-thumbnail" title="Imagen {{ $iteracion }}">
+                                <div class="dimensiones-mini" style=" background: url({{ asset('storage/imagenesProductos/'.$foto->nombre) }}) no-repeat  center; background-size: contain;"> </div>
                             </a>
                         </div>
                         <?php $iteracion += 1;?>

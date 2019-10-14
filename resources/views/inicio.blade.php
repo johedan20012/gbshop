@@ -25,9 +25,6 @@ GB Route Music Store: Tienda online
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="{{asset('storage/imagenesLayout/banners/slide1_image.png') }}" class="d-block w-100" alt="...">
-                        <!--<div class="carousel-caption d-none d-md-block">
-                            <span class="btn btn-danger">Comprar</span>
-                        </div>-->
                     </div>
                     <div class="carousel-item">
                         <img src="{{asset('storage/imagenesLayout/banners/slide2_image.png') }}" class="d-block w-100" alt="...">
@@ -60,8 +57,10 @@ GB Route Music Store: Tienda online
                                 </div>
                                 <div class="col-md-6 col-6">
                                     @if(isset($producto->foto))
-                                        <a href="{{ route('verProducto').'?code='.$producto->codigo }}">
-                                            <img class="card-img" alt="Imagen15" src="{{ asset('storage/imagenesProductos/'.$producto->foto->nombre) }}">
+                                        <a href="{{ route('verProducto').'?code='.$producto->codigo }}" >
+                                            <div style="padding:15px; height:100%; width:100%;">
+                                                <div class="dimensiones2" style="background: url({{ asset('storage/imagenesProductos/'.$producto->foto->nombre) }}) no-repeat  center; background-size: contain;"> </div>
+                                            </div>
                                         </a>
                                     @endif
                                 </div>

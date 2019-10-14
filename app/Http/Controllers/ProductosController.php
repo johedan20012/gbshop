@@ -21,7 +21,7 @@ class ProductosController extends Controller
      */
 
     public function getInicio(Request $request){
-        $productos = Producto::take(4)->get();
+        $productos = Producto::take(8)->inRandomOrder()->get();
         return view('inicio', ['productos'=>$productos,'conSideBar'=>true,'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get()]);
     }
 
