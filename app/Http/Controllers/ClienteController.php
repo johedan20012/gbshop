@@ -9,6 +9,7 @@ use App\Producto;
 use App\Cliente;
 use App\Venta;
 use App\DetalleVenta;
+use Carbon\Carbon;
 
 use Validator;
 
@@ -212,6 +213,7 @@ class ClienteController extends Controller
         if($request->ajax()){
             \Conekta\Conekta::setApiKey("key_cUmxB4FJfqDe5ZZD7pJmbQ");
             \Conekta\Conekta::setApiVersion("2.0.0");
+            date_default_timezone_set('America/Mexico_City');
 
             $validacion = Validator::make($request->all(), array(
                 'conektaTokenId' => 'required|string|max:100',
@@ -241,6 +243,7 @@ class ClienteController extends Controller
                 return array('Error' , $mensaje);
             }
 
+            //? Obtengo todas las variables que usare para procesar la compra
             $carrito = session()->get('carrito');
 
             if(!$carrito){
@@ -249,7 +252,13 @@ class ClienteController extends Controller
                 return array('Error', "No tienes productos en tu carrito");
             }
 
-            $usuario = Auth::guard('cliente')->user(); //A este punto gracias al middleware, estoy seguro de que tengo un cliente registrado
+            $total = session()->get('total');
+
+            if(!$total){
+                return array('Error', "No tienes productos en tu carrito");
+            }else if($total <=0){
+                return array('Error', "No tienes productos en tu carrito");
+            }
 
             $conektaToken = $request->input("conektaTokenId");
             $nombres = $request->input("cliente-nombreCompleto");
@@ -264,10 +273,23 @@ class ClienteController extends Controller
             $municipio = $request->input("cliente-municipio");
             $estado = $request->input("cliente-estado");
             $telefono = ($request->has("cliente-telefono"))? $request->input("cliente-telefono") : "";
+            $telefono = preg_replace('/[^0-9]/', '', $telefono);
             $referencias = ($request->has("cliente-referencias"))? $request->input("cliente-referencias") : ""; 
             $almacenarDir = ($request->has("cliente-almacenarDir"))? $request->input("cliente-almacenarDir") : ""; 
 
-            ///Hasta aqui tengo el token de conekta, los datos del pedido, un carrito con productos y el usuario 
+            $usuario = Auth::guard('cliente')->user(); //A este punto gracias al middleware, estoy seguro de que tengo un cliente registrado
+            
+            $clave1Venta = str_replace(array('-',':',' '), '',Carbon::now()->format('Y-m-d H:i:s'));
+            $clave2Venta = $clave1Venta.str_random(6);
+     
+            $nombreRecibidor = $nombres." ".$apePaterno." ".$apeMaterno;
+
+            while(Venta::where('clave',$clave2Venta)->count() > 0){
+
+                $clave2Venta = $clave1Venta.str_random(6);
+            }
+
+            //? Obtengo el cliente del lado de conketa
             try{
                 $cliente = \Conekta\Customer::create(
                     array(
@@ -290,25 +312,106 @@ class ClienteController extends Controller
                 return array('Error', "Hubo un error al procesar tus datos");
             }
 
+            ///Hasta aqui tengo el token de conekta, los datos del pedido, un carrito con productos y el usuario 
+            //? Cambio de los datos del cliente, en caso de que lo haya solicitado
+            if($almacenarDir == "on"){ //Cambiar los datos del cliente
+                $usuario->calle = $calle;
+                $usuario->entreCalle = $entreCalle;
+                $usuario->nExt = $nExt;
+                $usuario->nInt = $nInt;
+                $usuario->cp = $cp;
+                $usuario->colonia = $colonia;
+                $usuario->municipio = $municipio;
+                $usuario->estado = $estado;
+                $usuario->telefono = $telefono;
+                $usuario->referencia_domicilio = $referencias;
+
+                try{
+                    if(!$usuario->save()){ //No se logro guardar el producto de manera correcta;
+                        //No pasa nada, por ahora
+                    }
+                } catch (\Illuminate\Database\QueryException $e){
+                    //No pasa nada, por ahora //return array('Error', "No se pudo guardar la direccion del cliente");
+                }
+            }
+
+            //? Registro de la orden de venta
+            $venta = new Venta();
+            $venta->calle = $calle;
+            $venta->entreCalle = $entreCalle;
+            $venta->nExt = $nExt;
+            $venta->nInt = $nInt;
+            $venta->cp = $cp;
+            $venta->colonia = $colonia;
+            $venta->municipio = $municipio;
+            $venta->estado = $estado;
+            $venta->telefono = $telefono;
+            $venta->referencia_domicilio = $referencias;
+            $venta->idcliente = $usuario->idclientes;
+            $venta->total = $total;
+            $venta->clave = $clave2Venta;
+
+            try{
+                if(!$venta->save()){ //No se logro guardar el producto de manera correcta;
+                    return array('Error', "Hubo un error al procesar la compra");
+                }
+            } catch (\Illuminate\Database\QueryException $e){
+                return array('Error', "Hubo un error al procesar la compra");
+            }
+            $listaProductos = array();
+            //? Registro de los detalles de la orden de venta
+            foreach($carrito as $productoCarrito){
+                $detalleVenta = new DetalleVenta();
+
+                $producto = Producto::where("codigo",$productoCarrito["codigo"])->first();
+                if($producto === null){ //No se encontro el producto asi que mejor borro todo y me regreso
+                    $venta->detalles()->delete();
+                    $venta->delete();
+                    return array("Error","Hubo un error al procesar la compra, hay productos inexistentes en tu carrito");
+                }
+                if($producto->precioSF != $productoCarrito["precio"]){ //!Hay discrepancias con los precios
+                    $venta->detalles()->delete();
+                    $venta->delete();
+                    return array("Error","Hubo un error al procesar la compra, los precios en tu carrito no estan actualizados, intenta volverlos a registrar");
+                }
+                $detalleVenta->idproducto = $producto->idproductos;
+                $detalleVenta->idventa = $venta->idventas;
+                $detalleVenta->precio = $productoCarrito["precio"];
+                $detalleVenta->cantidad = $productoCarrito["cantidad"]; 
+
+                try{
+                    if(!$detalleVenta->save()){ //No se logro guardar el detalle de la venta de manera correcta;
+                        $venta->detalles()->delete();
+                        $venta->delete();
+                        return array('Error', "Hubo un error al procesar la compra");
+                    }
+                } catch (\Illuminate\Database\QueryException $e){
+                    $venta->detalles()->delete();
+                    $venta->delete();
+                    return array('Error', "Hubo un error al procesar la compra");
+                }
+
+                array_push($listaProductos,array("name"=>$producto->nombre,"unit_price"=>(int)($productoCarrito["precio"]*100),"quantity"=>$productoCarrito["cantidad"]));
+            } 
+            
+            //? Creacion de la orden de venta de  conekta
             try{
                 $order = \Conekta\Order::create(array(
-                    "line_items" => array(
-                      array(
-                        "name" => "Tacos",
-                        "unit_price" => 1000,
-                        "quantity" => 120
-                      )
-                    ), 
+                    "line_items" => $listaProductos, 
                     "shipping_lines" => array(
                         array(
-                          "amount" => 180,
+                          "amount" => 0,
                            "carrier" => "FEDEX"
                         )
                     ),
                     "shipping_contact" => array(
+                        "receiver" => $nombreRecibidor,
+                        "between_streets" => $entreCalle,
                         "address" => array(
-                          "street1" => "Calle 123, int 2",
-                          "postal_code" => "06100",
+                          "street1" => $calle." int ".$nInt,
+                          "postal_code" => $cp,
+                          'city' => $municipio,
+                          'state' => $estado,
                           "country" => "MX"
                         )
                       ),
@@ -326,12 +429,49 @@ class ClienteController extends Controller
                   )
                 );
             } catch (\Conekta\ProcessingError $error){ //Obtener el mensaje $error->getMessage();
+                $venta->estatus = 0;
+                $venta->comentarios = "No se pudo procesar el pago";
+                try{
+                    $venta->save();
+                } catch (\Illuminate\Database\QueryException $e){
+                    return array('Error', "Hubo un error al procesar la compra");
+                }
                 return array('Error', "Hubo un error al procesar el pedido");
             } catch (\Conekta\ParameterValidationError $error){ //Obtener el mensaje $error->getMessage();
-                return array('Error', "Hubo un error al procesar el pedido2");
+                $venta->estatus = 0;
+                $venta->comentarios = "No se pudo procesar el pago";
+                try{
+                    $venta->save();
+                } catch (\Illuminate\Database\QueryException $e){
+                    return array('Error', "Hubo un error al procesar la compra");
+                }
+                return array('Error', $error->getMessage());
             } catch (\Conekta\Handler $error){ //Obtener el mensaje $error->getMessage();
-                return array('Error', "Hubo un error al procesar el pedido3");
+                $venta->estatus = 0;
+                $venta->comentarios = "No se pudo procesar el pago";
+                try{
+                    $venta->save();
+                } catch (\Illuminate\Database\QueryException $e){
+                    return array('Error', "Hubo un error al procesar la compra");
+                }
+                return array('Error', $error->getMessage());
             }
+            //? Llenado del estatus de la venta como pagado
+            $venta->idOrdenConekta = $order->id;
+            $venta->estatus = 2;
+            $venta->comentarios = "Pagó con tarjeta";
+            try{
+                $venta->save();
+            } catch (\Illuminate\Database\QueryException $e){}
+
+            //? Vaciado de carrito
+            session()->forget('carrito');
+            session()->forget('productos');
+            session()->forget('total');
+
+            //? Mandar email
+            /////////////////////////
+            //return array("Error" , "Todo bien pero no manda el correo");
             return array("Exito" , "La compra se realizo con exito, los detalles de la compra fueron enviados a su correo");
         }
     }

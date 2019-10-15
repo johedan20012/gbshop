@@ -16,7 +16,7 @@
 
     <title>@yield('titulo')</title>
   </head>
-  <body>
+  <body  class="d-flex flex-column" style="min-height:100vh;">
 
     @section('header')
     <header>
@@ -106,11 +106,11 @@
     </header>
     @show
     
-    <div id="main">
-        @yield('contenido');
+    <div id="main" class="container-fluid py-3 flex-fill">
+        @yield('contenido')
     </div>
 
-    <footer >
+    <footer class="container-fluid w-100 py-3">
       <div class="container" id="pie">
         <div class="row">
           <div class="col-sm-3 custom_footer custom_footer3">

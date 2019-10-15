@@ -232,7 +232,7 @@
                             </a>
                         </h2>
                     </div> 
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
                         <?php if($carrito !== null): ?>
                             <?php $__currentLoopData = $carrito; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $producto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <span class="valores-etiqueta" id="<?php echo e($loop->iteration); ?>detalleEtiqueta"><?php echo e($producto['nombre']); ?></span>

@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" id="directorio">
-        <li class="breadcrumb-item" id="breadcrum-init"><a href="<?php echo e(route('inicio')); ?>">GB Shop Music Store</a></li>
+        <li class="breadcrumb-item" id="breadcrum-init"><a href="<?php echo e(route('inicio')); ?>">GB Route Music Store</a></li>
         
         <?php if(isset($breadcrumb) && $breadcrumb != null): ?>
             <?php $__currentLoopData = $breadcrumb; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hoja): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

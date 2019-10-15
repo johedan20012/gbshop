@@ -68,7 +68,7 @@ class ProductosController extends Controller
             return response()->json(array('tabla' => $tabla, 'bread'=>$bread));
         }
 
-        return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb,'actual' => $id,'actual2' => $cadena]);
+        return view('catalogo', ['productos' => $productos,'conSideBar'=>true, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb,'actual' => $id,'actual2' => $cadena]);
     }
 
     /**

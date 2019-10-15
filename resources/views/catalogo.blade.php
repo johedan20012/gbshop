@@ -19,15 +19,15 @@
 @section('contenido')
   <br><hr>
   <div class="d-flex justify-content-center">
-    <div class ="row col-md-12 pl-md-2">
-        <div class="col-md-4">
+    <div class ="row col-md-12 col-12 pl-md-2 p-0">
+        <div class="col-md-4 col-12">
           @include('widgets.sidebarCategorias')
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-12 p-0">
           <div class="col-md-12" id="breadcr">
             @include('widgets.breadcrumb')
           </div>
-          <div class="col-md-12" id="paginador">
+          <div class="col-md-12 p-0" id="paginador">
             @include('widgets.tablaProductos')
           </div>
         </div>

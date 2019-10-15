@@ -188,3 +188,9 @@ pre{
  #collapseTree label, select{
 	font-size: smaller;
  }
+
+ #producto-marca{
+	color: black;
+	font-weight: bolder;
+	text-transform: uppercase;
+ }

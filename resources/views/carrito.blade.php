@@ -228,7 +228,7 @@
                             </a>
                         </h2>
                     </div> 
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
                         @if($carrito !== null)
                             @foreach($carrito as $producto)
                                 <span class="valores-etiqueta" id="{{$loop->iteration}}detalleEtiqueta">{{ $producto['nombre'] }}</span>

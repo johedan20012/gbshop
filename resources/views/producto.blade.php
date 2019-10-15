@@ -75,6 +75,7 @@
         <div class="col-md-6">
             <h7>{{ $producto->nombre }}</h7>
             <br>
+            <h7 id="producto-marca" >{{ $producto->marca->nombre }}</h7>
             <div id="product_price" >
                 <!-- sin descuento -->
                 <span class="money">
@@ -145,9 +146,9 @@
             <div class="accordion" id="accordionCostos">                                      
                 <h5 class="mb-0">
                     <i class="fa fa-truck"></i>
-                    <a data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="true" aria-controls="collapseTwo">                                                                                        
-                        Ver costos de envío <span class="texto-promo">(Envío gratis)</span>
-                    </a>
+                    <span data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="true" aria-controls="collapseTwo">                                                                                        
+                        Costo de envío en la Republica Mexicana <span class="texto-promo">(Envío gratis)</span>
+                    </span>
                 </h5>   
                 <!--                                     
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionCostos">

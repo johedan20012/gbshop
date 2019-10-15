@@ -17,15 +17,15 @@
 <?php $__env->startSection('contenido'); ?>
   <br><hr>
   <div class="d-flex justify-content-center">
-    <div class ="row col-md-12 pl-md-2">
-        <div class="col-md-4">
+    <div class ="row col-md-12 col-12 pl-md-2 p-0">
+        <div class="col-md-4 col-12">
           <?php echo $__env->make('widgets.sidebarCategorias', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-12 p-0">
           <div class="col-md-12" id="breadcr">
             <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
           </div>
-          <div class="col-md-12" id="paginador">
+          <div class="col-md-12 p-0" id="paginador">
             <?php echo $__env->make('widgets.tablaProductos', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
           </div>
         </div>

@@ -90,55 +90,55 @@
                                         <div class="form-row" >
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-nombreCompleto">Nombre Completo<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-nombreCompleto" id="cliente-nombreCompleto" required >
+                                                <input type="text" maxlength="45" size="45" class="form-control form-envio-cliente" name="cliente-nombreCompleto" id="cliente-nombreCompleto" required >
                                             </div>
                                             <div class="form-group col-12 col-md-3">
                                                 <label for="cliente-aPaterno">Apellido Paterno<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-aPaterno" id="cliente-aPaterno" required >
+                                                <input type="text" maxlength="45" size="45" class="form-control form-envio-cliente" name="cliente-aPaterno" id="cliente-aPaterno" required >
                                             </div>
                                             <div class="form-group col-12 col-md-3">
                                                 <label for="cliente-aMaterno">Apellido Materno</label>
-                                                <input type="text" size="45" class="form-control form-envio-cliente" name="cliente-aMaterno" id="cliente-aMaterno" >
+                                                <input type="text" maxlength="45" size="45" class="form-control form-envio-cliente" name="cliente-aMaterno" id="cliente-aMaterno" >
                                             </div>
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-calle">Calle<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-calle" id="cliente-calle" required >
+                                                <input type="text" maxlength="70" size="70" class="form-control form-envio-cliente" name="cliente-calle" id="cliente-calle" required >
                                             </div>
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-entreCalle">Entre Calle</label>
-                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-entreCalle" id="cliente-entreCalle">
+                                                <input type="text" maxlength="70" size="70" class="form-control form-envio-cliente" name="cliente-entreCalle" id="cliente-entreCalle">
                                             </div>
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-nExt"># Exterior<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="10" class="form-control form-envio-cliente" name="cliente-nExt" id="cliente-nExt" required>
+                                                <input type="text" maxlength="10" size="10" class="form-control form-envio-cliente" name="cliente-nExt" id="cliente-nExt" required>
                                             </div> 
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-nInt"># Interior</label>
-                                                <input type="text" size="10" class="form-control form-envio-cliente" name="cliente-nInt" id="cliente-nInt">
+                                                <input type="text" maxlength="10" size="10" class="form-control form-envio-cliente" name="cliente-nInt" id="cliente-nInt">
                                             </div> 
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-cp">C. Postal<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="12" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
+                                                <input type="text" maxlength="12" size="12" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-colonia">Colonia<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="50" class="form-control form-envio-cliente" name="cliente-colonia" id="cliente-colonia" required >
+                                                <input type="text" maxlength="50" size="50" class="form-control form-envio-cliente" name="cliente-colonia" id="cliente-colonia" required >
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-municipio">Municipio<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="70" class="form-control form-envio-cliente" name="cliente-municipio" id="cliente-municipio" required >
+                                                <input type="text" maxlength="70" size="70" class="form-control form-envio-cliente" name="cliente-municipio" id="cliente-municipio" required >
                                             </div> 
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-estado">Estado<span class="rojo-red"> *</span></label>
-                                                <input type="text" size="50" class="form-control form-envio-cliente" name="cliente-estado" id="cliente-estado" required >
+                                                <input type="text" maxlength="50" size="50" class="form-control form-envio-cliente" name="cliente-estado" id="cliente-estado" required >
                                             </div> 
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-telefono">Teléfono de contacto</label>
-                                                <input type="tel" size="15" class="form-control form-envio-cliente" name="cliente-telefono" id="cliente-telefono" >
+                                                <input type="tel" maxlength="15" size="15" class="form-control form-envio-cliente" name="cliente-telefono" id="cliente-telefono" >
                                             </div> 
                                             <div class="form-group col-12 col-md-6">
                                                 <label for="cliente-referencias">Referencias del domicilio</label>
-                                                <input type="text" size="100" class="form-control form-envio-cliente" name="cliente-referencias" id="cliente-referencias">
+                                                <input type="text" maxlength="100" size="100" class="form-control form-envio-cliente" name="cliente-referencias" id="cliente-referencias">
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <input type="checkbox" class="" name="cliente-almacenarDir" id="cliente-almacenarDir">
@@ -200,14 +200,14 @@
                                                         <div class="form-row">
                                                             <div class="form group col-12">
                                                                 <label for="card-name">Nombre del Tarjetahabiente<span class="rojo-red"> *</span></label>
-                                                                <input type="text" class="form-control " aria-describedby="card-nameHelpInline" name="card-name" id="card-name" autocomplete="off" required size="20">
+                                                                <input type="text" class="form-control " aria-describedby="card-nameHelpInline" name="card-name" id="card-name" autocomplete="off" maxlength="20" required size="20">
                                                                 <small id="card-nameHelpInline" class="text-muted">
                                                                     Nombre completo del titular de la tarjeta
                                                                 </small>
                                                             </div>
                                                             <div class="form group mt-3 col-8 col-sm-10">
                                                                 <label for="card-number">Número de Tarjeta<span class="rojo-red"> *</span></label>
-                                                                <input type="text" class="form-control" aria-describedby="card-numberHelpInline" name="card-number" id="card-number" autocomplete="off" required size="20">
+                                                                <input type="text" class="form-control" aria-describedby="card-numberHelpInline" name="card-number" id="card-number" autocomplete="off" maxlength="20" required size="20">
                                                                 <li class="far fa-credit-card tarjeta"></li>
                                                                 <small id="card-numberHelpInline" class="text-muted mr-3">
                                                                     Número de Tarjeta válido
@@ -215,7 +215,7 @@
                                                             </div>   
                                                             <div class="form group mt-3 col-4 col-sm-2">
                                                                 <label for="card-cvc" >CVC<span class="rojo-red"> *</span></label>
-                                                                <input type="text" class="form-control" aria-describedby="card-cvcHelpInline" name="card-cvc" id="card-cvc" autocomplete="off" required size="4">
+                                                                <input type="text" class="form-control" aria-describedby="card-cvcHelpInline" name="card-cvc" id="card-cvc" autocomplete="off" maxlength="4" required size="4">
                                                                 <small id="card-cvcHelpInline" class="text-muted mr-5">
                                                                     <a href="#" class="" data-toggle="modal" data-target="#modalCvc">¿Dónde encontrarlo?</a>
                                                                 </small>
@@ -245,7 +245,7 @@
                                                             </div>
                                                             <div class="form group mt-3 col-6 " >
                                                                 <label for="card-yearExp">Año de Expiración<span class="rojo-red"> *</span></label> 
-                                                                <input type="text" class="form-control" aria-describedby="card-yearExpHelpInline" name="card-yearExp" id="card-yearExp" autocomplete="off" required size="4">
+                                                                <input type="text" class="form-control" aria-describedby="card-yearExpHelpInline" name="card-yearExp" id="card-yearExp" autocomplete="off" maxlength="4" required size="4">
                                                                 <small id="card-yearExpHelpInline" class="text-muted">
                                                                     Año de expiración
                                                                 </small>
@@ -278,7 +278,7 @@
                         </div>
                         <div class="accordion" id="accordion-detalle">
                             <h2 class="producto-encabezado">
-                                <a class="" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">                                        
+                                <a class="" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="true" aria-controls="collapseThree">                                        
                                     <span class="valores-titulo-etiqueta valores-etiqueta">Total a pagar</span>
                                     <span id="producto-precio" class="valores-titulo-valor valores-valor">
                                         @if(isset($total))
@@ -290,7 +290,7 @@
                                 </a>
                             </h2>
                         </div> 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
+                        <div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-detalle">                                
                             @if(isset($carrito))
                                 @foreach($carrito as $producto)
                                     <span class="valores-etiqueta" id="{{$loop->iteration}}detalleEtiqueta">{{ $producto['nombre'] }}</span>
