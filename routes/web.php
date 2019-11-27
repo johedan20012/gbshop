@@ -17,6 +17,9 @@ Route::get('/', function () {
 //Auth::routes();
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
+//?BORRAMEEEEEEEEEEEEEEEEEEEE
+Route::get("/correo","ClienteController@correo");
+Route::get("/pedido","AdminController@hojaPedido");
 
 //TODO Rutas de la tienda
 Route::get('/','ProductosController@getInicio')->name('inicio'); //?Inicio
@@ -25,17 +28,20 @@ Route::post('/proPorCat', 'ProductosController@getCatalogoPorCategoria')->name('
 Route::get('/producto', 'ProductosController@getProducto')->name('verProducto');
 
 Route::get('/confirmCompra','ClienteController@getConfirmCompra')->name("confirmCompra")->middleware('auth:cliente');
-
+Route::post('/datosEnvio','ClienteController@datosEnvioCliente')->name('datosEnvio')->middleware('auth:cliente');
 Route::view('/politicas','politicas')->name('politicas');
 
-//TODO Rutas para el cliente
-Route::get('/panelUsuario','ClienteController@getPanel')->name('panelUsuario')->middleware('auth:cliente');
 //?Carrito
 Route::get('/carrito','ClienteController@getCarrito')->name('carritoUsuario');
 Route::post('/agregarCarrito','ClienteController@addCarrito')->name('addCarrito');
 Route::get('/eliminarCarrito','ClienteController@eliminarCarrito')->name('delCarrito');
 Route::get('/vaciarCarrito','ClienteController@vaciarCarrito')->name('vaciarCarrito');
 Route::post('/procesarCompra','ClienteController@procesarCompra')->name('procesarCompra')->middleware('auth:cliente');
+Route::post('/conektaOXXO-u4a5knx','ClienteController@procesarPagoOXXO'); //?Es para el webhook de laravel
+
+//TODO Rutas para el cliente
+Route::get('/panelUsuario','ClienteController@getPanel')->name('panelUsuario')->middleware('auth:cliente');
+Route::post('/panelUsuario/editInfo','ClienteController@editarCliente')->name('panelUsuario-editInfo')->middleware("auth:cliente");
 /*Route::view('/panelUsuario','cliente.panelInicio')->name('panelCliente')->middleware('auth:cliente');
 Route::view('/panelUsuarioEdit','cliente.panelEditar')->name('panelClienteEditar');*/
 
@@ -76,3 +82,18 @@ Route::get('/admin','AdminController@getPanel')->name('admin')->middleware('auth
   Route::post('/admin/regCategoria','AdminController@storeCategoria')->name('storeCategoria')->middleware('auth');
   Route::post('/admin/editCategoria','AdminController@editCategoria')->name('editCategoria')->middleware('auth');
   Route::post('/admin/delCategoria','AdminController@delCategoria')->name('delCategoria')->middleware('auth');
+
+  //* Rutas de administracion para admins
+  Route::group(['middleware' => ['auth']], function() {
+    Route::post('/admin/tablaAdmins','AdminController@getTablaAdmins')->name('tablaAdmins')->middleware('auth');
+    Route::post('/admin/editAdmin','AdminController@editAdmin')->name('editAdmin')->middleware('auth');
+    Route::post('/admin/delAdmin','AdminController@delAdmin')->name('delAdmin')->middleware('auth');
+    Route::post('/admin/registro', 'AdminController@createAdmin')->name('registroAdmin')->middleware("auth");
+  });
+  
+
+  //* Rutas de administacion para pedidos
+  Route::get('/admin/hojaPedido', 'AdminController@generarHojaPedido')->name('hojaPedido')->middleware('auth');
+  Route::post('/admin/tablaPedidos','AdminController@getTablaPedidos')->name('tablaPedidos')->middleware('auth');
+  Route::post('/admin/editEstatus','AdminController@editEstatus')->name('editEstatusPedido')->middleware('auth');
+  Route::post('/admin/reenviarCorreo','AdminController@mandarCorreoPedido')->name('reenviarCorreo')->middleware('auth');

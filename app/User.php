@@ -16,13 +16,21 @@ class User extends Authenticatable
     protected $table = 'admins';
 
     protected $primaryKey = 'idadmins';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'password',
     ];
 
     /**

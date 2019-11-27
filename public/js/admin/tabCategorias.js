@@ -28,7 +28,7 @@ $(document).ready(function(){
         var button = $(event.relatedTarget); // Obtiene el boton que activo al modal
         var id = button.data('id'); // Obtiene los datos de los atributos data-*
         var nombre = button.data('nombre');
-        console.log(nombre);
+
         var ruta = (button.data('type') == 2) ?  $('#rutaDelCategoria').val() : $('#rutaEditCategoria').val();
         var modal = $(this);
 

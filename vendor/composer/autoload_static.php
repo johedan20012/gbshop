@@ -62,6 +62,7 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Sample\\' => 7,
         ),
         'R' => 
         array (
@@ -76,6 +77,7 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
+            'PayPalCheckoutSdk\\' => 18,
         ),
         'M' => 
         array (
@@ -85,6 +87,10 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         array (
             'League\\Flysystem\\' => 17,
             'Laravel\\Tinker\\' => 15,
+        ),
+        'K' => 
+        array (
+            'Knp\\Snappy\\' => 11,
         ),
         'J' => 
         array (
@@ -120,6 +126,11 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'C' => 
         array (
             'Cron\\' => 5,
+        ),
+        'B' => 
+        array (
+            'BraintreeHttp\\' => 14,
+            'Barryvdh\\Snappy\\' => 16,
         ),
         'A' => 
         array (
@@ -226,6 +237,10 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Sample\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -258,6 +273,10 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'PayPalCheckoutSdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -269,6 +288,10 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'Laravel\\Tinker\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
+        'Knp\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
         ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
@@ -326,6 +349,14 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
+        'BraintreeHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp',
+        ),
+        'Barryvdh\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -381,6 +412,7 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Mail\\CompraRealizada' => __DIR__ . '/../..' . '/app/Mail/CompraRealizada.php',
         'App\\Marca' => __DIR__ . '/../..' . '/app/Marca.php',
         'App\\Producto' => __DIR__ . '/../..' . '/app/Producto.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -392,6 +424,30 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'App\\Venta' => __DIR__ . '/../..' . '/app/Venta.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyImage.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyPdf.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyImage.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyPdf.php',
+        'Barryvdh\\Snappy\\ImageWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ImageWrapper.php',
+        'Barryvdh\\Snappy\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/LumenServiceProvider.php',
+        'Barryvdh\\Snappy\\PdfFaker' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfFaker.php',
+        'Barryvdh\\Snappy\\PdfWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfWrapper.php',
+        'Barryvdh\\Snappy\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ServiceProvider.php',
+        'BraintreeHttp\\Curl' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Curl.php',
+        'BraintreeHttp\\Encoder' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Encoder.php',
+        'BraintreeHttp\\Environment' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Environment.php',
+        'BraintreeHttp\\HttpClient' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/HttpClient.php',
+        'BraintreeHttp\\HttpException' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/HttpException.php',
+        'BraintreeHttp\\HttpRequest' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/HttpRequest.php',
+        'BraintreeHttp\\HttpResponse' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/HttpResponse.php',
+        'BraintreeHttp\\IOException' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/IOException.php',
+        'BraintreeHttp\\Injector' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Injector.php',
+        'BraintreeHttp\\Serializer' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer.php',
+        'BraintreeHttp\\Serializer\\Form' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer/Form.php',
+        'BraintreeHttp\\Serializer\\FormPart' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer/FormPart.php',
+        'BraintreeHttp\\Serializer\\Json' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer/Json.php',
+        'BraintreeHttp\\Serializer\\Multipart' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer/Multipart.php',
+        'BraintreeHttp\\Serializer\\Text' => __DIR__ . '/..' . '/braintree/braintreehttp/lib/BraintreeHttp/Serializer/Text.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\CarbonPeriod' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonPeriod.php',
@@ -1940,7 +1996,7 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'Intervention\\Image\\ImageManagerStatic' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageManagerStatic.php',
         'Intervention\\Image\\ImageServiceProvider' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProvider.php',
         'Intervention\\Image\\ImageServiceProviderLaravel4' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProviderLaravel4.php',
-        'Intervention\\Image\\ImageServiceProviderLaravel5' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProviderLaravel5.php',
+        'Intervention\\Image\\ImageServiceProviderLaravelRecent' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProviderLaravelRecent.php',
         'Intervention\\Image\\ImageServiceProviderLeague' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProviderLeague.php',
         'Intervention\\Image\\ImageServiceProviderLumen' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/ImageServiceProviderLumen.php',
         'Intervention\\Image\\Imagick\\Color' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Imagick/Color.php',
@@ -1991,6 +2047,11 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
         'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
+        'Knp\\Snappy\\AbstractGenerator' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/AbstractGenerator.php',
+        'Knp\\Snappy\\Exception\\FileAlreadyExistsException' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Exception/FileAlreadyExistsException.php',
+        'Knp\\Snappy\\GeneratorInterface' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/GeneratorInterface.php',
+        'Knp\\Snappy\\Image' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Image.php',
+        'Knp\\Snappy\\Pdf' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Pdf.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -2603,6 +2664,31 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'ParseError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
+        'PayPalCheckoutSdk\\Core\\AccessToken' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/AccessToken.php',
+        'PayPalCheckoutSdk\\Core\\AccessTokenRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/AccessTokenRequest.php',
+        'PayPalCheckoutSdk\\Core\\AuthorizationInjector' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/AuthorizationInjector.php',
+        'PayPalCheckoutSdk\\Core\\FPTIInstrumentationInjector' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/FPTIInstrumentationInjector.php',
+        'PayPalCheckoutSdk\\Core\\GzipInjector' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/GzipInjector.php',
+        'PayPalCheckoutSdk\\Core\\PayPalEnvironment' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/PayPalEnvironment.php',
+        'PayPalCheckoutSdk\\Core\\PayPalHttpClient' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/PayPalHttpClient.php',
+        'PayPalCheckoutSdk\\Core\\ProductionEnvironment' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/ProductionEnvironment.php',
+        'PayPalCheckoutSdk\\Core\\RefreshTokenRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/RefreshTokenRequest.php',
+        'PayPalCheckoutSdk\\Core\\SandboxEnvironment' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/SandboxEnvironment.php',
+        'PayPalCheckoutSdk\\Core\\UserAgent' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/UserAgent.php',
+        'PayPalCheckoutSdk\\Core\\Version' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Core/Version.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersAuthorizeRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersAuthorizeRequest.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersCaptureRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersCaptureRequest.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersCreateRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersCreateRequest.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersGetRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersGetRequest.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersPatchRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersPatchRequest.php',
+        'PayPalCheckoutSdk\\Orders\\OrdersValidateRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Orders/OrdersValidateRequest.php',
+        'PayPalCheckoutSdk\\Payments\\AuthorizationsCaptureRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/AuthorizationsCaptureRequest.php',
+        'PayPalCheckoutSdk\\Payments\\AuthorizationsGetRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/AuthorizationsGetRequest.php',
+        'PayPalCheckoutSdk\\Payments\\AuthorizationsReauthorizeRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/AuthorizationsReauthorizeRequest.php',
+        'PayPalCheckoutSdk\\Payments\\AuthorizationsVoidRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/AuthorizationsVoidRequest.php',
+        'PayPalCheckoutSdk\\Payments\\CapturesGetRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/CapturesGetRequest.php',
+        'PayPalCheckoutSdk\\Payments\\CapturesRefundRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/CapturesRefundRequest.php',
+        'PayPalCheckoutSdk\\Payments\\RefundsGetRequest' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk/Payments/RefundsGetRequest.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',
@@ -2880,6 +2966,7 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'PhpParser\\Node\\Stmt\\UseUse' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Stmt/UseUse.php',
         'PhpParser\\Node\\Stmt\\Use_' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Stmt/Use_.php',
         'PhpParser\\Node\\Stmt\\While_' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Stmt/While_.php',
+        'PhpParser\\Node\\UnionType' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/UnionType.php',
         'PhpParser\\Node\\VarLikeIdentifier' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/VarLikeIdentifier.php',
         'PhpParser\\Parser' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Parser.php',
         'PhpParser\\ParserAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/ParserAbstract.php',
@@ -3187,6 +3274,15 @@ class ComposerStaticInit38cb24bd22fd1901a9f1830b547f85ab
         'Ramsey\\Uuid\\UuidFactory' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactory.php',
         'Ramsey\\Uuid\\UuidFactoryInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactoryInterface.php',
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
+        'Sample\\AuthorizeIntentExamples\\AuthorizeOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/AuthorizeIntentExamples/AuthorizeOrder.php',
+        'Sample\\AuthorizeIntentExamples\\CaptureOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/AuthorizeIntentExamples/CaptureOrder.php',
+        'Sample\\AuthorizeIntentExamples\\CreateOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/AuthorizeIntentExamples/CreateOrder.php',
+        'Sample\\CaptureIntentExamples\\CaptureOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/CaptureIntentExamples/CaptureOrder.php',
+        'Sample\\CaptureIntentExamples\\CreateOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/CaptureIntentExamples/CreateOrder.php',
+        'Sample\\GetOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/GetOrder.php',
+        'Sample\\PatchOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/PatchOrder.php',
+        'Sample\\PayPalClient' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/PayPalClient.php',
+        'Sample\\RefundOrder' => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples/RefundOrder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',

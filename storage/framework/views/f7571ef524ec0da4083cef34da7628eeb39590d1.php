@@ -48,9 +48,9 @@
                 Acciones
             </button>
             <div class="dropdown-menu">
-                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#modalCategorias" data-id="<?php echo e($categoria->idcategorias); ?>" data-nombre="<?php echo e($categoria->nombre); ?>"><i class="fa fa-edit" style="color:blue"> </i>_Modificar</button>
+                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#modalCategorias" data-id="<?php echo e($categoria->idcategorias); ?>" data-nombre="<?php echo e($categoria->nombre); ?>"><i class="fa fa-edit" style="color:blue"> </i> Modificar</button>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#modalCategorias" data-id="<?php echo e($categoria->idcategorias); ?>" data-nombre="<?php echo e($categoria->nombre); ?>"><i class="fa fa-times" style="color: red"> </i>_Eliminar</button>
+                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#modalCategorias" data-id="<?php echo e($categoria->idcategorias); ?>" data-nombre="<?php echo e($categoria->nombre); ?>"><i class="fa fa-times" style="color: red"> </i> Eliminar</button>
             </div>
             </div>
         </td>

@@ -34,27 +34,3 @@ GB Route Music Store: Tienda online
     </div>  
 </header>
 @endsection
-
-
-@section('contenido')
-
-
-<div class="container">
-    <div class="row"> 
-        <div class="col-md-12 justify-content-cente">
-            @include('widgets.breadcrumb')
-        </div>
-        <div class="col-md-3 m-t-10 text-center">
-            <div class="m-t-10"><a href="{{ route('panelUsuario').'?panel=2'}}">Editar información</a></div><br>
-            <div class="m-t-10 m-b-20"><a href="{{ route('panelUsuario').'?panel=3'}}">Historial de compras</a></div>
-        </div>           
-        <div class="col-md-9 m-t-10 ">
-            @yield('panel')                   
-        </div>
-        <div class="col-md-12">
-            
-                
-        </div>
-    </div>
-</div>
-@endsection

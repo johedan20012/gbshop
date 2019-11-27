@@ -13,6 +13,7 @@ class Cliente extends Authenticatable
      *
      * @var string
      */
+    protected $table = 'clientes';
 
      /**
      * Indicates if the model should be timestamped.
@@ -21,7 +22,6 @@ class Cliente extends Authenticatable
      */
     public $timestamps = false;
     
-    protected $table = 'clientes';
     protected $primaryKey = 'idclientes';
     protected $guard = 'cliente';
 
@@ -30,6 +30,32 @@ class Cliente extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
+
+    /** 
+     * Obtiene solo los datos del cliente necesarios para el envio
+     * 
+     * @return $regreso 
+     */
+
+    public function getdatosEnvioAttribute(){ //Obtiene solo
+        $regreso = array(
+            'nombreCom' => $this->nombreCompleto,
+            'aPaterno' => $this->aPaterno,
+            'aMaterno' => $this->aMaterno,
+            'calle' => $this->calle,
+            'entreCalle' => $this->entreCalle,
+            'numExt' => $this->nExt,
+            'numInt' => $this->nInt,
+            'cp' => $this->cp,
+            'colonia' => $this->colonia,
+            'municipio' => $this->municipio,
+            'estado' => $this->estado,
+            'telefono' => $this->telefono,
+            'referencias' => $this->refrencias_domicilio
+        );
+
+        return $regreso;
+    }
 }

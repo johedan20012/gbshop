@@ -20,7 +20,7 @@ function changeProducto(codigo,cantidad,idFila){
         url: $('#rutaCarrito').val(),
         data:{codigo:codigo,cantidad:cantidad}
     }).done(function(data){
-        console.log(data);
+        //console.log(data);
         boton = data;
         if(data['codigo'] == 200){ //Hubo exito al modificar el carrito
             let id = "#"+String(idFila)+"cantidadProducto";
@@ -29,9 +29,9 @@ function changeProducto(codigo,cantidad,idFila){
             id = "#"+String(idFila)+"detalleValor";
             $(id).html("$"+data['subtotal']);
 
-            if(data['envio'] != "GRATIS"){
+            if(data['envioSF'] > 0){
                 $("#valorEnvio").removeClass("texto-promo");
-                $("#valorEnvio").html("$180.00");
+                $("#valorEnvio").html("$"+data['envio']);
             }else{
                 $("#valorEnvio").addClass("texto-promo");
                 $("#valorEnvio").html("GRATIS");

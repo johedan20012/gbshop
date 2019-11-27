@@ -133,7 +133,7 @@
               <ul>
                 <li class="contacts_company firstItem">GB Route Music Store</li>
                 <li class="contacts_address">Mariano Matamoros 39, Col. Centro, C.p. 62000, Cuernavaca, Morelos</li>
-                <li class="contacts_phone lastItem">Tel: 777 311 2741 629 0049</li>
+                <li class="contacts_phone lastItem"><span>Tel: 777 311 2741</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 777 629 0049</li>
               </ul>
           </div>
         </div>

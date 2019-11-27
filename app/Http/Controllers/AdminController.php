@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\CompraRealizada;
 
 use App\Marca;
 use App\Categoria;
 use App\Producto;
 use App\FotosProducto;
+use App\User;
+use App\Venta;
 
 use Validator;
 use Image;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -52,8 +59,21 @@ class AdminController extends Controller
                 break;
             
             case 4:
-                
+                $adminActual = Auth::guard("web")->user();
+                $admins = User::where('idadmins',"!=",$adminActual->idadmins)->orderBy("username")->paginate(10)->setPageName('p');
+
                 return view('admin.panelAdmins',[
+                    'admins' => $admins,
+                    'numPag' => $panel,
+                    'sinNavbar' => true
+                ]);
+                break;
+
+            case 5:
+                
+                $pedidos = Venta::orderBy('created_at')->paginate(10)->setPageName('p');
+                return view('admin.panelPedidos',[
+                    'pedidos' => $pedidos,
                     'numPag' => $panel,
                     'sinNavbar' => true
                 ]);
@@ -541,4 +561,266 @@ class AdminController extends Controller
 
         return redirect()->route('admin',['panel' => 3])->with('Mensaje' , 'Categoria eliminada con exito!');
     } 
+
+    //TODO, Aqui empiezan las funciones que llama el panel de pedidos
+    public function getTablaPedidos(Request $request){
+        if($request->ajax()){
+            if($request->has('cadena')){
+                //Buscar marcas por medio de la cadena
+                $validatedData = $request->validate([
+                    'cadena' => 'nullable|string|max:50'
+                ]);
+
+                if($request->input('cadena') !== null){
+                    $pedidos = Venta::where('clave', 'LIKE', '%'.$request->input('cadena').'%')->orderBy('created_at')->paginate(10)->setPageName("p");
+                    $tabla = view('widgets.admin.tablaPedidos', ['pedidos' => $pedidos,'actual' => $request->input('cadena')])->render();
+        
+                    return response()->json(array('tabla' => $tabla));
+                }
+            }
+        
+            //Traer marcas indiscriminadamente
+            $pedidos = Venta::orderBy('created_at')->paginate(10)->setPageName("p");
+            $tabla = view('widgets.admin.tablaPedidos', ['pedidos' => $pedidos])->render();
+
+            return response()->json(array('tabla' => $tabla));
+        }
+    }
+
+    public function hojaPedido(Request $request){
+
+        $validacion = Validator::make($request->all(), array(
+            'clavePedido' => 'required|string|max:100'
+        ));
+        
+        if($validacion->fails()){
+            return back()->with('Error' , 'No se pudo generar la hoja del pedido');
+        }
+
+        $pedido = Venta::where('clave',$request->input('clavePedido'))->first();
+
+        if(!$pedido){
+            return back()->with('Error' , 'No se pudo generar la hoja del pedido');
+        }
+
+        return view('correos.correoCompra',['pedido'=>$pedido]);
+        //$pdf = PDF::loadView('pdf.detalleCompra',compact('pedido'));
+    
+        
+        //return $pdf->download('orden.pdf');
+        
+    }
+
+    public function generarHojaPedido(Request $request){
+
+        $validacion = Validator::make($request->all(), array(
+            'clavePedido' => 'required|string|max:100'
+        ));
+        
+        if($validacion->fails()){
+            return back()->with('Error' , 'No se pudo generar la hoja del pedido');
+        }
+
+        $pedido = Venta::where('clave',$request->input('clavePedido'))->first();
+
+        if(!$pedido){
+            return back()->with('Error' , 'No se pudo generar la hoja del pedido');
+        }
+
+        if($request->has("ver")){
+            if($request->input("ver") == 1 || $request->input("ver") == "1"){
+                return view('admin.detallesPedido',[
+                    'pedido' => $pedido,
+                    'numPag' =>5,
+                    'sinNavbar' => true
+                ]);
+            }
+        }
+
+        $pdf = PDF::loadView('pdf.detalleCompra',compact('pedido'));
+        $pdf->setOption('margin-top',10);
+        $pdf->setOption('margin-bottom',10);
+        $pdf->setOption('margin-left',0);
+        $pdf->setOption('margin-right',0);
+        
+        return $pdf->download('orden'.$pedido->clave.'.pdf');
+        
+    }
+
+    public function editEstatus(Request $request){
+        if($request->ajax()){
+            $validacion = Validator::make($request->all(), array(
+                'estatus' => 'required|string|max:10',
+                'comentarios' => 'required|string',
+                'clavePedido' => 'required|string|max:50'
+            ));
+
+            if($validacion->fails()){
+                return array('Error'=>'No se pudo actualizar el pedido');
+            }
+            $estatus = $request->input("estatus");
+            $comentarios = $request->input("comentarios");
+            $clavePedido = $request->input("clavePedido");
+
+            if($estatus != 0 && $estatus != 2 && $estatus != 3 && $estatus != 4){
+                return array('Error'=>'No se pudo actualizar el pedido, el estatus no es valido');
+            }
+
+            $pedido = Venta::where('clave',$clavePedido)->first();
+
+            if(!$pedido){
+                return array('Error'=>'No se pudo actualizar el pedido, no se encontro en la base de datos');
+            }
+
+            $pedido->estatus = $estatus;
+            $pedido->comentarios .= '-'.$comentarios.'-';
+
+            try{
+                if(!$pedido->save()){ 
+                    return array('Error'=>'No se pudo actualizar el pedido');
+                }
+            } catch (\Illuminate\Database\QueryException $e){
+                return array('Error'=>'No se pudo actualizar el pedido');
+            }
+
+            return array('Exito'=>'El pedido se actualizo con exito');
+        }
+    }
+
+    public function mandarCorreoPedido(Request $request){
+        if($request->ajax()){
+            $validacion = Validator::make($request->all(), array(
+                'correo' => 'nullable|string|max:100|email',
+                'correoG' => 'nullable|string|max:10',
+                'clavePedido' => 'required|string|max:50'
+            ));
+
+            if($validacion->fails()){
+                return array('Error'=>'No se pudo enviar el correo');
+            }
+
+            $correo = ($request->has('correo'))? $request->input("correo") : "";
+            $correoG = ($request->has('correoG'))? $request->input("correoG") : "";
+            $clavePedido = $request->input("clavePedido");
+
+            if($correo == "" and $correoG == ""){
+                return array('Error'=>'No se pudo enviar el correo, los campos estan vacios');
+            }
+
+            $pedido = Venta::where('clave',$clavePedido)->first();
+
+            if(!$pedido){
+                return array('Error'=>'No se pudo enviar el correo, falta la clave de pedido');
+            }
+
+            if($correoG == "true"){ //? Usare la direccion guardada del cliente/usuario
+                $destinatario = $pedido->usuario->email;
+            }else{ //?Usare la nueva direccion proporcionada
+                if($correo == ""){
+                    return array('Error'=>'No se pudo enviar el correo, el email no puede estar vacio');
+                }
+                $destinatario = $correo;
+            }
+
+            Mail::to($destinatario)->send(new CompraRealizada($pedido));
+            return array('Exito' => 'El correo se envio con exito a la direccion '.$destinatario);
+        }
+    }
+
+    //TODO Aqui inician las funciones para el panel de admins
+    /**
+     * Crea un nuevo administrador
+     *
+     * @param  Request $request
+     * @return String mensaje
+     */
+    public function createAdmin(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'admin-username' => 'required|string|max:255|unique:admins,username',
+            'admin-pass' => 'required|string|min:7|confirmed'
+        ));
+
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo registrar al administrador');
+        }
+
+        $admin =  User::create([
+            'username' => $request->input('admin-username'),
+            'password' => bcrypt($request->input('admin-pass')),
+        ]);
+
+        if(!$admin){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo registrar al administrador');
+        }
+
+        return redirect()->route('admin',['panel' => 4])->with('Mensaje' , 'Administrador registrado con exito');
+    }
+
+    public function getTablaAdmins(Request $request){
+        if($request->ajax()){
+            $adminActual = Auth::guard("web")->user();
+            $admins = User::where('idadmins',"!=",$adminActual->idadmins)->orderBy('username')->paginate(10)->setPageName("p");
+            $tabla = view('widgets.admin.tablaAdmins', ['admins' => $admins])->render();
+
+            return response()->json(array('tabla' => $tabla));
+        }
+    }
+
+    public function editAdmin(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'admin-id' => 'required|integer',
+            'admin-pass' => 'required|string|min:7|confirmed'
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo cambiar la contraseña del administrador');
+        }
+
+        $adminActual = Auth::guard("web")->user();
+        if($adminActual->idadmins == $request->input('admin-id')){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo cambiar la contraseña del administrador');
+        }
+
+        $admin = User::find($request->input('admin-id'));
+        if($admin == null){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo cambiar la contraseña del administrador');
+        }
+
+        $admin->password = bcrypt($request->input('admin-pass'));
+
+        try{
+            if(!$admin->save()){ //No se logro guardar el admin de manera correcta;
+                return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo cambiar la contraseña del administrador');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo cambiar la contraseña del administrador');
+        }
+
+        return redirect()->route('admin',['panel' => 4])->with('Mensaje' , 'Contraseña cambiada con exito!');
+    }
+
+    public function delAdmin(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'admin-id' => 'required|integer',
+        ));
+
+        $adminActual = Auth::guard("web")->user();
+        if($adminActual->idadmins == $request->input('admin-id')){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo borrar al administrador, no te puedes borrar a ti mismo');
+        }
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo borrar al administrador');
+        }
+
+        try{
+            if(!User::destroy($request->input('admin-id'))){ //No se logro borrar la marca de manera correcta;
+                return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo borrar al administrador');
+            }
+        } catch (\Illuminate\Database\QueryException $e){
+            return redirect()->route('admin',['panel' => 4])->with('Error' , 'No se pudo borrar al administrador');
+        }
+
+        return redirect()->route('admin',['panel' => 4])->with('Mensaje' , 'Administrador eliminado con exito!');
+    }
 }

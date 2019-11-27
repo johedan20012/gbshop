@@ -65,7 +65,7 @@ $(document).ready(function(){
             $formModal.find("#producto-descripcion").val(desc);
             $formModal.find("#producto-marca").val(marca);
             $formModal.find("#producto-precio").val(precio);
-            console.log(id);
+            //console.log(id);
             $formModal.find("#producto-id").val(id);
             
             if(categoriaPadre != -1){ //Su categoria es una subcategoria

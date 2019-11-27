@@ -40,7 +40,7 @@ GB Route Music Store: Tienda online
             <div class="col-md-12 col-sm-12 col-12">
                 <div class="toast" style="max-width: none;" id="myToast" data-delay="5000">
                     <div class="toast-header">
-                        <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                        <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBRoute</strong>
                         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
                     </div>
                     <div class="toast-body">

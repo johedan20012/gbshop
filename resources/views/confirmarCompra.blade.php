@@ -144,7 +144,7 @@
                                                 <input type="checkbox" class="" name="cliente-almacenarDir" id="cliente-almacenarDir">
                                                 <label for="cliente-almacenarDir">Almacenar como dirección actual</label>
                                             </div>
-
+                                            <input type="hidden" class="form-control" name="cliente-mesesIntereses" id="cliente-mesesIntereses" >
                                             <div class="form-group col-6 col-md-6">
                                                 <label ><span class="rojo-red"> *</span>Campos obligatorios</label>
                                             </div>
@@ -165,17 +165,17 @@
                         <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionGrupo">
                             <div class="card-body">
                                 <div class="payment" >
-                                    <div class="accordion" id="accordionPAgo">
+                                    <div class="accordion" id="accordionPago">
                                         <div class="card">
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="oxxo"  >
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="{{ asset('storage/imagenesLayout/OXXO2.jpeg')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="{{ asset('storage/imagenesLayout/oxxopay.png')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
                                                 </li>
                                             </div>
-                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPAgo">
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
                                                 <div class="card-body">
-                                                    Por favor realiza el pago en el OXXO más cercano utilizando la ficha de pago. Dale clic en Realizar Pedido para generar la ficha de pago con codigo de barras.		                                        
+                                                    Por favor realiza el pago en el OXXO más cercano utilizando la ficha de pago. Dale click en Comprar para generar la ficha de pago con codigo de barras.		                                        
                                                 </div>
                                             </div>
                                         </div>
@@ -183,10 +183,10 @@
                                             <div class="card-header" id="headingTwo">
                                                 <li >
                                                     <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="tarjeta">
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="{{ asset('storage/imagenesLayout/cvv-cards.jpeg')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="{{ asset('storage/imagenesLayout/credits.png')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
                                                 </li>
                                             </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPAgo">
+                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPago">
                                                 <div class="col-12 col-md-12">
                                                     <div class="toast" id="toast-tarjeta" data-delay="3000" style="max-width:none; margin:0; width:100%;">
                                                         <div class="toast-body">
@@ -222,7 +222,7 @@
                                                             </div> 
                                                         </div>
                                                         <div class="form-row">
-                                                            <div class="form group mt-3 col-6 ">
+                                                            <div class="form group mt-3 col-4 ">
                                                                 <label for="card-monthExp">Mes de Expiración<span class="rojo-red"> *</span></label>  
                                                                 <select class="form-control custom-select" aria-describedby="card-monthExpHelpInline" name="card-monthExp" id="card-monthExp" autocomplete="off" required>
                                                                     <option selected value="0">Selecciona un mes...</option>
@@ -243,25 +243,51 @@
                                                                     Mes de expiración
                                                                 </small>
                                                             </div>
-                                                            <div class="form group mt-3 col-6 " >
+                                                            <div class="form group mt-3 col-4 " >
                                                                 <label for="card-yearExp">Año de Expiración<span class="rojo-red"> *</span></label> 
                                                                 <input type="text" class="form-control" aria-describedby="card-yearExpHelpInline" name="card-yearExp" id="card-yearExp" autocomplete="off" maxlength="4" required size="4">
                                                                 <small id="card-yearExpHelpInline" class="text-muted">
                                                                     Año de expiración
                                                                 </small>
                                                             </div> 
+                                                            <div class="form group mt-3 col-4 ">
+                                                                <label for="card-mesesIntereses">Meses sin intereses</label>  
+                                                                <select class="form-control custom-select" aria-describedby="card-mesesInteresesHelp" name="card-mesesIntereses" id="card-mesesIntereses" autocomplete="off">
+                                                                    <option selected value="0">Ninguno...</option>
+                                                                    <option value="1">3 Meses(Min $300)</option>
+                                                                    <option value="2">6 Meses(Min $600)</option>
+                                                                    <option value="3">9 Meses(Min $900)</option>
+                                                                    <option value="4">12 Meses(Min $1200)</option>
+                                                                </select>
+                                                                <small id="card-mesesInteresesHelp" class="text-muted">
+                                                                    *Aplican cargos correspondientes
+                                                                </small>
+                                                            </div>
                                                         </div>                                                                                                                               
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="boton-continuar">
-                                        <button id="continuarCompra" onclick="procesarCompra($(this));" class="bt btn-danger btn-lg btn-block">Comprar</button>
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">                               
+                                                <li >
+                                                    <input data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" id="pm-paypal" type="radio" class="input-radio btn btn-link" name="payment_method" value="paypal"  >
+                                                    <label for="payment_paypal">Pago con cuenta PayPal <img src="{{ asset('storage/imagenesLayout/paypal.png')}}" style="width:100px;" alt="Pago con cuenta PayPal" style="margin-top: -12px">	</label>
+                                                </li>
+                                            </div>
+                                            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
+                                                <div class="card-body">
+                                                <div id="paypal-button-container"></div>		                                        
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div> 
                             </div> 
                         </div>
+                    </div>
+                    <div class="boton-continuar">
+                        <button id="continuarCompra" onclick="procesarCompra();" class="bt btn-danger btn-lg btn-block">Comprar</button>
                     </div>
                 </div>
             </div>                                                   
@@ -281,12 +307,18 @@
                                 <a class="" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="true" aria-controls="collapseThree">                                        
                                     <span class="valores-titulo-etiqueta valores-etiqueta">Total a pagar</span>
                                     <span id="producto-precio" class="valores-titulo-valor valores-valor">
-                                        @if(isset($total))
-                                        ${{ number_format($total+(($total > 800)? 0:180),2) }}
-                                        @else
-                                        $0.00
+                                        @if(isset($total) && isset($envio))
+                                            ${{ number_format($total+$envio,2) }}
                                         @endif
                                     </span>
+                                    @if(isset($total) && isset($envio))
+                                        <input type="hidden" id="total-compra-sf" value="{{$total+$envio}}">
+                                        <input type="hidden" id="total-compra" value="{{number_format($total+$envio,2)}}">
+                                        <input type="hidden" id="total-compra-10" value="{{number_format(($total+$envio)*1.1,2)}}">
+                                        <input type="hidden" id="aumento-compra-10" value="{{number_format(($total+$envio)*0.1,2)}}">
+                                        <input type="hidden" id="total-compra-15" value="{{number_format(($total+$envio)*1.15,2)}}">
+                                        <input type="hidden" id="aumento-compra-15" value="{{number_format(($total+$envio)*0.15,2)}}">
+                                    @endif
                                 </a>
                             </h2>
                         </div> 
@@ -296,11 +328,13 @@
                                     <span class="valores-etiqueta" id="{{$loop->iteration}}detalleEtiqueta">{{ $producto['nombre'] }}</span>
                                     <span class="valores-valor" id="{{$loop->iteration}}detalleValor" >${{ number_format( $producto['precio']*$producto['cantidad'], 2, '.', ',') }}</span>
                                 @endforeach
+                                <span class="valores-etiqueta" style="display: none;" id="mesesDetalleEtiqueta">Meses sin intereses</span>
+                                <span class="valores-valor"style="display: none;"  id="mesesDetalleValor" ></span>
                                 <span class="valores-etiqueta">Costo de envio</span>
-                                @if($total > 800)
+                                @if($envio == 0)
                                     <span class="valores-valor texto-promo" id="valorEnvio" >GRATIS</span>
                                 @else
-                                    <span class="valores-valor" id="valorEnvio" >$180.00</span>
+                                    <span class="valores-valor" id="valorEnvio" >${{number_format($envio,2)}}</span>
                                 @endif
                             @endif                      
                         </div>                         
@@ -325,7 +359,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <img class="mx-auto d-block" src="img/cvv-cards.png">
+            <img class="mx-auto d-block" src="{{ asset('storage/imagenesLayout/cvv-cards.png')}}">
         </div>
         </div>
     </div>
@@ -362,6 +396,8 @@
 @endsection
 
 @section('scripts')
+    <input type="hidden" value="{{ route('datosEnvio') }}" id="rutaDatosEnvio">
     <script src="{{ asset('js/confirmarCompra.js') }}"></script>
     <script type="text/javascript" src="https://cdn.conekta.io/js/latest/conekta.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac6HOuvFbi5fFO3mTxSxcThAWFu3KG0GKXzAbY0HeuHSwZcIzmY6D7YwWILwzlqgXXk7EfnUXXG6CHhy&disable-card=visa,mastercard,amex,discover,jcb,elo,hiper&currency=MXN"></script>
 @endsection

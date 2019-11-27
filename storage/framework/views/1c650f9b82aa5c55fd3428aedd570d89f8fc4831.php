@@ -161,7 +161,7 @@
                                         <tbody id="opciones">
                                             <tr>
                                                 <td>
-                                                    Envíos Gratis Compra Min. $800
+                                                    Envíos Gratis
                                                 </td>
                                                 <td>
                                                     <span class="texto-promo">Envío gratis</span>
@@ -170,7 +170,7 @@
                                                     Martes&nbsp;
                                                     <strong class="dia-entrega">27 de Agosto </strong>
                                                 </td>
-                                            </tr> 
+                                            </tr> <!--
                                             <tr>
                                                 <td>
                                                     Compras inferiores a $800
@@ -182,7 +182,7 @@
                                                     Miércoles&nbsp;
                                                     <strong class="dia-entrega">28 de Agosto </strong>
                                                 </td>
-                                            </tr>   
+                                            </tr>  -->
                                             <tr>
                                                 <td>
                                                     A convenir
@@ -222,11 +222,9 @@
                             <a class="" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">                                        
                                 <span class="valores-titulo-etiqueta valores-etiqueta">Total</span>
                                 <span id="carrito-total" class="valores-titulo-valor valores-valor">
-                                    <?php if($total !== null): ?>
-                                    $<?php echo e(number_format($total+(($total > 800)? 0:180),2)); ?>
+                                    <?php if(isset($total) && isset($envio)): ?>
+                                        $<?php echo e(number_format($envio+$total,2)); ?>
 
-                                    <?php else: ?>
-                                    $0.00
                                     <?php endif; ?>
                                 </span>
                             </a>
@@ -239,10 +237,10 @@
                                 <span class="valores-valor" id="<?php echo e($loop->iteration); ?>detalleValor" >$<?php echo e(number_format( $producto['precio']*$producto['cantidad'], 2, '.', ',')); ?></span>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <span class="valores-etiqueta">Costo de envio</span>
-                            <?php if($total > 800): ?>
+                            <?php if($envio == 0): ?>
                                 <span class="valores-valor texto-promo" id="valorEnvio" >GRATIS</span>
                             <?php else: ?>
-                                <span class="valores-valor" id="valorEnvio" >$180.00</span>
+                                <span class="valores-valor" id="valorEnvio" >$<?php echo e(number_format($envio,2)); ?></span>
                             <?php endif; ?>
                         <?php endif; ?>                      
                     </div>                         

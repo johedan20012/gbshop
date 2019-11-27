@@ -57,24 +57,8 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
 
-    protected function createCliente(Request $request)
-    {
-        //$this->validator($request->all())->validate();
+    protected function createCliente(Request $request){
 
         $validacion = Validator::make($request->all(), array(
             'registro-nombre' => 'required|string|max:255',

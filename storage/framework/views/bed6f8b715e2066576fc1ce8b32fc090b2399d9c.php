@@ -33,28 +33,4 @@ GB Route Music Store: Tienda online
 </header>
 <?php $__env->stopSection(); ?>
 
-
-<?php $__env->startSection('contenido'); ?>
-
-
-<div class="container">
-    <div class="row"> 
-        <div class="col-md-12 justify-content-cente">
-            <?php echo $__env->make('widgets.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-        </div>
-        <div class="col-md-3 m-t-10 text-center">
-            <div class="m-t-10"><a href="<?php echo e(route('panelUsuario').'?panel=2'); ?>">Editar información</a></div><br>
-            <div class="m-t-10 m-b-20"><a href="<?php echo e(route('panelUsuario').'?panel=3'); ?>">Historial de compras</a></div>
-        </div>           
-        <div class="col-md-9 m-t-10 ">
-            <?php echo $__env->yieldContent('panel'); ?>                   
-        </div>
-        <div class="col-md-12">
-            
-                
-        </div>
-    </div>
-</div>
-<?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

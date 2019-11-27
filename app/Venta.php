@@ -8,9 +8,11 @@ class Venta extends Model
 {
     protected $primaryKey = 'idventas';
 
-    public $timestamps = false;
-
     public function detalles(){
         return $this->hasMany('App\DetalleVenta','idventa','idventas');
+    }
+
+    public function usuario(){
+        return $this->hasOne('App\Cliente','idclientes','idcliente');
     }
 }
