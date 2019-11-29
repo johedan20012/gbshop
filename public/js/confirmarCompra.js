@@ -118,19 +118,30 @@ function mostrarModal(mensaje,status = 0){
     if(status == 1){ //Exito
         modal.find("#imgOk").show();
         modal.find("#imgError").hide();
+        modal.find("#imgCargando").hide();
         modal.modal("show");
         modal.find("#modalMensajeLabel").html("Éxito");
         modal.find("#modal-mensaje").html(mensaje);
         modal.find("#modal-boton2").html("Aceptar");
         modal.find("#modal-boton2").show();
         modal.find("#modal-boton1").hide();
-    }else{ //Error
+    }else if(status == 0){ //Error
         modal.find("#imgOk").hide();
         modal.find("#imgError").show();
+        modal.find("#imgCargando").hide();
         modal.modal("show");
         modal.find("#modalMensajeLabel").html("Error");
         modal.find("#modal-mensaje").html(mensaje);
         modal.find("#modal-boton1").html("Aceptar");
+        modal.find("#modal-boton2").hide();
+    }else{
+        modal.find("#imgOk").hide();
+        modal.find("#imgError").hide();
+        modal.find("#imgCargando").show();
+        modal.modal("show");
+        modal.find("#modalMensajeLabel").html("Procesando tu compra");
+        modal.find("#modal-mensaje").html(mensaje);
+        modal.find("#modal-boton1").hide();
         modal.find("#modal-boton2").hide();
     }
 }
@@ -167,6 +178,7 @@ function traerDatosCliente(){
 }
 
 function mandarFormulario(){
+    mostrarModal("",2);
     var form = $("#form-envio");
     form.find("#cliente-mesesIntereses").val($("#card-mesesIntereses").val());
     $.ajaxSetup({

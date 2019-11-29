@@ -18,8 +18,8 @@ Route::get('/', function () {
 //Route::get('/productos', 'ProductosController@getProductos')->name('produc');
 //Route::get('/verProducto/{id}', 'ProductosController@getProducto')->name('verProducto');
 //?BORRAMEEEEEEEEEEEEEEEEEEEE
-Route::get("/correo","ClienteController@correo");
-Route::get("/pedido","AdminController@hojaPedido");
+//Route::get("/correo","ClienteController@correo");
+//Route::get("/pedido","AdminController@hojaPedido");
 
 //TODO Rutas de la tienda
 Route::get('/','ProductosController@getInicio')->name('inicio'); //?Inicio

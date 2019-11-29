@@ -118,7 +118,7 @@
                                             </div> 
                                             <div class="form-group col-4 col-md-2">
                                                 <label for="cliente-cp">C. Postal<span class="rojo-red"> *</span></label>
-                                                <input type="text" maxlength="12" size="12" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
+                                                <input type="text" maxlength="5" size="5" class="form-control form-envio-cliente" name="cliente-cp" id="cliente-cp" required >
                                             </div>
                                             <div class="form-group col-6 col-md-6">
                                                 <label for="cliente-colonia">Colonia<span class="rojo-red"> *</span></label>
@@ -170,7 +170,7 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="oxxo"  >
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO <img src="{{ asset('storage/imagenesLayout/oxxopay.png')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO (Monto maximo de $10,000) <img src="{{ asset('storage/imagenesLayout/oxxopay.png')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
                                                 </li>
                                             </div>
                                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
@@ -183,7 +183,7 @@
                                             <div class="card-header" id="headingTwo">
                                                 <li >
                                                     <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="tarjeta">
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito <img src="{{ asset('storage/imagenesLayout/credits.png')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
+                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito (Monto maximo de $10,000)<img src="{{ asset('storage/imagenesLayout/credits.png')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
                                                 </li>
                                             </div>
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPago">
@@ -381,6 +381,9 @@
         </div>
         <div id="imgError" class="text-center">
             <img src="{{ asset('storage/imagenesLayout/error.png') }}"  style="width:20%;" title="Algo malo ocurrio">
+        </div>
+        <div id="imgCargando" class="text-center">
+            <img src="{{ asset('storage/imagenesLayout/loading.gif') }}"  style="width:20%;" title="Algo malo ocurrio">
         </div>
         <div id="modal-mensaje" class="col-md-12 col-12">
         

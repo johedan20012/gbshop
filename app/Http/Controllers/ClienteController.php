@@ -403,7 +403,7 @@ class ClienteController extends Controller
             $entreCalle = ($request->has("cliente-entreCalle"))? $request->input("cliente-entreCalle") : "";
             $nExt = $request->input("cliente-nExt");
             $nInt = ($request->has("cliente-nInt"))? $request->input("cliente-nInt") : "";
-            $cp = $request->input("cliente-cp");
+            $cp = substr(sprintf("%'05s",$request->input("cliente-cp")),0,5);
             $colonia = $request->input("cliente-colonia");
             $municipio = $request->input("cliente-municipio");
             $estado = $request->input("cliente-estado");

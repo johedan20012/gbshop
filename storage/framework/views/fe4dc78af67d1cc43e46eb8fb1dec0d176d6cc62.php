@@ -3,22 +3,6 @@
         <?php echo $pedidos->links('widgets.pagination'); ?>
 
     </div>
-
-    <form class="form-inline mr-3" id="buscarPedido" action="">          
-        <?php if(isset($actual)): ?>  
-            <input type="search" class="form-group" name="pedido-busca" id="pedido-busca" placeholder="Buscar" value="<?php echo e($actual); ?>"> 
-        <?php else: ?>
-            <input type="search" class="form-group" name="pedido-busca" id="pedido-busca" placeholder="Buscar"> 
-        <?php endif; ?>            
-                               
-        <i class="fa fa-search"></i>
-    </form>
-
-    <?php if(isset($actual)): ?>  
-        <input type="hidden" id="pedido-actual" value="<?php echo e($actual); ?>">  
-    <?php else: ?>
-        <input type="hidden" id="pedido-actual" value=""> 
-    <?php endif; ?>
     
 </div>
 
