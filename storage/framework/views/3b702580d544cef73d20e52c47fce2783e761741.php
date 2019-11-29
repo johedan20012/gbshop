@@ -16,20 +16,30 @@ GB Route Music Store: Tienda online
             <hr>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    <?php $cont = 0; ?>
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($cont == 0): ?>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo e($cont); ?>" class="active"></li>
+                        <?php else: ?>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo e($cont); ?>"></li>
+                        <?php endif; ?>
+                        <?php $cont +=1?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="<?php echo e(asset('storage/imagenesLayout/banners/slide1_image.png')); ?>" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="<?php echo e(asset('storage/imagenesLayout/banners/slide2_image.png')); ?>" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="<?php echo e(asset('storage/imagenesLayout/banners/slide3_image.png')); ?>" class="d-block w-100" alt="...">
-                    </div>
+                    <?php $cont = 0; ?>
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($cont == 0): ?>
+                            <div class="carousel-item active" data-id="<?php echo e($cont); ?>" data-nombre="<?php echo e($banner); ?>">
+                                <img src="<?php echo e(asset('storage/imagenesLayout/banners/'.$banner)); ?>" class="d-block w-100" alt="...">
+                            </div>
+                        <?php else: ?>
+                            <div class="carousel-item" data-id="<?php echo e($cont); ?>" data-nombre="<?php echo e($banner); ?>">
+                                <img src="<?php echo e(asset('storage/imagenesLayout/banners/'.$banner)); ?>" class="d-block w-100" alt="...">
+                            </div>
+                        <?php endif; ?>
+                        <?php $cont +=1?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -39,7 +49,7 @@ GB Route Music Store: Tienda online
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-            </div> 
+            </div>  
             <hr>
             <div class="row">
                 <?php $__currentLoopData = $productos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $producto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

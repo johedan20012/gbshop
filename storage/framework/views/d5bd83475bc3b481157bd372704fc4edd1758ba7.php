@@ -9,9 +9,9 @@ Administración gbshop
 <?php $__env->startSection('contenido'); ?>
 <?php
     if(!isset($numPag)){
-        $numPag = 5;
-    }elseif($numPag != 1 && $numPag != 2 && $numPag != 3 && $numPag != 4){
-        $numPag = 5;
+        $numPag = 1;
+    }elseif($numPag != 1 && $numPag != 2 && $numPag != 3 && $numPag != 4 && $numPag != 5 && $numPag != 6){
+        $numPag = 1;
     }
     
 ?>
@@ -48,7 +48,7 @@ Administración gbshop
         <?php endif; ?>
         <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:medium">
-            <?php if( $numPag == 1 || $numPag == 6 ): ?>
+            <?php if( $numPag == 1): ?>
                 <a href = "<?php echo e(route('admin').'?panel=1'); ?>" class="nav-item nav-link active" id="nav-productos-tab" aria-selected="true">Productos</a>
             <?php else: ?>
                 <a href = "<?php echo e(route('admin').'?panel=1'); ?>" class="nav-item nav-link" id="nav-productos-tab" aria-selected="false">Productos</a>
@@ -63,15 +63,22 @@ Administración gbshop
             <?php else: ?>
                 <a href = "<?php echo e(route('admin').'?panel=3'); ?>" class="nav-item nav-link" id="nav-categorias-tab" aria-selected="false">Categorias</a>
             <?php endif; ?>
-            <?php if($numPag == 4): ?>
-                <a href = "<?php echo e(route('admin').'?panel=4'); ?>" class="nav-item nav-link active" id="nav-admins-tab" aria-selected="true">Admin</a>
-            <?php else: ?>
-                <a href = "<?php echo e(route('admin').'?panel=4'); ?>" class="nav-item nav-link" id="nav-admins-tab" aria-selected="false">Admin</a>
+            <?php if(Auth::guard()->user()->privilegios == 1): ?>
+                <?php if($numPag == 4): ?>
+                    <a href = "<?php echo e(route('admin').'?panel=4'); ?>" class="nav-item nav-link active" id="nav-admins-tab" aria-selected="true">Admin</a>
+                <?php else: ?>
+                    <a href = "<?php echo e(route('admin').'?panel=4'); ?>" class="nav-item nav-link" id="nav-admins-tab" aria-selected="false">Admin</a>
+                <?php endif; ?>
             <?php endif; ?>
             <?php if($numPag == 5): ?>
                 <a href = "<?php echo e(route('admin').'?panel=5'); ?>" class="nav-item nav-link active" id="nav-admin-tab" aria-selected="true">Pedidos</a>
             <?php else: ?>
                 <a href = "<?php echo e(route('admin').'?panel=5'); ?>" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Pedidos</a>
+            <?php endif; ?>
+            <?php if($numPag == 6): ?>
+                <a href = "<?php echo e(route('admin').'?panel=6'); ?>" class="nav-item nav-link active" id="nav-admin-tab" aria-selected="true">Banners</a>
+            <?php else: ?>
+                <a href = "<?php echo e(route('admin').'?panel=6'); ?>" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Banners</a>
             <?php endif; ?>
             <a class="nav-item nav-link ml-auto" role = "tab" aria-controls="nav-admin" aria-selected="false" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">

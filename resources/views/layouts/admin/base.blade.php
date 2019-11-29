@@ -11,9 +11,9 @@ Administración gbshop
 @section('contenido')
 <?php
     if(!isset($numPag)){
-        $numPag = 5;
-    }elseif($numPag != 1 && $numPag != 2 && $numPag != 3 && $numPag != 4){
-        $numPag = 5;
+        $numPag = 1;
+    }elseif($numPag != 1 && $numPag != 2 && $numPag != 3 && $numPag != 4 && $numPag != 5 && $numPag != 6){
+        $numPag = 1;
     }
     
 ?>
@@ -47,7 +47,7 @@ Administración gbshop
         @endif
         <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:medium">
-            @if( $numPag == 1 || $numPag == 6 )
+            @if( $numPag == 1)
                 <a href = "{{route('admin').'?panel=1'}}" class="nav-item nav-link active" id="nav-productos-tab" aria-selected="true">Productos</a>
             @else
                 <a href = "{{route('admin').'?panel=1'}}" class="nav-item nav-link" id="nav-productos-tab" aria-selected="false">Productos</a>
@@ -62,15 +62,22 @@ Administración gbshop
             @else
                 <a href = "{{route('admin').'?panel=3'}}" class="nav-item nav-link" id="nav-categorias-tab" aria-selected="false">Categorias</a>
             @endif
-            @if($numPag == 4)
-                <a href = "{{route('admin').'?panel=4'}}" class="nav-item nav-link active" id="nav-admins-tab" aria-selected="true">Admin</a>
-            @else
-                <a href = "{{route('admin').'?panel=4'}}" class="nav-item nav-link" id="nav-admins-tab" aria-selected="false">Admin</a>
+            @if(Auth::guard()->user()->privilegios == 1)
+                @if($numPag == 4)
+                    <a href = "{{route('admin').'?panel=4'}}" class="nav-item nav-link active" id="nav-admins-tab" aria-selected="true">Admin</a>
+                @else
+                    <a href = "{{route('admin').'?panel=4'}}" class="nav-item nav-link" id="nav-admins-tab" aria-selected="false">Admin</a>
+                @endif
             @endif
             @if($numPag == 5)
                 <a href = "{{route('admin').'?panel=5'}}" class="nav-item nav-link active" id="nav-admin-tab" aria-selected="true">Pedidos</a>
             @else
                 <a href = "{{route('admin').'?panel=5'}}" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Pedidos</a>
+            @endif
+            @if($numPag == 6)
+                <a href = "{{route('admin').'?panel=6'}}" class="nav-item nav-link active" id="nav-admin-tab" aria-selected="true">Banners</a>
+            @else
+                <a href = "{{route('admin').'?panel=6'}}" class="nav-item nav-link" id="nav-admin-tab" aria-selected="false">Banners</a>
             @endif
             <a class="nav-item nav-link ml-auto" role = "tab" aria-controls="nav-admin" aria-selected="false" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

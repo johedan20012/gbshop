@@ -42,6 +42,7 @@ Route::post('/conektaOXXO-u4a5knx','ClienteController@procesarPagoOXXO'); //?Es 
 //TODO Rutas para el cliente
 Route::get('/panelUsuario','ClienteController@getPanel')->name('panelUsuario')->middleware('auth:cliente');
 Route::post('/panelUsuario/editInfo','ClienteController@editarCliente')->name('panelUsuario-editInfo')->middleware("auth:cliente");
+Route::get('/detallesPedido', 'ClienteController@verDetallesPedido')->name('hojaPedidoCliente')->middleware('auth:cliente');
 /*Route::view('/panelUsuario','cliente.panelInicio')->name('panelCliente')->middleware('auth:cliente');
 Route::view('/panelUsuarioEdit','cliente.panelEditar')->name('panelClienteEditar');*/
 
@@ -84,16 +85,19 @@ Route::get('/admin','AdminController@getPanel')->name('admin')->middleware('auth
   Route::post('/admin/delCategoria','AdminController@delCategoria')->name('delCategoria')->middleware('auth');
 
   //* Rutas de administracion para admins
-  Route::group(['middleware' => ['auth']], function() {
-    Route::post('/admin/tablaAdmins','AdminController@getTablaAdmins')->name('tablaAdmins')->middleware('auth');
-    Route::post('/admin/editAdmin','AdminController@editAdmin')->name('editAdmin')->middleware('auth');
-    Route::post('/admin/delAdmin','AdminController@delAdmin')->name('delAdmin')->middleware('auth');
-    Route::post('/admin/registro', 'AdminController@createAdmin')->name('registroAdmin')->middleware("auth");
+  Route::group(['middleware' => ['auth','adminPriv']], function() {
+    Route::post('/admin/tablaAdmins','AdminController@getTablaAdmins')->name('tablaAdmins');
+    Route::post('/admin/editAdmin','AdminController@editAdmin')->name('editAdmin');
+    Route::post('/admin/delAdmin','AdminController@delAdmin')->name('delAdmin');
+    Route::post('/admin/registro', 'AdminController@createAdmin')->name('registroAdmin');
   });
-  
 
   //* Rutas de administacion para pedidos
   Route::get('/admin/hojaPedido', 'AdminController@generarHojaPedido')->name('hojaPedido')->middleware('auth');
   Route::post('/admin/tablaPedidos','AdminController@getTablaPedidos')->name('tablaPedidos')->middleware('auth');
   Route::post('/admin/editEstatus','AdminController@editEstatus')->name('editEstatusPedido')->middleware('auth');
   Route::post('/admin/reenviarCorreo','AdminController@mandarCorreoPedido')->name('reenviarCorreo')->middleware('auth');
+
+  //* Rutas de administracion para los banners de la pagina de inicio
+  Route::post('/admin/addBanner','AdminController@storeBanner')->name('storeBanner')->middleware('auth');
+  Route::post('/admin/delBanner','AdminController@delBanner')->name('delBanner')->middleware('auth');

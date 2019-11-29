@@ -28,5 +28,7 @@
         @endif
     </div>
     </nav>
-
+    <div class="tab-content" id="nav-tabContent">
+        @include("widgets.cliente.tablaPedidos")
+    </div>
 @endsection

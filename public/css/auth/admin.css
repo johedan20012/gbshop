@@ -1,5 +1,5 @@
 /* configAdmin */
-#add-producto, #del-producto, #add-marca,#add-admin, #del-marca, #add-categoria, #del-admin, #del-categoria{
+#add-producto, #del-producto, #add-marca,#add-admin,#ver-banners, #del-banner, #add-banner, #del-marca, #add-categoria, #del-admin, #del-categoria{
 	border: 1px solid #e0e1e1;
 	border-radius: 8px;
 	padding: 10px;

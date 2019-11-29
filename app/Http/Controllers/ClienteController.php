@@ -41,10 +41,21 @@ class ClienteController extends Controller
                 return view('cliente.panelEditar',['breadcrumb'=>$breadcrumb,'numPanel' => 2,'datosUser' => $datosUsuario]);
             case 3:
                 $tipoPedido = ($request->has("type"))? $request->input("type") : 1;
-
+                
+                $pedidos = array();
+                switch($tipoPedido){
+                    case 1:
+                        $pedidos = Auth::guard("cliente")->user()->pedidos()->orderBy('created_at', 'desc')->paginate(10)->setPageName("p");
+                    case 2:
+                        $pedidos = Auth::guard("cliente")->user()->pedidos()->where('estatus',"!=",0)->orderBy('created_at', 'desc')->paginate(10)->setPageName("p");
+                        break;
+                    case 3:
+                        $pedidos = Auth::guard("cliente")->user()->pedidos()->where('estatus',0)->orderBy('created_at', 'desc')->paginate(10)->setPageName("p");
+                        break;
+                }
                 $breadcrumb = [['nombre'=> 'Usuario','ruta'=>route('panelUsuario')], ['nombre'=> 'Mis pedidos','ruta'=>'']];
 
-                return view('cliente.panelPedidos',['breadcrumb'=>$breadcrumb,'numPanel' => 3, 'tipoPedido' => $tipoPedido]);
+                return view('cliente.panelPedidos',['breadcrumb'=>$breadcrumb,'numPanel' => 3, 'tipoPedido' => $tipoPedido, 'pedidos' => $pedidos]);
             default:
                 $breadcrumb = [['nombre'=> 'Usuario','ruta'=>'']];
                 
@@ -299,6 +310,29 @@ class ClienteController extends Controller
         $destinatario = $request->input("correo");
 
         Mail::to($destinatario)->send(new CompraRealizada());
+    }
+
+    public function verDetallesPedido(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'clavePedido' => 'required|string|max:100'
+        ));
+
+        $breadcrumb = [['nombre'=> 'Usuario','ruta'=>route('panelUsuario')], ['nombre'=> 'Mis pedidos','ruta'=>route("panelUsuario")."?panel=3"]];
+        
+        if($validacion->fails()){
+            
+            return view('cliente.detallesPedido',['breadcrumb'=> $breadcrumb,'pedido' => null]);
+        }
+
+        $pedido = Venta::where('clave',$request->input('clavePedido'))->first();
+
+        if(!$pedido){
+            return view('cliente.detallesPedido',['breadcrumb'=> $breadcrumb,'pedido' => null]);
+        }else if($pedido->idcliente != Auth::guard('cliente')->user()->idclientes){
+            return view('cliente.detallesPedido',['breadcrumb'=> $breadcrumb,'pedido' => null]);
+        }
+
+        return view('cliente.detallesPedido',['breadcrumb'=> $breadcrumb,'pedido' => $pedido]);
     }
 
     public function procesarCompra(Request $request){

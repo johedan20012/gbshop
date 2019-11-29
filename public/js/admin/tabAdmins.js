@@ -11,7 +11,7 @@ $(document).ready(function(){
         buscarAdmins(page);
     });
 
-    //Modal de editar y/o eliminar marcas
+    //Modal de editar y/o eliminar admins
     $(document).on('show.bs.modal','#modalAdmins',function(event){
         var button = $(event.relatedTarget); // Obtiene el boton que activo al modal
         var id = button.data('id'); // Obtiene los datos de los atributos data-*

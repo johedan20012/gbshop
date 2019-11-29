@@ -35,6 +35,11 @@ class AdminController extends Controller
 
         $panel = ($validacion->fails())? 1: ($request->has('panel')) ? $request->input('panel') : 1;
 
+        $adminActual = Auth::guard()->user();
+        if($adminActual->privilegios == 0 && $panel == 4){
+            $panel = 1;
+        }
+
         switch($panel){
             case 2:
                 $marcas = Marca::orderBy('nombre')->paginate(10)->setPageName('p');
@@ -59,7 +64,6 @@ class AdminController extends Controller
                 break;
             
             case 4:
-                $adminActual = Auth::guard("web")->user();
                 $admins = User::where('idadmins',"!=",$adminActual->idadmins)->orderBy("username")->paginate(10)->setPageName('p');
 
                 return view('admin.panelAdmins',[
@@ -77,7 +81,15 @@ class AdminController extends Controller
                     'numPag' => $panel,
                     'sinNavbar' => true
                 ]);
-                break;
+
+            case 6:
+                $banners = Storage::disk('banners')->files();
+
+                return view('admin.panelBanners',[
+                    'banners' => $banners,
+                    'numPag' => $panel,
+                    'sinNavbar' => true
+                ]);
 
             default:
                 $marcas = Marca::orderBy('nombre')->get();
@@ -173,7 +185,7 @@ class AdminController extends Controller
             $filename  = str_random(15).'.'.$extension;
 
             while(Storage::disk('imgProductos')->exists($filename)){
-                $filename  = str_random(15).'.jpg';
+                $filename  = str_random(15).'.'.$extension;
             }
 
             $imagen = Image::make($photo->getRealPath())->encode('jpg',85);
@@ -313,7 +325,7 @@ class AdminController extends Controller
             $filename  = str_random(15).'.'.$extension;
 
             while(Storage::disk('imgProductos')->exists($filename)){
-                $filename  = str_random(15).'.jpg';
+                $filename  = str_random(15).'.'.$extension;
             }
 
             $imagen = Image::make($foto->getRealPath())->encode('jpg',85);
@@ -822,5 +834,54 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin',['panel' => 4])->with('Mensaje' , 'Administrador eliminado con exito!');
+    }
+
+    //TODO Aqui inician las funciones para el panel de banners
+    public function storeBanner(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'banner-fotos.*' => 'nullable|file|image|mimes:jpeg,png|max:4096' //Para esto activamos php_fileinfo en php.ini
+        ));
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 6])->with('Error' , 'No se pudo agregar los banners');
+        }
+        
+        //Guardar imagenes
+        $photos = $request->file('banner-fotos');
+
+        foreach ($photos as $photo) {
+            
+            $extension = $photo->getClientOriginalExtension();
+            $filename  = date('YmdHis').str_random(3).'.'.$extension;
+
+            $imagen = Image::make($photo->getRealPath())->encode('jpg',85);
+            //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
+
+            Storage::disk('banners')->put($filename, (string) $imagen);
+            if(!Storage::disk('banners')->exists($filename)){ //No se guardo la imagen
+                return redirect()->route('admin',['panel' => 6])->with('Warning' , 'Solo se pudo guardar algunos banners');
+            }
+
+        }
+        return redirect()->route('admin',['panel' => 6])->with('Mensaje' , 'Banners agregados con exito!');
+    }
+
+    public function delBanner(Request $request){
+        $validacion = Validator::make($request->all(), array(
+            'banner-nombre' => 'required|string|max:50',
+        ));
+        
+        if($validacion->fails()){
+            return redirect()->route('admin',['panel' => 6])->with('Error' , 'No se pudo borrar el banner');
+        }
+
+        $nombreBanner = $request->input('banner-nombre');
+
+        Storage::disk('banners')->delete($nombreBanner);
+
+        if(Storage::disk('banners')->exists($nombreBanner)){
+            return redirect()->route('admin',['panel' => 6])->with('Error' , 'No se pudo borrar el banner');
+        }
+
+        return redirect()->route('admin',['panel' => 6])->with('Mensaje' , 'Banner eliminado con exito!');
     }
 }

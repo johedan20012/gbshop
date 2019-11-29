@@ -58,4 +58,8 @@ class Cliente extends Authenticatable
 
         return $regreso;
     }
+
+    public function pedidos(){
+        return $this->hasMany('App\Venta','idcliente','idclientes');
+    }
 }

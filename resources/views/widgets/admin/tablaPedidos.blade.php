@@ -38,7 +38,7 @@
 <tbody>
     <tr>
     @if(count($pedidos) == 0)
-        No se encontraron marcas con los datos solicitados.
+        No se encontraron pedidos con los datos solicitados.
     @endif
 
     @foreach($pedidos as $pedido)
