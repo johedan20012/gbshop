@@ -105,7 +105,7 @@ class AdminController extends Controller
                 ]);
                 break;
         }
-    }
+    } 
 
     //TODO, Aqui empiezan las funciones que llama el panel de productos
     public function getTablaProductos(Request $request){
@@ -150,7 +150,7 @@ class AdminController extends Controller
             'producto-categoria' => 'required|integer',
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
-            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048' //Para esto activamos php_fileinfo en php.ini
+            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:4096' //Para esto activamos php_fileinfo en php.ini
         ));
         if($validacion->fails()){
             return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Error' , 'No se pudo registrar el producto, revisa los campos');
@@ -188,10 +188,12 @@ class AdminController extends Controller
                 $filename  = str_random(15).'.'.$extension;
             }
 
-            $imagen = Image::make($photo->getRealPath())->encode('jpg',85);
+            $imagen = Image::make($photo->getRealPath())->encode('png',85);
             //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('imgProductos')->put($filename, (string) $imagen);
+            $imagen->destroy(); //Liberamos el espacio en memoria que ocupa "imagen"
+            
             if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
                 return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
             }
@@ -259,7 +261,7 @@ class AdminController extends Controller
             'producto-categoria' => 'required|integer',
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
-            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:2048', //Para esto activamos php_fileinfo en php.ini
+            'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:4096', //Para esto activamos php_fileinfo en php.ini
             'producto-fotosBorrar' => 'nullable|string|max:300'
         ));
         
@@ -328,10 +330,12 @@ class AdminController extends Controller
                 $filename  = str_random(15).'.'.$extension;
             }
 
-            $imagen = Image::make($foto->getRealPath())->encode('jpg',85);
+            $imagen = Image::make($foto->getRealPath())->encode('png',85);
             //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('imgProductos')->put($filename, (string) $imagen);
+            $imagen->destroy(); //Liberamos el espacio en memoria que ocupa "imagen"
+
             if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Se edito el producto, se eliminaron las fotos, pero hubo un error con alguna o varias imagenes nuevas');
             }

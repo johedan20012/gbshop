@@ -274,7 +274,7 @@
 										<table  style="width:100%; font-family:Arial,Helvetica; font-size:12px; font-style: italic;">
 											<tr>
 												<td style="color:#bf2546; font-size:23px; font-style:normal;">
-													(777)311-2741 
+													(777)629-0048
 												</td>
 												<td style=" font-style:normal;">
 													Muchas gracias por tu confianza,<br>

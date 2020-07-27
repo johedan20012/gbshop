@@ -39,7 +39,7 @@
 <tbody>
     <tr>
     <?php if(count($pedidos) == 0): ?>
-        No se encontraron marcas con los datos solicitados.
+        No se encontraron pedidos con los datos solicitados.
     <?php endif; ?>
 
     <?php $__currentLoopData = $pedidos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pedido): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

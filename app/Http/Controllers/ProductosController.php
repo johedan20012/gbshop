@@ -36,13 +36,12 @@ class ProductosController extends Controller
      *
      * @return Productos
      */
-    public function getCatalogoPorCategoria(Request $request)
-    {
+    public function getCatalogoPorCategoria(Request $request){
         $validatedData = $request->validate([
-            'id' => 'nullable|integer|digits_between:1,10',
+            'id' => 'nullable|integer',
             'cadena' => 'nullable|string|max:50'
         ]);
-        $id = ($request->input('id') !== null)? $request->input('id') : 0;
+        $id = ($request->input('id') !== null)? $request->input('id') : -1;
         $cadena = ($request->input('cadena') !== null)? $request->input('cadena') : "";
 
         $breadcrumb = null;
@@ -51,7 +50,7 @@ class ProductosController extends Controller
             //return view('catalogo', ['productos' => $productos, 'categorias' => Categoria::where('idcategoriapadre',null)->orderBy('nombre')->get(), 'breadcrumb' => $breadcrumb]);
         }else{
 
-            if($id == 0){
+            if($id == -1){
                 $productos = Producto::orderBy('nombre')->paginate(20)->setPageName("p");
             }else{
                 $productos = Producto::whereIn('idcategoria',function($query2) use ($id){

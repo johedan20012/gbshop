@@ -13,6 +13,7 @@ use App\DetalleVenta;
 use Carbon\Carbon;
 
 use App\Mail\CompraRealizada;
+use App\Mail\PagoRealizadoOXXO;
 
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
@@ -800,8 +801,9 @@ class ClienteController extends Controller
                             return array("ERROR" => "No se pudo actualizar la orden, error de query");
                         }
                         header('HTTP/1.1 200 OK');
-                        return 1;
                         //Enviar correo de confirmación de pago;
+                        Mail::to($orden->usuario->email)->send(new PagoRealizadoOXXO($orden));
+                        return array("Exito" => "Se registro el evento y se envio el correo a la direccion".$orden->usuario->email);
                     }else{
                         header('HTTP/1.1 500 Internal Server Error');
                         return array("ERROR" => "El estatus de la orden ya es diferente que 'pendiente'");

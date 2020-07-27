@@ -8,7 +8,7 @@ $(document).ready(function(){
         var myurl = $(this).attr('href');
         
         var page= myurl.split('p=')[1];
-        var id = $("#paginador-idCat").val();
+        var id = $("#categoria-actual").val();
         var cadena =$("#cadena-actual").val();
         
         getCatalogo(id,page,cadena);
@@ -41,7 +41,7 @@ function getCatalogo(id,page,cadena){
     $.ajax({
         type:'POST',
         url: $('#rutaProductos').val(),
-        data:{cadena:cadena,p:page}
+        data:{id:id,cadena:cadena,p:page}
     }).done(function(data){
         //console.log(data);
         $("#paginador").empty().html(data.tabla);
