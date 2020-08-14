@@ -140,7 +140,7 @@ class ClienteController extends Controller
             if($request->ajax()){
                 return ['codigo'=>500];
             }
-            return redirect()->back()->with('Error' , 'No se pudo agregar el producto al carrito1');
+            return redirect()->back()->with('Error' , 'No se pudo agregar el producto al carrito.');
         }
 
         $codigo = $request->input('codigo');
@@ -151,7 +151,14 @@ class ClienteController extends Controller
             if($request->ajax()){
                 return ['codigo'=>500];
             }
-            return redirect()->back()->with('Error' , 'No se pudo agregar el producto al carrito');
+            return redirect()->back()->with('Error' , 'No se pudo agregar el producto al carrito.');
+        }
+
+        if($producto->stock <= 0){ //?No puedes comprar productos que no tienen stock xD
+            if($request->ajax()){
+                return ['codigo'=>500];
+            }
+            return redirect()->back()->with('Error' , 'No se pudo agregar el producto al carrito, se agotó el producto.');
         }
 
         $carrito = session()->get('carrito');
@@ -433,7 +440,7 @@ class ClienteController extends Controller
             }
 
             if($tipoPago == "ConektaTarjeta" || $tipoPago == "ConektaOXXO"){
-                \Conekta\Conekta::setApiKey("key_cUmxB4FJfqDe5ZZD7pJmbQ");
+                \Conekta\Conekta::setApiKey("key_tKUKeLQepmsZR1rT4FiXKA"); //? Api key privada de produccion para Conekta
                 \Conekta\Conekta::setApiVersion("2.0.0");
 
                 if($tipoPago == "ConektaTarjeta"){$conektaToken = $request->input("conektaTokenId");}
@@ -769,7 +776,7 @@ class ClienteController extends Controller
         $tipoEvento = $data->type; //¿Qué evento es?
         $livemode = $data->livemode; // True o false , si el evento es en modo de pruebas dara false
         
-        if($tipoEvento == "order.paid" || $livemode == true){ //!!! Cambiar el "or" por un "and"
+        if($tipoEvento == "order.paid" && $livemode == true){ //!!! Cambiar el "or" por un "and"
              $metodoPago = $data->data->object->charges->data[0]->payment_method->service_name;//->data[0]->payment_method->service_name; //Metodo de pago
              $statusPago = $data->data->object->payment_status; //Estado del pago, si es "paid" significa que esta pagado
 

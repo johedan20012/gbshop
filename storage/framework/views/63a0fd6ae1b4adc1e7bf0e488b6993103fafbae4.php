@@ -9,9 +9,9 @@
 <?php $__env->startSection('contenido'); ?>
 <div class="container">
     <?php if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning')): ?>
-        <div class="toast" id="myToast" data-delay="3000">
+        <div class="toast" id="myToast" data-delay="6000" style="max-width: none;">
             <div class="toast-header">
-                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBRoute</strong>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
             </div>
             <div class="toast-body">
@@ -41,6 +41,9 @@
             
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
+                    <?php if($producto->stock <= 0): ?>
+                        <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: relative; z-index : 2;" >
+                    <?php endif; ?>
                     <?php $iteracion = 0; $bandera = 0;?>
                     <?php $__currentLoopData = $producto->fotos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $foto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($bandera == 0): ?>
@@ -154,14 +157,21 @@
                 </h5>   
             </div>
             <br>
-            <form action="<?php echo e(route('addCarrito')); ?>" enctype="multipart/form-data" role="form" method="post">
-                <?php echo e(csrf_field()); ?>
+            <?php if($producto->stock > 0): ?>
+                <label class = "">Disponibilidad:</label>
+                <span class="text-success">En existencia</span> 
 
-                <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
-                <br><br><br>
-                <input type="hidden" value="<?php echo e($producto->codigo); ?>" name="codigo">
-                <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
-            </form>
+                <form action="<?php echo e(route('addCarrito')); ?>" enctype="multipart/form-data" role="form" method="post">
+                    <?php echo e(csrf_field()); ?>
+
+                    <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
+                    <br><br><br>
+                    <input type="hidden" value="<?php echo e($producto->codigo); ?>" name="codigo">
+                    <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+                </form>
+            <?php else: ?>
+                <span class="text-danger">Producto agotado</span>                
+            <?php endif; ?>
         </div>
         <div id="descripcion" class="col-xs-12 clear">
             <div class="row">
@@ -178,7 +188,7 @@
                     <img width="100%" src="<?php echo e(asset('storage/imagenesProductos/detalles/'.$producto->codigo.'1.png')); ?>">  <!--Large-->
                 </div>
                 <div class="col-xl-12 d-none d-lg-none d-xl-block">
-                    <img width="100%" src="<?php echo e(asset('storage/imagenesProductos/detalles/1.png')); ?>">  <!--Large-->
+                    <img width="100%" src="<?php echo e(asset('storage/imagenesProductos/detalles/'.$producto->codigo.'1.png')); ?>">  <!--Large-->
                 </div>
             </div>
         </div>

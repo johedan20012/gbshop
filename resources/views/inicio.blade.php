@@ -62,10 +62,17 @@ GB Route Music Store: Tienda online
                                     <div class="card-body">
                                         <p class="card-title money">${{$producto->precio}}</p>
                                         <p class="card-text"><small>{{$producto->nombre}}</small></p>
-                                        <div style="text-align: center"><a href="{{ route('verProducto').'?code='.$producto->codigo }}"class="btn btn-danger">Comprar</a></div>
+                                        @if($producto->stock > 0)
+                                            <div style="text-align: center"><a href="{{ route('verProducto').'?code='.$producto->codigo }}"class="btn btn-danger">Comprar</a></div>
+                                        @else
+                                            <div style="text-align: center"><a href="{{ route('verProducto').'?code='.$producto->codigo }}"class="btn btn-danger">Ver</a></div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6">
+                                    @if($producto->stock <= 0)
+                                        <img src="{{asset('storage/imagenesLayout/agotado.png') }}" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                    @endif
                                     @if(isset($producto->foto))
                                         <a href="{{ route('verProducto').'?code='.$producto->codigo }}" >
                                             <div style="padding:15px; height:100%; width:100%;">

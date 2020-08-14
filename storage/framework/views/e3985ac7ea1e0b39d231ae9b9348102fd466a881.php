@@ -131,7 +131,7 @@ GB Route Music Store: Tienda online
                     <input type="password" class="form-control" name="registro-pass" id="registro-pass" placeholder="7 a 15 caracteres" autocomplete="off"  required>
                     </div>
                     <div class="form-group">
-                    <label class="rojo-red" for="registro-pass-confirmation">Confirma contraseña:</label>
+                    <label class="rojo-red" for="registro-pass-confirmation">Confirmar contraseña:</label>
                     <input type="password" class="form-control" name="registro-pass_confirmation" id="registro-pass-confirmation" placeholder="7 a 15 caracteres" autocomplete="off" required>
                     </div>
                     <input type="hidden" name="redireccion" value="<?php echo e(Request::get('urlsig')); ?>">

@@ -11,9 +11,9 @@
 @section('contenido')
 <div class="container">
     @if(Session::has('Mensaje') || Session::has('Error') || Session::has('Warning'))
-        <div class="toast" id="myToast" data-delay="3000">
+        <div class="toast" id="myToast" data-delay="6000" style="max-width: none;">
             <div class="toast-header">
-                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBShop</strong>
+                <strong class="mr-auto"><i class="fas fa-info-circle"></i>Mensaje de GBRoute</strong>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
             </div>
             <div class="toast-body">
@@ -40,6 +40,9 @@
             
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
+                    @if($producto->stock <= 0)
+                        <img src="{{asset('storage/imagenesLayout/agotado.png') }}" style="position: relative; z-index : 2;" >
+                    @endif
                     <?php $iteracion = 0; $bandera = 0;?>
                     @foreach($producto->fotos as $foto)
                         @if($bandera == 0)
@@ -152,13 +155,20 @@
                 </h5>   
             </div>
             <br>
-            <form action="{{ route('addCarrito') }}" enctype="multipart/form-data" role="form" method="post">
-                {{ csrf_field() }}
-                <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
-                <br><br><br>
-                <input type="hidden" value="{{ $producto->codigo}}" name="codigo">
-                <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
-            </form>
+            @if($producto->stock > 0)
+                <label class = "">Disponibilidad:</label>
+                <span class="text-success">En existencia</span> 
+
+                <form action="{{ route('addCarrito') }}" enctype="multipart/form-data" role="form" method="post">
+                    {{ csrf_field() }}
+                    <span>Cantidad: <input min="1" type="number" name="cantidad" value="1" style="width:60px; height:27px; text-align: center;margin: 5px 10px;"></span>
+                    <br><br><br>
+                    <input type="hidden" value="{{ $producto->codigo}}" name="codigo">
+                    <button type="submit" class="btn btn-danger">COMPRAR <i class="fa fa-shopping-cart"></i></button>
+                </form>
+            @else
+                <span class="text-danger">Producto agotado</span>                
+            @endif
         </div>
         <div id="descripcion" class="col-xs-12 clear">
             <div class="row">

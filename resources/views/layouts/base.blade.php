@@ -146,7 +146,7 @@
               <dd class="text-center tittles-pages-logo"> <a style="color:white;" href="{{route('politicas')}}" title="Política de Privacidad">Política de Privacidad</a> </dd>
             </dl>
           </div>
-          &copy; 2019 Musical Cortés S. de R.L.
+          &copy; 2020 Musical Cortés S. de R.L.
         </div>
       </div>
     </footer>

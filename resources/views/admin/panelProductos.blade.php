@@ -48,14 +48,24 @@
                                 <select class="form-control custom-select mr-sm-2" name="producto-subcategoria" id="producto-subcategoria">
                                     <option value="">Sin subcategoria</option>
                                 </select>
-                            </div> 
-                            <label for="producto-precio">Precio</label>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-sm-6">
+                                    <label for="producto-precio">Precio</label>
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">$</div>
+                                        </div>
+                                        <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
+                                    </div>  
                                 </div>
-                                <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
-                            </div>  
+                                <div class="col-12 col-md-6 col-sm-6">
+                                    <label for="producto-stock">Stock</label>
+                                    <div class="input-group form-group">
+                                        <input type="number" class="form-control" min="0" value="0" name="producto-stock" id="producto-stock" placeholder="Stock" required step="1">
+                                    </div>  
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="producto-foto">Selecciona Imágen...(Maximo 10 fotos, 2MB maximo por cada una)</label>
                                 <input type="file" class="form-control" multiple name="producto-foto[]" id="producto-foto" required>

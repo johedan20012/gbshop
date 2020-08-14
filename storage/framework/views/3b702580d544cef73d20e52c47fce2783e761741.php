@@ -60,10 +60,17 @@ GB Route Music Store: Tienda online
                                     <div class="card-body">
                                         <p class="card-title money">$<?php echo e($producto->precio); ?></p>
                                         <p class="card-text"><small><?php echo e($producto->nombre); ?></small></p>
-                                        <div style="text-align: center"><a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>"class="btn btn-danger">Comprar</a></div>
+                                        <?php if($producto->stock > 0): ?>
+                                            <div style="text-align: center"><a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>"class="btn btn-danger">Comprar</a></div>
+                                        <?php else: ?>
+                                            <div style="text-align: center"><a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>"class="btn btn-danger">Ver</a></div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6">
+                                    <?php if($producto->stock <= 0): ?>
+                                        <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                    <?php endif; ?>
                                     <?php if(isset($producto->foto)): ?>
                                         <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" >
                                             <div style="padding:15px; height:100%; width:100%;">

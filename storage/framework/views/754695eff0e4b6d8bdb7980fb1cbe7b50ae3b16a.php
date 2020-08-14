@@ -45,6 +45,7 @@
         <td class="categoria-producto" ><?php echo e($producto->categoria->nombre); ?></td>
         <td class="precio-producto" >$<?php echo e($producto->precio); ?></td>
         <input type="hidden" id="<?php echo e($producto->idproductos); ?>precio" value="<?php echo e($producto->precioSF); ?>">
+        <input type="hidden" id="<?php echo e($producto->idproductos); ?>stock" value="<?php echo e($producto->stock); ?>">
         <?php if($producto->categoria->padre != null): ?>
           <input type="hidden" id="<?php echo e($producto->idproductos); ?>categoriaPadre" value="<?php echo e($producto->categoria->padre->idcategorias); ?>">
         <?php endif; ?>
@@ -122,13 +123,23 @@
                             <option value="">Sin subcategoria</option>
                         </select>
                     </div> 
-                    <label for="producto-precio">Precio</label>
-                    <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">$</div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-sm-6">
+                            <label for="producto-precio">Precio</label>
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
+                            </div>  
                         </div>
-                        <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
-                    </div>  
+                        <div class="col-12 col-md-6 col-sm-6">
+                            <label for="producto-stock">Stock</label>
+                            <div class="input-group form-group">
+                                <input type="number" class="form-control" min="0" name="producto-stock" id="producto-stock" placeholder="Stock" required step="1">
+                            </div>  
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="producto-foto">Selecciona Imágen...</label>
                         <input type="file" class="form-control" multiple name="producto-foto[]" id="producto-foto" required style="padding: 0;">

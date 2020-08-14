@@ -60,11 +60,13 @@ $(document).ready(function(){
             let categoria = button.data('categoria');
             let categoriaPadre = ($("#"+id+"categoriaPadre")[0] != null)? $("#"+id+"categoriaPadre").val() : -1;
             let precio = $("#"+id+"precio").val();
+            let stock= $("#"+id+"stock").val();
 
             $formModal.find("#producto-nombre").val(nombre);
             $formModal.find("#producto-descripcion").val(desc);
             $formModal.find("#producto-marca").val(marca);
             $formModal.find("#producto-precio").val(precio);
+            $formModal.find("#producto-stock").val(stock);
             //console.log(id);
             $formModal.find("#producto-id").val(id);
             

@@ -150,6 +150,7 @@ class AdminController extends Controller
             'producto-categoria' => 'required|integer',
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
+            'producto-stock' => 'required|numeric',
             'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:4096' //Para esto activamos php_fileinfo en php.ini
         ));
         if($validacion->fails()){
@@ -161,7 +162,7 @@ class AdminController extends Controller
         $producto->nombre = $request->input('producto-nombre');
         $producto->descripcion = $request->input('producto-descripcion');
         $producto->precio = $request->input('producto-precio');
-        $producto->stock = 1;
+        $producto->stock = ($request->input('producto-stock') <= 0)? 0 : $request->input('producto-stock');
         $producto->codigo = str_random(15);
         $producto->idmarca = $request->input('producto-marca');
 
@@ -261,6 +262,7 @@ class AdminController extends Controller
             'producto-categoria' => 'required|integer',
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
+            'producto-stock' => 'required|numeric',
             'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:4096', //Para esto activamos php_fileinfo en php.ini
             'producto-fotosBorrar' => 'nullable|string|max:300'
         ));
@@ -281,6 +283,7 @@ class AdminController extends Controller
         $producto->idmarca = $request->input('producto-marca');
         $producto->idcategoria = ($request->input('producto-subcategoria') != null)? $request->input('producto-subcategoria'): $request->input('producto-categoria');
         $producto->precio = $request->input('producto-precio');
+        $producto->stock = ($request->input('producto-stock') <= 0)? 0 : $request->input('producto-stock');
         
         try{
             if(!$producto->save()){ //No se logro guardar el producto de manera correcta;

@@ -19,9 +19,12 @@
         <li class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 0">
             <div class="m-0 col-md-12">
                 <div class="row">
-                    <div class="image-parent col-md-4 col-4 pt-md-1 pb-md-1" style="padding:5px;">
+                    <div class="image-parent col-md-4 col-4 pb-md-1" style="padding:0px;">
+                        <?php if($producto->stock <= 0): ?>
+                            <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: absolute; z-index : 2; width: 45%;" >
+                        <?php endif; ?>
                         <?php if(isset($producto->foto)): ?>
-                            <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" style="height:100%; width:100%;">
+                            <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" style="height:100%; width:100%; position: absolute; left: 0px;">
                                 <div style="height:100%; width:100%;">
                                     <div class="dimensiones2" style="background: url(<?php echo e(asset('storage/imagenesProductos/'.$producto->foto->nombre)); ?>) no-repeat  center; background-size: contain;"> </div>
                                 </div>
@@ -31,6 +34,14 @@
                     
                     <div class="text-left mr-auto col-md-8 col-8 pt-5 pb-3 pl-1 pr-1 pt-md-5 pb-md-5">
                         <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" title="<?php echo e($producto->nombre); ?>" target="_self"><?php echo e($producto->nombre); ?></a>
+                        <div class="row" style="padding-left:15px;">
+                            <?php if($producto->stock > 0): ?>
+                                <label class = "">Disponibilidad:</label>
+                                <span class="text-success" style="padding-left:10px;">En existencia</span> 
+                            <?php else: ?>
+                                <span class="text-danger">Producto agotado</span>                
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
