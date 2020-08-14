@@ -150,52 +150,6 @@
                         Costo de envío en la Republica Mexicana <span class="texto-promo">(Envío gratis)</span>
                     </span>
                 </h5>   
-                <!--                                     
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionCostos">
-                        <table class="envios-tabla">
-                            <thead>
-                                <tr>
-                                    <th>Forma de Envío</th>
-                                    <th>Costo</th>
-                                    <th>Entrega Estimada</th>
-                                </tr>
-                            </thead>
-                            <tbody id="opciones">
-                                <tr>
-                                    <td>
-                                        Envíos Gratis Compra Min. $800
-                                    </td>
-                                    <td>
-                                        <span class="texto-promo">Envío gratis</span>
-                                    </td>
-                                    <td>
-                                        Martes&nbsp;
-                                        <strong class="dia-entrega">27 de Agosto </strong>
-                                    </td>
-                                </tr> 
-                                <tr>
-                                    <td>
-                                        Compras inferiores a $800
-                                    </td>
-                                    <td>
-                                        <span class="envio-precio">$ 150.00</span>
-                                    </td>
-                                    <td>
-                                        Miércoles&nbsp;
-                                        <strong class="dia-entrega">28 de Agosto </strong>
-                                    </td>
-                                </tr>   
-                                <tr>
-                                    <td>
-                                        A convenir
-                                    </td>
-                                    <td colspan="2">
-                                        <span class="envio-precio">Acuerdas la forma de entrega del producto después de la compra.</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>-->
             </div>
             <br>
             <form action="{{ route('addCarrito') }}" enctype="multipart/form-data" role="form" method="post">
@@ -207,8 +161,23 @@
             </form>
         </div>
         <div id="descripcion" class="col-xs-12 clear">
-            <h4>Descripción</h4>
-            <pre>{{ $producto->descripcion }}</pre>
+            <div class="row">
+                <div class="col-12 d-block d-sm-none">  
+                    <img width="100%" src="{{ asset('storage/imagenesProductos/detalles/'.$producto->codigo.'2.png')}}">    <!--Mobile-->
+                </div>
+                <div class="col-sm-12 d-none d-sm-block d-md-none">
+                    <img width="100%" src="{{ asset('storage/imagenesProductos/detalles/'.$producto->codigo.'2.png')}}">   <!--Tab-->
+                </div>
+                <div class="col-md-12 d-none d-md-block d-lg-none">
+                    <img width="100%" src="{{ asset('storage/imagenesProductos/detalles/'.$producto->codigo.'1.png')}}">   <!--Desktop-->
+                </div>
+                <div class="col-lg-12 d-none d-lg-block d-xl-none">
+                    <img width="100%" src="{{ asset('storage/imagenesProductos/detalles/'.$producto->codigo.'1.png')}}">  <!--Large-->
+                </div>
+                <div class="col-xl-12 d-none d-lg-none d-xl-block">
+                    <img width="100%" src="{{ asset('storage/imagenesProductos/detalles/'.$producto->codigo.'1.png')}}">  <!--Large-->
+                </div>
+            </div>
         </div>
         </div> 
     </div>
