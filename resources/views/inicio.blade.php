@@ -31,16 +31,19 @@ GB Route Music Store: Tienda online
                 <div class="carousel-inner">
                     <?php $cont = 0; ?>
                     @foreach($banners as $banner)
+                        <?php $banner = pathinfo($banner, PATHINFO_FILENAME); ?>
                         @if($cont == 0)
                             <div class="carousel-item active" data-id="{{$cont}}" data-nombre="{{$banner}}">
-                                <img src="{{asset('storage/imagenesLayout/banners/'.$banner) }}" class="d-block w-100" alt="...">
-                            </div>
                         @else
                             <div class="carousel-item" data-id="{{$cont}}" data-nombre="{{$banner}}">
-                                <img src="{{asset('storage/imagenesLayout/banners/'.$banner) }}" class="d-block w-100" alt="...">
-                            </div>
                         @endif
-                        <?php $cont +=1?>
+                                <picture>
+                                    <source type="image/webp" srcset = "{{asset('storage/imagenesLayout/webp/banners/'.$banner.'.webp') }}">
+                                    <source type="image/png" srcset = "{{asset('storage/imagenesLayout/banners/'.$banner.'.png') }}">
+                                    <img src="{{asset('storage/imagenesLayout/banners/'.$banner.'.png') }}" class="d-block w-100" alt="...">
+                                </picture>
+                            </div>
+                        <?php $cont = 1;?>
                     @endforeach 
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -71,12 +74,23 @@ GB Route Music Store: Tienda online
                                 </div>
                                 <div class="col-md-6 col-6">
                                     @if($producto->stock <= 0)
-                                        <img src="{{asset('storage/imagenesLayout/agotado.png') }}" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                        <picture>
+                                            <source type="image/webp" srcset = "{{asset('storage/imagenesLayout/webp/agotado.webp') }}">
+                                            <source type="image/png" srcset = "{{asset('storage/imagenesLayout/agotado.png') }}">
+                                            <img src="{{asset('storage/imagenesLayout/agotado.png') }}" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                        </picture>
                                     @endif
                                     @if(isset($producto->foto))
+                                        <?php $fotoProducto = pathinfo($producto->foto->nombre, PATHINFO_FILENAME); ?>
                                         <a href="{{ route('verProducto').'?code='.$producto->codigo }}" >
-                                            <div style="padding:15px; height:100%; width:100%;">
-                                                <div class="dimensiones2" style="background: url({{ asset('storage/imagenesProductos/'.$producto->foto->nombre) }}) no-repeat  center; background-size: contain;"> </div>
+                                            <div class = "dimensiones2" style="padding:15px;">
+                                                <div class = "contImgProducto">
+                                                    <picture>
+                                                        <source type="image/webp" srcset = "{{asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp') }}">
+                                                        <source type="image/png" srcset = "{{asset('storage/imagenesProductos/'.$fotoProducto.'.png') }}">
+                                                        <img src="{{asset('storage/imagenesProductos/'.$fotoProducto.'.png') }}" class="d-block w-100" alt="...">
+                                                    </picture>
+                                                </div>
                                             </div>
                                         </a>
                                     @endif

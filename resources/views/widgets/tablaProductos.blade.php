@@ -23,9 +23,16 @@
                             <img src="{{asset('storage/imagenesLayout/agotado.png') }}" style="position: absolute; z-index : 2; width: 45%;" >
                         @endif
                         @if(isset($producto->foto))
+                            <?php $fotoProducto = pathinfo($producto->foto->nombre, PATHINFO_FILENAME); ?>
                             <a href="{{ route('verProducto').'?code='.$producto->codigo }}" style="height:100%; width:100%; position: absolute; left: 0px;">
-                                <div style="height:100%; width:100%;">
-                                    <div class="dimensiones2" style="background: url({{ asset('storage/imagenesProductos/'.$producto->foto->nombre) }}) no-repeat  center; background-size: contain;"> </div>
+                                <div class = "dimensiones2" style="padding:15px;">
+                                    <div class = "contImgProducto">
+                                        <picture>
+                                            <source type="image/webp" srcset = "{{asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp') }}">
+                                            <source type="image/png" srcset = "{{asset('storage/imagenesProductos/'.$fotoProducto.'.png') }}">
+                                            <img src="{{asset('storage/imagenesProductos/'.$fotoProducto.'.png') }}" class="d-block w-100" alt="...">
+                                        </picture>
+                                    </div>
                                 </div>
                             </a>
                         @endif

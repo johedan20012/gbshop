@@ -12,7 +12,11 @@ GB Route Music Store: Tienda online
         <div class="row">
             <div class="col-12 col-md-3 col-xs-12">
                 <a href="<?php echo e(route('inicio')); ?>">
-                    <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>"  alt="Gb Shop">
+                    <picture>
+                        <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/logo.webp')); ?>">
+                        <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>"> 
+                        <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>"  alt="Gb Shop">
+                    </picture>
                 </a>
             </div>
             <div class="col-12 col-md-6 col-xs-12 text-center abajo">
@@ -70,7 +74,11 @@ GB Route Music Store: Tienda online
                 Nuestros Valores
             </div>
             <div class="col-6 col-md-6 col-xs-6 img-valores">
-                <img src="<?php echo e(asset('storage/imagenesLayout/side_img.jpeg')); ?>" class="text-center">
+                <picture>
+                    <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/side_img.webp')); ?>">
+                    <source type="image/jpeg" srcset = "<?php echo e(asset('storage/imagenesLayout/side_img.jpeg')); ?>"> 
+                    <img src="<?php echo e(asset('storage/imagenesLayout/side_img.jpeg')); ?>" class="text-center">
+                </picture>
             </div>
             <div class="col-3 col-md-6 col-xs-6">
                 <ul class="text-valores">

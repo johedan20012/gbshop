@@ -25,10 +25,15 @@
                                 <h2>Tu Carrito </h2>                                       
                                 <?php if($carrito !== null): ?>
                                     <?php $__currentLoopData = $carrito; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $producto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php $fotoProducto = pathinfo($producto['foto'], PATHINFO_FILENAME); ?>
                                         <div class="row" id="<?php echo e($loop->iteration); ?>listaProducto">
                                             <div class="col-3 col-md-2 col-sm-2">
                                                 <a href="<?php echo e(route('verProducto').'?code='.$producto['codigo']); ?>">
-                                                    <img src="<?php echo e(asset('storage/imagenesProductos/'.$producto['foto'])); ?>" class="img-fluid" alt="imagen">
+                                                    <picture>
+                                                        <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')); ?>">
+                                                        <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>">
+                                                        <img src="<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>" class="img-fluid" alt="imagen">
+                                                    </picture>
                                                 </a>
                                             </div>
                                             <div class="col-9 col-md-4 col-sm-3">
@@ -172,7 +177,14 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="oxxo"  >
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO (Monto maximo de $10,000) <img src="<?php echo e(asset('storage/imagenesLayout/oxxopay.png')); ?>" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="payment_method_ConektaCash">
+                                                        Conekta: Pago en Efectivo en OXXO (Monto maximo de $10,000) 
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/oxxopay.webp')); ?>">
+                                                            <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/oxxopay.png')); ?>">
+                                                            <img src="<?php echo e(asset('storage/imagenesLayout/oxxopay.png')); ?>" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	
+                                                        </picture>
+                                                    </label>
                                                 </li>
                                             </div>
                                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
@@ -185,7 +197,14 @@
                                             <div class="card-header" id="headingTwo">
                                                 <li >
                                                     <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="tarjeta">
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito (Monto maximo de $10,000)<img src="<?php echo e(asset('storage/imagenesLayout/credits.png')); ?>" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
+                                                    <label for="payment_method_ConektaCash">
+                                                        Conekta: Pago seguro con tarjeta de Crédito o Débito (Monto maximo de $10,000)
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/credits.webp')); ?>">
+                                                            <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/credits.png')); ?>">
+                                                            <img src="<?php echo e(asset('storage/imagenesLayout/credits.png')); ?>" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">
+                                                        </picture>
+                                                    </label>                                    
                                                 </li>
                                             </div>
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPago">
@@ -274,7 +293,14 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" id="pm-paypal" type="radio" class="input-radio btn btn-link" name="payment_method" value="paypal"  >
-                                                    <label for="payment_paypal">Pago con cuenta PayPal <img src="<?php echo e(asset('storage/imagenesLayout/paypal.png')); ?>" style="width:100px;" alt="Pago con cuenta PayPal" style="margin-top: -12px">	</label>
+                                                    <label for="payment_paypal">
+                                                        Pago con cuenta PayPal 
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/paypal.webp')); ?>">
+                                                            <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/paypal.png')); ?>">
+                                                            <img src="<?php echo e(asset('storage/imagenesLayout/paypal.png')); ?>" style="width:100px;" alt="Pago con cuenta PayPal" style="margin-top: -12px">	
+                                                        </picture>
+                                                    </label>
                                                 </li>
                                             </div>
                                             <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
@@ -362,7 +388,11 @@
             </button>
         </div>
         <div class="modal-body">
-            <img class="mx-auto d-block" src="<?php echo e(asset('storage/imagenesLayout/cvv-cards.png')); ?>">
+            <picture>
+                <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/cvv-cards.webp')); ?>">
+                <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/cvv-cards.png')); ?>">
+                <img class="mx-auto d-block" src="<?php echo e(asset('storage/imagenesLayout/cvv-cards.png')); ?>">
+            </picture>
         </div>
         </div>
     </div>
@@ -380,13 +410,21 @@
       </div>
       <div class="modal-body">
         <div id="imgOk" class="text-center">
-            <img src="<?php echo e(asset('storage/imagenesLayout/ok.jpg')); ?>"  style="width:20%;" title="Todo bien">
+            <picture>
+                <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/ok.webp')); ?>">
+                <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/ok.png')); ?>"> 
+                <img src="<?php echo e(asset('storage/imagenesLayout/ok.png')); ?>"  style="width:20%;" title="Todo bien">
+            </picture>
         </div>
         <div id="imgError" class="text-center">
-            <img src="<?php echo e(asset('storage/imagenesLayout/error.png')); ?>"  style="width:20%;" title="Algo malo ocurrio">
+            <picture>
+                <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/error.webp')); ?>">
+                <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/error.png')); ?>">
+                <img src="<?php echo e(asset('storage/imagenesLayout/error.png')); ?>"  style="width:20%;" title="Algo malo ocurrio">
+            </picture>
         </div>
         <div id="imgCargando" class="text-center">
-            <img src="<?php echo e(asset('storage/imagenesLayout/loading.gif')); ?>"  style="width:20%;" title="Algo malo ocurrio">
+            <img src="<?php echo e(asset('storage/imagenesLayout/loading.gif')); ?>"  style="width:20%;" title="Se esta procesando la compra">
         </div>
         <div id="modal-mensaje" class="col-md-12 col-12">
         

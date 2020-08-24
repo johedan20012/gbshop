@@ -29,16 +29,19 @@ GB Route Music Store: Tienda online
                 <div class="carousel-inner">
                     <?php $cont = 0; ?>
                     <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $banner = pathinfo($banner, PATHINFO_FILENAME); ?>
                         <?php if($cont == 0): ?>
                             <div class="carousel-item active" data-id="<?php echo e($cont); ?>" data-nombre="<?php echo e($banner); ?>">
-                                <img src="<?php echo e(asset('storage/imagenesLayout/banners/'.$banner)); ?>" class="d-block w-100" alt="...">
-                            </div>
                         <?php else: ?>
                             <div class="carousel-item" data-id="<?php echo e($cont); ?>" data-nombre="<?php echo e($banner); ?>">
-                                <img src="<?php echo e(asset('storage/imagenesLayout/banners/'.$banner)); ?>" class="d-block w-100" alt="...">
-                            </div>
                         <?php endif; ?>
-                        <?php $cont +=1?>
+                                <picture>
+                                    <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/banners/'.$banner.'.webp')); ?>">
+                                    <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/banners/'.$banner.'.png')); ?>">
+                                    <img src="<?php echo e(asset('storage/imagenesLayout/banners/'.$banner.'.png')); ?>" class="d-block w-100" alt="...">
+                                </picture>
+                            </div>
+                        <?php $cont = 1;?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -69,12 +72,23 @@ GB Route Music Store: Tienda online
                                 </div>
                                 <div class="col-md-6 col-6">
                                     <?php if($producto->stock <= 0): ?>
-                                        <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                        <picture>
+                                            <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/agotado.webp')); ?>">
+                                            <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>">
+                                            <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: absolute; z-index : 2; width: 45%; top: 15%;" >
+                                        </picture>
                                     <?php endif; ?>
                                     <?php if(isset($producto->foto)): ?>
+                                        <?php $fotoProducto = pathinfo($producto->foto->nombre, PATHINFO_FILENAME); ?>
                                         <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" >
-                                            <div style="padding:15px; height:100%; width:100%;">
-                                                <div class="dimensiones2" style="background: url(<?php echo e(asset('storage/imagenesProductos/'.$producto->foto->nombre)); ?>) no-repeat  center; background-size: contain;"> </div>
+                                            <div class = "dimensiones2" style="padding:15px;">
+                                                <div class = "contImgProducto">
+                                                    <picture>
+                                                        <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')); ?>">
+                                                        <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>">
+                                                        <img src="<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>" class="d-block w-100" alt="...">
+                                                    </picture>
+                                                </div>
                                             </div>
                                         </a>
                                     <?php endif; ?>

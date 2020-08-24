@@ -27,10 +27,15 @@
                                 <h2>Tu Carrito </h2>                                       
                                 @if($carrito !== null)
                                     @foreach($carrito as $producto)
+                                        <?php $fotoProducto = pathinfo($producto['foto'], PATHINFO_FILENAME); ?>
                                         <div class="row" id="{{$loop->iteration}}listaProducto">
                                             <div class="col-3 col-md-2 col-sm-2">
                                                 <a href="{{ route('verProducto').'?code='.$producto['codigo'] }}">
-                                                    <img src="{{ asset('storage/imagenesProductos/'.$producto['foto'])}}" class="img-fluid" alt="imagen">
+                                                    <picture>
+                                                        <source type="image/webp" srcset = "{{ asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')}}">
+                                                        <source type="image/png" srcset = "{{ asset('storage/imagenesProductos/'.$fotoProducto.'.png')}}">
+                                                        <img src="{{ asset('storage/imagenesProductos/'.$fotoProducto.'.png')}}" class="img-fluid" alt="imagen">
+                                                    </picture>
                                                 </a>
                                             </div>
                                             <div class="col-9 col-md-4 col-sm-3">
@@ -170,7 +175,14 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="pm-conektaCash" type="radio" class="input-radio btn btn-link" name="payment_method" value="oxxo"  >
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago en Efectivo en OXXO (Monto maximo de $10,000) <img src="{{ asset('storage/imagenesLayout/oxxopay.png')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	</label>
+                                                    <label for="payment_method_ConektaCash">
+                                                        Conekta: Pago en Efectivo en OXXO (Monto maximo de $10,000) 
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/oxxopay.webp')}}">
+                                                            <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/oxxopay.png')}}">
+                                                            <img src="{{ asset('storage/imagenesLayout/oxxopay.png')}}" alt="Conekta: Pago en Efectivo en OXXO" style="margin-top: -12px">	
+                                                        </picture>
+                                                    </label>
                                                 </li>
                                             </div>
                                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
@@ -183,7 +195,14 @@
                                             <div class="card-header" id="headingTwo">
                                                 <li >
                                                     <input  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="pm-conektaCard" type="radio" class="input-radio btn btn-link" name="payment_method" value="tarjeta">
-                                                    <label for="payment_method_ConektaCash">Conekta: Pago seguro con tarjeta de Crédito o Débito (Monto maximo de $10,000)<img src="{{ asset('storage/imagenesLayout/credits.png')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">	</label>                                    
+                                                    <label for="payment_method_ConektaCash">
+                                                        Conekta: Pago seguro con tarjeta de Crédito o Débito (Monto maximo de $10,000)
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/credits.webp')}}">
+                                                            <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/credits.png')}}">
+                                                            <img src="{{ asset('storage/imagenesLayout/credits.png')}}" alt="Conekta: Pago seguro con tarjeta de Crédito o Débito">
+                                                        </picture>
+                                                    </label>                                    
                                                 </li>
                                             </div>
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPago">
@@ -272,7 +291,14 @@
                                             <div class="card-header" id="headingOne">                               
                                                 <li >
                                                     <input data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" id="pm-paypal" type="radio" class="input-radio btn btn-link" name="payment_method" value="paypal"  >
-                                                    <label for="payment_paypal">Pago con cuenta PayPal <img src="{{ asset('storage/imagenesLayout/paypal.png')}}" style="width:100px;" alt="Pago con cuenta PayPal" style="margin-top: -12px">	</label>
+                                                    <label for="payment_paypal">
+                                                        Pago con cuenta PayPal 
+                                                        <picture>
+                                                            <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/paypal.webp')}}">
+                                                            <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/paypal.png')}}">
+                                                            <img src="{{ asset('storage/imagenesLayout/paypal.png')}}" style="width:100px;" alt="Pago con cuenta PayPal" style="margin-top: -12px">	
+                                                        </picture>
+                                                    </label>
                                                 </li>
                                             </div>
                                             <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago">
@@ -359,7 +385,11 @@
             </button>
         </div>
         <div class="modal-body">
-            <img class="mx-auto d-block" src="{{ asset('storage/imagenesLayout/cvv-cards.png')}}">
+            <picture>
+                <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/cvv-cards.webp')}}">
+                <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/cvv-cards.png')}}">
+                <img class="mx-auto d-block" src="{{ asset('storage/imagenesLayout/cvv-cards.png')}}">
+            </picture>
         </div>
         </div>
     </div>
@@ -377,13 +407,21 @@
       </div>
       <div class="modal-body">
         <div id="imgOk" class="text-center">
-            <img src="{{ asset('storage/imagenesLayout/ok.jpg') }}"  style="width:20%;" title="Todo bien">
+            <picture>
+                <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/ok.webp') }}">
+                <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/ok.png') }}"> 
+                <img src="{{ asset('storage/imagenesLayout/ok.png') }}"  style="width:20%;" title="Todo bien">
+            </picture>
         </div>
         <div id="imgError" class="text-center">
-            <img src="{{ asset('storage/imagenesLayout/error.png') }}"  style="width:20%;" title="Algo malo ocurrio">
+            <picture>
+                <source type="image/webp" srcset = "{{ asset('storage/imagenesLayout/webp/error.webp') }}">
+                <source type="image/png" srcset = "{{ asset('storage/imagenesLayout/error.png') }}">
+                <img src="{{ asset('storage/imagenesLayout/error.png') }}"  style="width:20%;" title="Algo malo ocurrio">
+            </picture>
         </div>
         <div id="imgCargando" class="text-center">
-            <img src="{{ asset('storage/imagenesLayout/loading.gif') }}"  style="width:20%;" title="Algo malo ocurrio">
+            <img src="{{ asset('storage/imagenesLayout/loading.gif') }}"  style="width:20%;" title="Se esta procesando la compra">
         </div>
         <div id="modal-mensaje" class="col-md-12 col-12">
         

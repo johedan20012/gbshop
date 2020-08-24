@@ -34,10 +34,15 @@
             <h2>Carrito de Compras</h2>
             @if($carrito !== null)
                 @foreach($carrito as $producto)
+                    <?php $fotoProducto = pathinfo($producto['foto'], PATHINFO_FILENAME); ?>
                     <div class="row" id="{{$loop->iteration}}listaProducto">
                         <div class="col-3 col-md-2 col-sm-2">
                             <a href="{{ route('verProducto').'?code='.$producto['codigo'] }}">
-                                <img src="{{ asset('storage/imagenesProductos/'.$producto['foto'])}}" class="img-fluid" alt="imagen">
+                                <picture>
+                                    <source type="image/webp" srcset = "{{ asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')}}">
+                                    <source type="image/png" srcset = "{{ asset('storage/imagenesProductos/'.$fotoProducto.'.png')}}">
+                                    <img src="{{ asset('storage/imagenesProductos/'.$fotoProducto.'.png')}}" class="img-fluid" alt="imagen">
+                                </picture>
                             </a>
                         </div>
                         <div class="col-9 col-md-4 col-sm-3">

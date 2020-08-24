@@ -24,9 +24,16 @@
                             <img src="<?php echo e(asset('storage/imagenesLayout/agotado.png')); ?>" style="position: absolute; z-index : 2; width: 45%;" >
                         <?php endif; ?>
                         <?php if(isset($producto->foto)): ?>
+                            <?php $fotoProducto = pathinfo($producto->foto->nombre, PATHINFO_FILENAME); ?>
                             <a href="<?php echo e(route('verProducto').'?code='.$producto->codigo); ?>" style="height:100%; width:100%; position: absolute; left: 0px;">
-                                <div style="height:100%; width:100%;">
-                                    <div class="dimensiones2" style="background: url(<?php echo e(asset('storage/imagenesProductos/'.$producto->foto->nombre)); ?>) no-repeat  center; background-size: contain;"> </div>
+                                <div class = "dimensiones2" style="padding:15px;">
+                                    <div class = "contImgProducto">
+                                        <picture>
+                                            <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')); ?>">
+                                            <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>">
+                                            <img src="<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>" class="d-block w-100" alt="...">
+                                        </picture>
+                                    </div>
                                 </div>
                             </a>
                         <?php endif; ?>

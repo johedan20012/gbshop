@@ -24,7 +24,11 @@
         <div class="row">
           <div class="col-md-12">
               <a href="{{ route('inicio')}}">
-              <img src="{{asset('storage/imagenesLayout/logo.png') }}" class="img-responsive" alt="Gb Shop">
+                <picture>
+                  <source type="image/webp" srcset = "{{asset('storage/imagenesLayout/webp/logo.webp') }}">
+                  <source type="image/png" srcset = "{{asset('storage/imagenesLayout/logo.png') }}">
+                  <img src="{{asset('storage/imagenesLayout/logo.png') }}" class="img-responsive" alt="Gb Shop">
+                </picture>
               </a>
               @if(Auth::check())
                 <a class="text-white" href="{{ route('admin')}}">Panel de administración</a>

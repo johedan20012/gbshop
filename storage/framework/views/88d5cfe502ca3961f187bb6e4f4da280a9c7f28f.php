@@ -24,7 +24,11 @@
         <div class="row">
           <div class="col-md-12">
               <a href="<?php echo e(route('inicio')); ?>">
-              <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>" class="img-responsive" alt="Gb Shop">
+                <picture>
+                  <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesLayout/webp/logo.webp')); ?>">
+                  <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>">
+                  <img src="<?php echo e(asset('storage/imagenesLayout/logo.png')); ?>" class="img-responsive" alt="Gb Shop">
+                </picture>
               </a>
               <?php if(Auth::check()): ?>
                 <a class="text-white" href="<?php echo e(route('admin')); ?>">Panel de administración</a>
@@ -146,7 +150,7 @@
               <dd class="text-center tittles-pages-logo"> <a style="color:white;" href="<?php echo e(route('politicas')); ?>" title="Política de Privacidad">Política de Privacidad</a> </dd>
             </dl>
           </div>
-          &copy; 2019 Musical Cortés S. de R.L.
+          &copy; 2020 Musical Cortés S. de R.L.
         </div>
       </div>
     </footer>

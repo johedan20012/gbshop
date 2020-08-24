@@ -34,10 +34,15 @@
             <h2>Carrito de Compras</h2>
             <?php if($carrito !== null): ?>
                 <?php $__currentLoopData = $carrito; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $producto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $fotoProducto = pathinfo($producto['foto'], PATHINFO_FILENAME); ?>
                     <div class="row" id="<?php echo e($loop->iteration); ?>listaProducto">
                         <div class="col-3 col-md-2 col-sm-2">
                             <a href="<?php echo e(route('verProducto').'?code='.$producto['codigo']); ?>">
-                                <img src="<?php echo e(asset('storage/imagenesProductos/'.$producto['foto'])); ?>" class="img-fluid" alt="imagen">
+                                <picture>
+                                    <source type="image/webp" srcset = "<?php echo e(asset('storage/imagenesProductos/webp/'.$fotoProducto.'.webp')); ?>">
+                                    <source type="image/png" srcset = "<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>">
+                                    <img src="<?php echo e(asset('storage/imagenesProductos/'.$fotoProducto.'.png')); ?>" class="img-fluid" alt="imagen">
+                                </picture>
                             </a>
                         </div>
                         <div class="col-9 col-md-4 col-sm-3">
