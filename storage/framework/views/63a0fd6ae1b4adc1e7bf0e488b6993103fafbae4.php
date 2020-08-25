@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('titulo'); ?>
-<?php echo e($producto->nombre); ?>| GB Route Music Store: Tienda online
+GB Route Music Store: Tienda online
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('contenido'); ?>

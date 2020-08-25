@@ -93,7 +93,7 @@ $(document).ready(function(){
         }
     }).render('#paypal-button-container');
 
-    Conekta.setPublicKey('key_JaKbrsnAzjx1CaX9dso6qWA');
+    Conekta.setPublicKey($("#llaveConekta").val());
 
     boton = $("#continuarCompra");
 
@@ -202,7 +202,8 @@ function mandarFormulario(){
         } 
         boton.css({ 'background-color': '#dc3545', 'border-color': '#dc3545' });
         boton.prop("disabled",false);
-    }).fail( function() {
+    }).fail( function(data) {
+        console.log(data);
         mostrarModal("Error interno, intente mas tarde, si realizó un pago de Paypal contactenos para registrarlo",0);
 
         boton.css({ 'background-color': '#dc3545', 'border-color': '#dc3545' });

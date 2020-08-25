@@ -16,7 +16,7 @@ use App\Mail\CompraRealizada;
 use App\Mail\PagoRealizadoOXXO;
 
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 use Illuminate\Support\Facades\Mail;
@@ -440,7 +440,8 @@ class ClienteController extends Controller
             }
 
             if($tipoPago == "ConektaTarjeta" || $tipoPago == "ConektaOXXO"){
-                \Conekta\Conekta::setApiKey("key_tKUKeLQepmsZR1rT4FiXKA"); //? Api key privada de produccion para Conekta
+                $conektaApiKeySecret = env("CONEKTA_SECRET","");
+                \Conekta\Conekta::setApiKey($conektaApiKeySecret); //? Api key privada de produccion para Conekta
                 \Conekta\Conekta::setApiVersion("2.0.0");
 
                 if($tipoPago == "ConektaTarjeta"){$conektaToken = $request->input("conektaTokenId");}
@@ -470,11 +471,11 @@ class ClienteController extends Controller
                         );
                     }
                 } catch (\Conekta\ProccessingError $error){ //Obtener el mensaje $error->getMessage();
-                    return array('Error', "Hubo un error al procesar tus datos");
+                    return array('Error', "Hubo un error al procesar tus datos de pago");
                 } catch (\Conekta\ParameterValidationError $error){ //Obtener el mensaje $error->getMessage();
-                    return array('Error', "Hubo un error al procesar tus datos");
+                    return array('Error', "Hubo un error al procesar tus datos de pago");
                 } catch (\Conekta\Handler $error){ //Obtener el mensaje $error->getMessage();
-                    return array('Error', "Hubo un error al procesar tus datos");
+                    return array('Error', "Hubo un error al procesar tus datos de pago");
                 }
                 switch($mesesSinIntereses){
                     case 1:
@@ -676,7 +677,7 @@ class ClienteController extends Controller
                     try{
                         $venta->save();
                     } catch (\Illuminate\Database\QueryException $e){
-                        return array('Error', "Hubo un error al procesar la compra");
+                        return array('Error', "Hubo un error al procesar el pago");
                     }
                     return array('Error', "Hubo un error al procesar el pedido");
                 } catch (\Conekta\ParameterValidationError $error){ //Obtener el mensaje $error->getMessage();
@@ -685,7 +686,7 @@ class ClienteController extends Controller
                     try{
                         $venta->save();
                     } catch (\Illuminate\Database\QueryException $e){
-                        return array('Error', "Hubo un error al procesar la compra");
+                        return array('Error', "Hubo un error al procesar el pago");
                     }
                     return array('Error', $error->getMessage());
                 } catch (\Conekta\Handler $error){ //Obtener el mensaje $error->getMessage();
@@ -694,7 +695,7 @@ class ClienteController extends Controller
                     try{
                         $venta->save();
                     } catch (\Illuminate\Database\QueryException $e){
-                        return array('Error', "Hubo un error al procesar la compra");
+                        return array('Error', "Hubo un error al procesar el pago");
                     }
                     return array('Error', $error->getMessage());
                 }
@@ -723,14 +724,14 @@ class ClienteController extends Controller
                     return array('Error', "No se pudo procesar tu pago de Paypal, en caso de que hayas completado la transaccion ponte en contacto con nosotros");
                 }
 
-                $clientId = getenv("CLIENT_ID");
-                $clientSecret = getenv("CLIENT_SECRET");
+                $clientId = env("CLIENT_ID","");
+                $clientSecret = env("CLIENT_SECRET","");
                 
                 if($clientId === false || $clientSecret === false){
                     return array('Error', "Error interno, por el momento no podemos procesar pagos de Paypal, en caso de que hayas completado la transaccion ponte en contacto con nosotros");
                 }
                 
-                $enviroment = new SandboxEnvironment($clientId, $clientSecret);
+                $enviroment = new ProductionEnvironment($clientId, $clientSecret);
 
                 $clientePaypal = new PayPalHttpClient($enviroment);
 
@@ -740,7 +741,7 @@ class ClienteController extends Controller
                 }
 
                 if($response->result->purchase_units[0]->amount->value != $total){
-                    return array("Error", "El precio que pagaste en Paypal no coincide con el precio del carrito, contactanos para solucionarlo");
+                    return array("Error", "El precio que pagaste en Paypal no coincide con el precio del carrito, por favor contactanos para solucionarlo");
                 }
 
                 //? Llenado del estatus de la venta como pagado
@@ -776,15 +777,15 @@ class ClienteController extends Controller
         $tipoEvento = $data->type; //¿Qué evento es?
         $livemode = $data->livemode; // True o false , si el evento es en modo de pruebas dara false
         
-        if($tipoEvento == "order.paid" && $livemode == true){ //!!! Cambiar el "or" por un "and"
-             $metodoPago = $data->data->object->charges->data[0]->payment_method->service_name;//->data[0]->payment_method->service_name; //Metodo de pago
-             $statusPago = $data->data->object->payment_status; //Estado del pago, si es "paid" significa que esta pagado
+        if($tipoEvento == "charge.paid" && $livemode == true){ //!!! Cambiar el "or" por un "and"
+             $metodoPago = $data->data->object->payment_method->service_name;//->data[0]->payment_method->service_name; //Metodo de pago
+             $statusPago = $data->data->object->status; //Estado del pago, si es "paid" significa que esta pagado
 
              if($metodoPago == "OxxoPay" && $statusPago == "paid"){
                 $cantidad = $data->data->object->amount; //Es la cantidad pagada por el usuario, multiplicada por 100
-                $claveConekta = $data->data->object->id;  //Id de la orden "ord_xxxxxxxx"
-                $referencia = $data->data->object->charges->data[0]->payment_method->reference;
-                $fechaEPOCH = $data->data->object->charges->data[0]->paid_at; //Fecha de pago en formato UNIX
+                $claveConekta = $data->data->object->order_id;  //Id de la orden "ord_xxxxxxxx"
+                $referencia = $data->data->object->payment_method->reference;
+                $fechaEPOCH = $data->data->object->paid_at; //Fecha de pago en formato UNIX
                 $fechaDePago =  date("Y-m-d H:i:s", substr(strval($fechaEPOCH), 0, 10));
                 
                 $orden = Venta::where('clavePago', $claveConekta)->where('referOXXO', $referencia)->first();
@@ -818,7 +819,7 @@ class ClienteController extends Controller
                 }
              }
         }
-        header('HTTP/1.1 200 OK');
+        header('HTTP/1.1 500 Internal Server Error');
         return array("info" => "El evento no fue 'order.paid' o esta en modo de pruebas o el metodo no fue oxxoPay o su estatus no es 'paid'");
     }
 }

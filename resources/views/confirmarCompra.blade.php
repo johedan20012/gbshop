@@ -438,7 +438,8 @@
 
 @section('scripts')
     <input type="hidden" value="{{ route('datosEnvio') }}" id="rutaDatosEnvio">
+    <input type="hidden" value="{{ env('CONEKTA_PUBLIC','') }}" id="llaveConekta">
     <script src="{{ asset('js/confirmarCompra.js') }}"></script>
     <script type="text/javascript" src="https://cdn.conekta.io/js/latest/conekta.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=Ac6HOuvFbi5fFO3mTxSxcThAWFu3KG0GKXzAbY0HeuHSwZcIzmY6D7YwWILwzlqgXXk7EfnUXXG6CHhy&disable-card=visa,mastercard,amex,discover,jcb,elo,hiper&currency=MXN"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id={{ env('CLIENT_ID','') }}&disable-card=visa,mastercard,amex,discover,jcb,elo,hiper&currency=MXN"></script>
 @endsection

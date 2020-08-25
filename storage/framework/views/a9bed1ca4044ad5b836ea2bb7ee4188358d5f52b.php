@@ -441,8 +441,9 @@
 
 <?php $__env->startSection('scripts'); ?>
     <input type="hidden" value="<?php echo e(route('datosEnvio')); ?>" id="rutaDatosEnvio">
+    <input type="hidden" value="<?php echo e(env('CONEKTA_PUBLIC','')); ?>" id="llaveConekta">
     <script src="<?php echo e(asset('js/confirmarCompra.js')); ?>"></script>
     <script type="text/javascript" src="https://cdn.conekta.io/js/latest/conekta.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=Ac6HOuvFbi5fFO3mTxSxcThAWFu3KG0GKXzAbY0HeuHSwZcIzmY6D7YwWILwzlqgXXk7EfnUXXG6CHhy&disable-card=visa,mastercard,amex,discover,jcb,elo,hiper&currency=MXN"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo e(env('CLIENT_ID','')); ?>&disable-card=visa,mastercard,amex,discover,jcb,elo,hiper&currency=MXN"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.cliente.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
