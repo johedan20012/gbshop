@@ -183,19 +183,25 @@ class AdminController extends Controller
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Producto registrado con exito, la cantidad maxima de fotos(10) fue rebasada, puede que no se hayan guardado algunas fotos');
             }
             $extension = $photo->getClientOriginalExtension();
-            $filename  = str_random(15).'.'.$extension;
+            $nombreSolo = str_random(15);
+            $filename  = $nombreSolo.'.png';
 
             while(Storage::disk('imgProductos')->exists($filename)){
-                $filename  = str_random(15).'.'.$extension;
+                $nombreSolo = str_random(15);
+                $filename  = $nombreSolo.'.png';
             }
 
             $imagen = Image::make($photo->getRealPath())->encode('png',85);
+            $imagenWEBP = Image::make($photo->getRealPath())->encode('webp',95);
             //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('imgProductos')->put($filename, (string) $imagen);
+            Storage::disk('imgProductos')->put('webp/'.$nombreSolo.'.webp',(string) $imagenWEBP);
+
             $imagen->destroy(); //Liberamos el espacio en memoria que ocupa "imagen"
+            $imagenWEBP->destroy(); //Liberamos la memoria de "imagenWEBP"
             
-            if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
+            if(!Storage::disk('imgProductos')->exists($filename) || !Storage::disk('imgProductos')->exists('webp/'.$nombreSolo.'.webp')){ //No se guardo la imagen
                 return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
             }
 
@@ -206,6 +212,7 @@ class AdminController extends Controller
 
             if(!$foto->save()){ //No se guardo la foto en la base de datos
                 Storage::disk('imgProductos')->delete($filename);
+                Storage::disk('imgProductos')->delete('webp/'.$nombreSolo.'.webp');
 
                 return back()->withInput($request->only('producto-nombre', 'producto-descripcion'))->with('Warning' , 'Se guardo el producto, pero hubo un error con alguna o varias imagenes');
             }
@@ -310,6 +317,8 @@ class AdminController extends Controller
                 }
 
                 Storage::disk('imgProductos')->delete($foto->nombre);
+                $nombreFotoWEBP = pathinfo($foto->nombre, PATHINFO_FILENAME).'.webp';
+                Storage::disk('imgProductos')->delete('webp/'.$nombreFotoWEBP);
             }
         }
 
@@ -327,19 +336,25 @@ class AdminController extends Controller
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Producto editado con exito, se borraron las fotos pero la cantidad maxima de fotos(10) fue rebasada, puede que no se hayan guardado algunas fotos');
             }
             $extension = $foto->getClientOriginalExtension();
-            $filename  = str_random(15).'.'.$extension;
+            $nombreSolo = str_random(15);
+            $filename  = $nombreSolo.'.png';
 
             while(Storage::disk('imgProductos')->exists($filename)){
-                $filename  = str_random(15).'.'.$extension;
+                $nombreSolo = str_random(15);
+                $filename  = $nombreSolo.'.png';
             }
 
             $imagen = Image::make($foto->getRealPath())->encode('png',85);
+            $imagenWEBP = Image::make($foto->getRealPath())->encode('webp',95);
             //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('imgProductos')->put($filename, (string) $imagen);
-            $imagen->destroy(); //Liberamos el espacio en memoria que ocupa "imagen"
+            Storage::disk('imgProductos')->put('webp/'.$nombreSolo.'.webp',(string) $imagenWEBP);
 
-            if(!Storage::disk('imgProductos')->exists($filename)){ //No se guardo la imagen
+            $imagen->destroy(); //Liberamos el espacio en memoria que ocupa "imagen"
+            $imagenWEBP->destroy(); //Liberamos la memoria de "imagenWEBP"
+
+            if(!Storage::disk('imgProductos')->exists($filename) || !Storage::disk('imgProductos')->exists('webp/'.$nombreSolo.'.webp')){ //No se guardo la imagen
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Se edito el producto, se eliminaron las fotos, pero hubo un error con alguna o varias imagenes nuevas');
             }
 
@@ -350,6 +365,7 @@ class AdminController extends Controller
 
             if(!$foto->save()){ //No se guardo la foto en la base de datos
                 Storage::disk('imgProductos')->delete($filename);
+                Storage::disk('imgProductos')->delete('webp/'.$nombreSolo.'.webp');
 
                 return redirect()->route('admin',['panel' => 1])->with('Warning' , 'Se edito el producto, se eliminaron las fotos, pero hubo un error con alguna o varias imagenes nuevas');
             }
@@ -374,6 +390,8 @@ class AdminController extends Controller
             }
 
             Storage::disk('imgProductos')->delete($foto->nombre);
+            $nombreFotoWEBP = pathinfo($foto->nombre, PATHINFO_FILENAME).'.webp';
+            Storage::disk('imgProductos')->delete('webp/'.$nombreFotoWEBP);
         }
 
         try{
@@ -858,13 +876,18 @@ class AdminController extends Controller
         foreach ($photos as $photo) {
             
             $extension = $photo->getClientOriginalExtension();
-            $filename  = date('YmdHis').str_random(3).'.'.$extension;
+            $filename  = date('YmdHis').str_random(3);
+            $filenameWEBP = $filename.'.webp';
+            $filename .= '.'.$extension;
 
             $imagen = Image::make($photo->getRealPath())->encode('jpg',85);
+            $imagenWEBP = Image::make($photo->getRealPath())->encode('webp',95);
             //$imagen = Image::make($photo->getRealPath())->resize(900, 550)->encode('jpg', 85);
 
             Storage::disk('banners')->put($filename, (string) $imagen);
-            if(!Storage::disk('banners')->exists($filename)){ //No se guardo la imagen
+            Storage::disk('bannersWEBP')->put($filenameWEBP, (string) $imagenWEBP);
+
+            if(!Storage::disk('banners')->exists($filename) || !Storage::disk('bannersWEBP')->exists($filenameWEBP)){ //No se guardo la imagen
                 return redirect()->route('admin',['panel' => 6])->with('Warning' , 'Solo se pudo guardar algunos banners');
             }
 
@@ -884,8 +907,10 @@ class AdminController extends Controller
         $nombreBanner = $request->input('banner-nombre');
 
         Storage::disk('banners')->delete($nombreBanner);
+        $nombreBannerWEBP = pathinfo($nombreBanner, PATHINFO_FILENAME).'.webp';
+        Storage::disk('bannersWEBP')->delete($nombreBannerWEBP);
 
-        if(Storage::disk('banners')->exists($nombreBanner)){
+        if(Storage::disk('banners')->exists($nombreBanner) || Storage::disk('bannersWEBP')->exists($nombreBannerWEBP)){
             return redirect()->route('admin',['panel' => 6])->with('Error' , 'No se pudo borrar el banner');
         }
 

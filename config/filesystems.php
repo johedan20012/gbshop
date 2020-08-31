@@ -64,6 +64,11 @@ return [
             'driver' => 'local',
             'root' => public_path() . '/storage/imagenesLayout/banners',
         ],
+
+        'bannersWEBP' => [
+            'driver' => 'local',
+            'root' => public_path() . '/storage/imagenesLayout/webp/banners',
+        ],
         
         's3' => [
             'driver' => 's3',
