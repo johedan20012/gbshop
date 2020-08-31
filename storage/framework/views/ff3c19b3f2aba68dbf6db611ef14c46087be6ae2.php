@@ -61,7 +61,17 @@
                     <label for="cliente-telefono">Teléfono</label>
                     <input type="text" class="form-control" name="cliente-telefono" id="cliente-telefono" placeholder="Teléfono" value="<?php echo e($datosUser['telefono']); ?>">
                 </div> 
-            </div>                       
+            </div> 
+            <div class="form-row">
+                <div class="form-group col-12 col-md-12">
+                    <label for="cliente-infoCorreo">Deseo recibir información por correo</label>
+                    <?php if($datosUser['infoCorreo'] == 1): ?>
+                        <input type="checkbox" name="cliente-infoCorreo" id="cliente-infoCorreo" checked>
+                    <?php else: ?>
+                        <input type="checkbox" name="cliente-infoCorreo" id="cliente-infoCorreo">
+                    <?php endif; ?>
+                </div>
+            </div>                      
         </div>  
         <div class="form-group mx-auto" style="padding-right: 51px;">
             <button type="submit" class="btn btn-primary mr-3">Guardar Cambios</button>

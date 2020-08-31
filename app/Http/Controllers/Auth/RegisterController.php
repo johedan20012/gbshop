@@ -59,11 +59,11 @@ class RegisterController extends Controller
 
 
     protected function createCliente(Request $request){
-
         $validacion = Validator::make($request->all(), array(
             'registro-nombre' => 'required|string|max:255',
             'registro-correo' => 'required|string|email|max:255|unique:clientes,email',
             'registro-pass' => 'required|string|min:6|confirmed',
+            'registro-infoCorreo' => 'nullable|string|max:4',
             'redireccion' => 'nullable|integer|digits_between:1,3'
         ));
         
@@ -75,6 +75,7 @@ class RegisterController extends Controller
             'nombreCompleto' => $request['registro-nombre'],
             'email' => $request['registro-correo'],
             'password' => bcrypt($request['registro-pass']),
+            'ofertasCorreo' =>( ($request['registro-infoCorreo'] !== NULL)? 1 : 0 )
         ]);
 
         if($request->input('redireccion') !== null){

@@ -131,7 +131,7 @@ GB Route Music Store: Tienda online
                     </div>
                     <div class="form-group">
                     <label class="rojo-red" for="registro-correo">Correo electrónico:</label>
-                    <h6 class="gris-gray">Te enviaremos a éste correo la confirmación de tus compras, entregas y envíos</h6>
+                    <h6 class="gris-gray">Te enviaremos a éste correo la confirmación de tus compras, entregas y envíos.</h6>
                     <input type="email" class="form-control" name="registro-correo" id="registro-correo" placeholder="Ingresa tu correo electrónico" autocomplete="off" required>
                     </div>
                     <div class="form-group">
@@ -142,8 +142,12 @@ GB Route Music Store: Tienda online
                     <label class="rojo-red" for="registro-pass-confirmation">Confirmar contraseña:</label>
                     <input type="password" class="form-control" name="registro-pass_confirmation" id="registro-pass-confirmation" placeholder="7 a 15 caracteres" autocomplete="off" required>
                     </div>
+                    <div class="form-group">
+                    <label class="rojo-red" for="registro-pass-confirmation">Deseo recibir información por correo</label>
+                    <input type="checkbox" class="" name="registro-infoCorreo" id="registro-infoCorreo" checked>
+                    </div>
                     <input type="hidden" name="redireccion" value="<?php echo e(Request::get('urlsig')); ?>">
-                    <button type="submit" class="btn btn-danger bt-block m-b-20 m-t-10" style="width: 100%">
+                    <button type="submit" class="btn btn-danger bt-block m-b-20" style="width: 100%">
                     Registrate y compra
                     </button>
                 </div>

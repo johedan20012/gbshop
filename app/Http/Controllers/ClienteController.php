@@ -38,6 +38,7 @@ class ClienteController extends Controller
                 $breadcrumb = [['nombre'=> 'Usuario','ruta'=>route('panelUsuario')], ['nombre'=> 'Editar información','ruta'=>'']];
 
                 $datosUsuario = Auth::guard('cliente')->user()->datosEnvio;
+                $datosUsuario['infoCorreo'] = Auth::guard('cliente')->user()->ofertasCorreo;
 
                 return view('cliente.panelEditar',['breadcrumb'=>$breadcrumb,'numPanel' => 2,'datosUser' => $datosUsuario]);
             case 3:
@@ -78,7 +79,8 @@ class ClienteController extends Controller
             'cliente-colonia' => 'nullable|string|max:50',
             'cliente-municipio' => 'nullable|string|max:70',
             'cliente-estado' =>  'nullable|string|max:50',
-            'cliente-telefono' => 'nullable|string|max:15'
+            'cliente-telefono' => 'nullable|string|max:15',
+            'cliente-infoCorreo' => 'nullable|string|max:4',
         ));
 
         if($validacion->fails()){
@@ -104,6 +106,8 @@ class ClienteController extends Controller
         $usuario->estado = ($request->has("cliente-estado"))? $request->input("cliente-estado"): "";
         $usuario->telefono = ($request->has("cliente-telefono"))? $request->input("cliente-telefono"): "";
         $usuario->telefono = preg_replace('/[^0-9]/', '', $usuario->telefono);
+        $usuario->ofertasCorreo = ($request->has("cliente-infoCorreo"))? 1 : 0;
+
         try{
             if(!$usuario->save()){ //No se logro guardar el usuario de manera correcta;
                 return back()->with('Error' , 'No se pudo actualizar tus datos, hubo un error interno');
