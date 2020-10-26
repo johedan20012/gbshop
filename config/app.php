@@ -180,7 +180,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /* Extras */
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+
+        /* Manejo de excel */
+        Maatwebsite\Excel\ExcelServiceProvider::class
     ],
 
     /*
@@ -233,7 +236,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-	    'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

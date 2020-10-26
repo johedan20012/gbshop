@@ -71,6 +71,7 @@ Route::get('/admin','AdminController@getPanel')->name('admin')->middleware('auth
   Route::post('/admin/fotosProducto','AdminController@getFotosProducto')->name('fotosProducto')->middleware('auth');
   Route::post('/admin/editProducto','AdminController@editProducto')->name('editProducto')->middleware('auth');
   Route::post('/admin/delProducto','AdminController@delProducto')->name('delProducto')->middleware('auth');
+  Route::get('/admin/reportProducto','AdminController@getReporteProductos')->name('reportProductos')->middleware('auth');
 
   //* Rutas de administracion para marcas
   Route::post('/admin/tablaMarcas','AdminController@getTablaMarcas')->name('tablaMarcas')->middleware('auth');

@@ -21,7 +21,17 @@
                             <div class="form-group">
                                 <label for="producto-descripcion">Descripción</label>
                                 <textarea class="form-control" name="producto-descripcion" id="producto-descripcion" placeholder="Descripción" rows="3"><?php echo e(old('producto-descripcion')); ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto-modelo">Modelo</label>
+                                <input type="text" class="form-control" name="producto-modelo" id="producto-modelo" placeholder="Modelo" rows="3"><?php echo e(old('producto-modelo')); ?></input>
                             </div>  
+                            <div class="form-group">
+                                <label for="producto-atributos">Atributos</label>
+                                <textarea class="form-control" name="producto-atributos" id="producto-atributos" placeholder="Atributos" rows="3"><?php echo e(old('producto-atributos')); ?></textarea>
+                            </div>   
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="producto-marca">Marca</label>
                                 <select class="form-control custom-select mr-sm-2" name="producto-marca" id="producto-marca" required>
@@ -31,8 +41,6 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div> 
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="producto-categoria">Categoría</label>
                                 <select class="form-control custom-select mr-sm-2" name="producto-categoria" id="producto-categoria" required>
@@ -83,7 +91,10 @@
                 </div>
             </div>
         </div>
-             
+        <div class="col-md-12 col-12">
+            <br>
+            <a href="<?php echo e(route('reportProductos')); ?>"><button type="button"  class="btn btn-danger">Descargar reporte de productos</button></a>
+        </div>
     </div>
 </div>
 

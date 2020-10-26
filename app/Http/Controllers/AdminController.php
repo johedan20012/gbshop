@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 
+use App\Exports\ExportProductos;
+
 use App\Mail\CompraRealizada;
 
 use App\Marca;
@@ -19,6 +21,8 @@ use App\Venta;
 use Validator;
 use Image;
 use PDF;
+use Excel;
+
 
 class AdminController extends Controller
 {
@@ -146,6 +150,8 @@ class AdminController extends Controller
         $validacion = Validator::make($request->all(), array(
             'producto-nombre' => 'required|string|max:100', //|regex:/^[0-9a-zñÑÁÉÍÓÚáéíóúüA-Z ]+$/
             'producto-descripcion' => 'nullable|string',
+            'producto-modelo' => 'nullable|string|max:30',
+            'producto-atributos' => 'nullable|string',
             'producto-marca' => 'required|integer',
             'producto-categoria' => 'required|integer',
             'producto-subcategoria' => 'nullable|integer',
@@ -161,6 +167,7 @@ class AdminController extends Controller
         
         $producto->nombre = $request->input('producto-nombre');
         $producto->descripcion = $request->input('producto-descripcion');
+        $producto->atributos = $request->input('producto-modelo').$request->input('producto-atributos');
         $producto->precio = $request->input('producto-precio');
         $producto->stock = ($request->input('producto-stock') <= 0)? 0 : $request->input('producto-stock');
         $producto->codigo = str_random(15);
@@ -403,6 +410,25 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin',['panel' => 1])->with('Mensaje' , 'Producto eliminado con exito!');
+    }
+
+    public function getReporteProductos(){
+        $data = Producto::all();
+        $cabezera = array(array("ID","Nombre","Descripcion","Modelo","Precio","Categoria","Marca","Stock","Tabla descripción"));
+        foreach($data as $producto){
+            
+            $modelo = "NULL";
+            if($producto->atributos){
+                $mijson = json_decode($producto->atributos);
+                if($mijson){
+                    if(array_key_exists('N.° de modelo', $mijson)){
+                        $modelo = $mijson->{'N.° de modelo'};
+                    }
+                }
+            }
+            $cabezera[] = array($producto->idproductos,$producto->nombre,$producto->descripcion,$modelo,$producto->precio, $producto->categoria->nombre,$producto->marca? $producto->marca->nombre:"NULL",($producto->stock==1)?"1":"0",$producto->atributos);
+        }
+        return Excel::download(new ExportProductos($cabezera),'Productos.xlsx');
     }
 
     //TODO, Aqui empiezan las funciones que llama el panel de marcas

@@ -154,12 +154,14 @@
                 </header>
                 <section class="esp-producto-section">
                     <?php $AtributosProducto = json_decode($producto->atributos);?>
+                    @if($AtributosProducto)
                     @foreach($AtributosProducto as $nombre=>$valor)
                         <div class="row">
                             <div class="col-sm-4">{{$nombre}}</div>
                             <div class="col-sm-8" >{{$valor}}</div>
                         </div>
                     @endforeach
+                    @endif
                 </section>   
             </div>
             @endif
