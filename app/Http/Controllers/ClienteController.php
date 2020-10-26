@@ -768,7 +768,8 @@ class ClienteController extends Controller
             ///////////////////////////////////
             
             Mail::to($usuario->email)->send(new CompraRealizada($venta));
-
+			Mail::to("johedan20012@gmail.com")->send(new CompraRealizada($venta));
+			Mail::to("gbroute@outlook.com")->send(new CompraRealizada($venta));
             return array("Exito" , "La compra se realizo con exito, los detalles de la compra fueron enviados a su correo(".$usuario->email.") o puedes consultarlos en la ventana de 'Mis Pedidos' en la barra principal");
         }
     }
