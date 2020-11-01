@@ -768,6 +768,7 @@ class ClienteController extends Controller
             ///////////////////////////////////
             
             Mail::to($usuario->email)->send(new CompraRealizada($venta));
+            Mail::to("ventas@gbroute.com.mx")->send(new CompraRealizada($venta));
 			Mail::to("johedan20012@gmail.com")->send(new CompraRealizada($venta));
 			Mail::to("gbroute@outlook.com")->send(new CompraRealizada($venta));
             return array("Exito" , "La compra se realizo con exito, los detalles de la compra fueron enviados a su correo(".$usuario->email.") o puedes consultarlos en la ventana de 'Mis Pedidos' en la barra principal");
@@ -815,7 +816,11 @@ class ClienteController extends Controller
                         }
                         header('HTTP/1.1 200 OK');
                         //Enviar correo de confirmación de pago;
-                        Mail::to($orden->usuario->email)->send(new PagoRealizadoOXXO($orden));
+                        $pagoRealizado = new PagoRealizadoOXXO($orden);
+                        Mail::to($orden->usuario->email)->send($pagoRealizado);
+                        Mail::to("ventas@gbroute.com.mx")->send($pagoRealizado);
+                        Mail::to("gbroute@outlook.com")->send($pagoRealizado);
+                        Mail::to("johedan20012@gmail.com")->send($pagoRealizado);
                         return array("Exito" => "Se registro el evento y se envio el correo a la direccion".$orden->usuario->email);
                     }else{
                         header('HTTP/1.1 500 Internal Server Error');
