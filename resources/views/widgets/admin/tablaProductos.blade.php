@@ -45,6 +45,8 @@
         <td class="precio-producto" >${{$producto->precio}}</td>
         <input type="hidden" id="{{$producto->idproductos}}precio" value="{{$producto->precioSF}}">
         <input type="hidden" id="{{$producto->idproductos}}stock" value="{{$producto->stock}}">
+        <input type="hidden" id="{{$producto->idproductos}}modelo" value="{{$producto->modelo}}">
+        <input type="hidden" id="{{$producto->idproductos}}atributos" value="{{$producto->atributosStr}}">
         @if($producto->categoria->padre != null)
           <input type="hidden" id="{{$producto->idproductos}}categoriaPadre" value="{{$producto->categoria->padre->idcategorias}}">
         @endif
@@ -71,7 +73,7 @@
 <!--Modales-->
 
 <div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="modalProductosLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalProductosLabel"></h5>
@@ -104,6 +106,16 @@
                             @endforeach
                         </select>
                     </div> 
+                    <div class="form-group">
+                        <label for="producto-modelo">Modelo</label>
+                        <input type="text" class="form-control" name="producto-modelo" id="producto-modelo" placeholder="Modelo" rows="3">{{old('producto-modelo')}}</input>
+                    </div>  
+                    <div class="form-group">
+                        <label for="producto-stock">Stock</label>
+                        <div class="input-group form-group">
+                            <input type="number" class="form-control" min="0" name="producto-stock" id="producto-stock" placeholder="Stock" required step="1">
+                        </div>  
+                    </div>
                 </div>
                 <div class="col-12 col-md-6 col-sm-6">
                     <div class="form-group">
@@ -121,27 +133,23 @@
                             <option value="">Sin subcategoria</option>
                         </select>
                     </div> 
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-sm-6">
-                            <label for="producto-precio">Precio</label>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
-                                </div>
-                                <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
-                            </div>  
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6">
-                            <label for="producto-stock">Stock</label>
-                            <div class="input-group form-group">
-                                <input type="number" class="form-control" min="0" name="producto-stock" id="producto-stock" placeholder="Stock" required step="1">
-                            </div>  
+                    <div class="form-group">
+                        <label for="producto-precio">Precio</label>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required min="0" step=".01">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="producto-foto">Selecciona Imágen...</label>
                         <input type="file" class="form-control" multiple name="producto-foto[]" id="producto-foto" required style="padding: 0;">
                     </div> 
+                    <div class="form-group">
+                        <label for="producto-atributos">Atributos</label>
+                        <textarea class="form-control" name="producto-atributos" id="producto-atributos" placeholder="Atributos" rows="3">{{old('producto-atributos')}}</textarea>
+                    </div>  
                 </div>
             </div>
             <a class="" data-toggle="collapse" href="#modal-form-fotos" role="button" aria-expanded="true" aria-controls="modal-form-fotos">

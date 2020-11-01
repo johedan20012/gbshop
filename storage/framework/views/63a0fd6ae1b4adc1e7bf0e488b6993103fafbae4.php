@@ -150,6 +150,8 @@
             <?php endif; ?>
         </div>
         <div id="descripcion" class="col-md-12 clear">
+            <?php echo e($producto->descripcion); ?>
+
             <?php if($producto->atributos != ""): ?>
             <div class="row esp-producto-contenedor col-md-12">
                 <header class="esp-producto-header">
@@ -157,12 +159,14 @@
                 </header>
                 <section class="esp-producto-section">
                     <?php $AtributosProducto = json_decode($producto->atributos);?>
+                    <?php if($AtributosProducto): ?>
                     <?php $__currentLoopData = $AtributosProducto; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nombre=>$valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="row">
                             <div class="col-sm-4"><?php echo e($nombre); ?></div>
                             <div class="col-sm-8" ><?php echo e($valor); ?></div>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endif; ?>
                 </section>   
             </div>
             <?php endif; ?>

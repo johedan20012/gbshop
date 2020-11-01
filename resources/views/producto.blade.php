@@ -147,6 +147,7 @@
             @endif
         </div>
         <div id="descripcion" class="col-md-12 clear">
+            {{$producto->descripcion}}
             @if($producto->atributos != "")
             <div class="row esp-producto-contenedor col-md-12">
                 <header class="esp-producto-header">

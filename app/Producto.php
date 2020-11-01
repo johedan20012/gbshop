@@ -17,6 +17,34 @@ class Producto extends Model
         return $this->attributes['precio'];
     }
 
+    public function getModeloAttribute(){
+        $atributos = $this->attributes['atributos'];
+        if($atributos){
+            $atributosArray = json_decode($atributos);
+            if(array_key_exists("N.° de modelo",$atributosArray)){
+                return $atributosArray->{'N.° de modelo'};
+            }
+        }
+        return "";
+    }
+
+    public function getAtributosStrAttribute(){
+        $atributos = $this->attributes['atributos'];
+        if($atributos){
+            $atributosArray = json_decode($atributos);
+            $regreso = "";
+            foreach($atributosArray as $nomAtributo=>$valAtributo){
+                if($nomAtributo == "N.° de modelo"){
+                    continue;
+                }
+                $regreso .= $nomAtributo.":".$valAtributo;
+                $regreso .= "\n";
+            }
+            return $regreso;
+        }
+        return "";
+    }
+
     public function fotos(){
         return $this->hasMany('App\FotosProducto','idproducto','idproductos');
     }

@@ -64,7 +64,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">$</div>
                                         </div>
-                                        <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required step=".01">
+                                        <input type="number" class="form-control" name="producto-precio" id="producto-precio" placeholder="Precio" required min="0" step=".01">
                                     </div>  
                                 </div>
                                 <div class="col-12 col-md-6 col-sm-6">

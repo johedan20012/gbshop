@@ -61,12 +61,16 @@ $(document).ready(function(){
             let categoriaPadre = ($("#"+id+"categoriaPadre")[0] != null)? $("#"+id+"categoriaPadre").val() : -1;
             let precio = $("#"+id+"precio").val();
             let stock= $("#"+id+"stock").val();
+            let modelo = $("#"+id+"modelo").val();
+            let atributos = $("#"+id+"atributos").val();
 
             $formModal.find("#producto-nombre").val(nombre);
             $formModal.find("#producto-descripcion").val(desc);
             $formModal.find("#producto-marca").val(marca);
             $formModal.find("#producto-precio").val(precio);
             $formModal.find("#producto-stock").val(stock);
+            $formModal.find("#producto-modelo").val(modelo);
+            $formModal.find("#producto-atributos").val(atributos);
             //console.log(id);
             $formModal.find("#producto-id").val(id);
             

@@ -167,7 +167,23 @@ class AdminController extends Controller
         
         $producto->nombre = $request->input('producto-nombre');
         $producto->descripcion = $request->input('producto-descripcion');
-        $producto->atributos = $request->input('producto-modelo').$request->input('producto-atributos');
+        /* Formateo del campo atributos */
+        if($request->input('producto-modelo') || $request->input('producto-atributos')){
+            $atributos = array();
+            if($request->input('producto-modelo')){
+                $atributos["N.° de modelo"]=$request->input('producto-modelo');
+            }
+            if($request->input('producto-atributos')){
+                $auxAtributos = explode("\n",$request->input('producto-atributos'));
+                foreach($auxAtributos as $atributo){
+                    $auxAtributo = explode(":",$atributo);
+                    if(count($auxAtributo) >=2){ 
+                        $atributos[$auxAtributo[0]]=$auxAtributo[1];
+                    }
+                }
+            }
+            $producto->atributos = json_encode($atributos);
+        }
         $producto->precio = $request->input('producto-precio');
         $producto->stock = ($request->input('producto-stock') <= 0)? 0 : $request->input('producto-stock');
         $producto->codigo = str_random(15);
@@ -277,6 +293,8 @@ class AdminController extends Controller
             'producto-subcategoria' => 'nullable|integer',
             'producto-precio' => 'required|numeric',
             'producto-stock' => 'required|numeric',
+            'producto-modelo' => 'nullable|string|max:30',
+            'producto-atributos' => 'nullable|string',
             'producto-foto.*' => 'nullable|file|image|mimes:jpeg,png|max:4096', //Para esto activamos php_fileinfo en php.ini
             'producto-fotosBorrar' => 'nullable|string|max:300'
         ));
@@ -298,6 +316,23 @@ class AdminController extends Controller
         $producto->idcategoria = ($request->input('producto-subcategoria') != null)? $request->input('producto-subcategoria'): $request->input('producto-categoria');
         $producto->precio = $request->input('producto-precio');
         $producto->stock = ($request->input('producto-stock') <= 0)? 0 : $request->input('producto-stock');
+        /* Formateo del campo atributos */
+        if($request->input('producto-modelo') || $request->input('producto-atributos')){
+            $atributos = array();
+            if($request->input('producto-modelo')){
+                $atributos["N.° de modelo"]=$request->input('producto-modelo');
+            }
+            if($request->input('producto-atributos')){
+                $auxAtributos = explode("\n",$request->input('producto-atributos'));
+                foreach($auxAtributos as $atributo){
+                    $auxAtributo = explode(":",$atributo);
+                    if(count($auxAtributo) >=2){ 
+                        $atributos[$auxAtributo[0]]=$auxAtributo[1];
+                    }
+                }
+            }
+            $producto->atributos = json_encode($atributos);
+        }
         
         try{
             if(!$producto->save()){ //No se logro guardar el producto de manera correcta;
